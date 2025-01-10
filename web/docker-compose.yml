@@ -37,13 +37,13 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: todo-web-nginx
+    container_name: todo-nginx-web
     depends_on:
       - todo-web-1
       - todo-web-2
       - todo-web-3
     ports:
-      - "5173:80"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/web/nginx.conf:ro
     networks:
