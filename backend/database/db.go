@@ -43,7 +43,7 @@ func InitializeTables() {
 	);
 	`
 	createTodosTable := `
-	CREATE TABLE IF NOT EXISTS posts (
+	CREATE TABLE IF NOT EXISTS todos (
 		id SERIAL PRIMARY KEY,
 		title VARCHAR(255) NOT NULL,
 		content TEXT NOT NULL,
