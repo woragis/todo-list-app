@@ -56,7 +56,7 @@ func GetAllTodos(c *gin.Context) {
 		todos = append(todos, todo)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"posts": todos})
+	c.JSON(http.StatusOK, gin.H{"todos": todos})
 }
 
 

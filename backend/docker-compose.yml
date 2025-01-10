@@ -1,0 +1,103 @@
+services:
+  todo-db:
+    image: postgres:16.6
+    container_name: todo-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - todo_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "todo"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+    networks:
+      - todo-network
+
+  todo-redis:
+    image: redis:7.2.5
+    container_name: todo-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+    networks:
+      - todo-network
+
+  nginx:
+    image: nginx:latest
+    container_name: todo-nginx-api
+    depends_on:
+      - todo-api-1
+      - todo-api-2
+      - todo-api-3
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/api/nginx.conf:ro
+    networks:
+      - todo-network
+
+  todo-api-1:
+    container_name: todo-api-1
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      - todo-db
+      - todo-redis
+    environment:
+      - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
+      - REDIS_URL=redis://todo-redis:6379
+    networks:
+      - todo-network
+  todo-api-2:
+    container_name: todo-api-2
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    depends_on:
+      - todo-db
+      - todo-redis
+    environment:
+      - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
+      - REDIS_URL=redis://todo-redis:6379
+    networks:
+      - todo-network
+  todo-api-3:
+    container_name: todo-api-3
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    depends_on:
+      - todo-db
+      - todo-redis
+    environment:
+      - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
+      - REDIS_URL=redis://todo-redis:6379
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+
+volumes:
+  todo_db_data:

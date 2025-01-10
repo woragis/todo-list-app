@@ -37,7 +37,7 @@ func main() {
 	}
 
 	// Todo Routes
-	todoGroup := router.Group("/posts")
+	todoGroup := router.Group("/todos")
 	{
 		todoGroup.POST("/", handlers.CreateTodo)      // Create Post
 		todoGroup.GET("/", handlers.GetAllTodos)      // Get All Posts

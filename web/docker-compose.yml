@@ -1,0 +1,53 @@
+services:
+  todo-web-1:
+    container_name: todo-web-1
+    restart: always
+    build:
+      context: .
+    ports:
+      - "5174:5173"
+    volumes:
+      - .:/app
+    networks:
+      - todo-network
+
+  todo-web-2:
+    container_name: todo-web-2
+    restart: always
+    build:
+      context: .
+    ports:
+      - "5175:5173"
+    volumes:
+      - .:/app
+    networks:
+      - todo-network
+
+  todo-web-3:
+    container_name: todo-web-3
+    restart: always
+    build:
+      context: .
+    ports:
+      - "5176:5173"
+    volumes:
+      - .:/app
+    networks:
+      - todo-network
+
+  nginx:
+    image: nginx:latest
+    container_name: todo-web-nginx
+    depends_on:
+      - todo-web-1
+      - todo-web-2
+      - todo-web-3
+    ports:
+      - "5173:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/web/nginx.conf:ro
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
