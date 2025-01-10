@@ -37,11 +37,11 @@ func CreateTodo(c *gin.Context) {
 
 
 func GetAllTodos(c *gin.Context) {
-	query := `SELECT id, title, content, author_id, created_at, updated_at FROM posts`
+	query := `SELECT id, title, content, author_id, created_at, updated_at FROM todos`
 	rows, err := database.DB.Query(c.Request.Context(), query)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve posts"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve todos"})
 		return
 	}
 	defer rows.Close()
@@ -50,7 +50,7 @@ func GetAllTodos(c *gin.Context) {
 	for rows.Next() {
 		var todo models.Todo
 		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Content, &todo.AuthorID, &todo.CreatedAt, &todo.UpdatedAt); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process post data"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process todo data"})
 			return
 		}
 		todos = append(todos, todo)
