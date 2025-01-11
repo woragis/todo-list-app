@@ -1,9 +1,9 @@
 export default {
   primary: {
-    light: "#D6E4FF", // Light variant
-    main: "#1E90FF", // Main color
-    dark: "#155E91", // Dark variant
-    contrastText: "#FFFFFF", // Text on primary
+    light: "#D6E4FF",
+    main: "#1E90FF",
+    dark: "#155E91",
+    contrastText: "#FFFFFF",
   },
   secondary: {
     light: "#FFE6CC",
@@ -39,6 +39,10 @@ export default {
     default: "#FAFAFA", // Main background
     paper: "#FFFFFF", // Surface background (cards, modals)
     contrast: "#171717", // Contrast for dark themes
+  },
+  navbar: {
+    background: "#70F8BA",
+    contrast: "#524948",
   },
   text: {
     primary: "#212529", // Main text color

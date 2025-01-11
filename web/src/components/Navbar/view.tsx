@@ -40,10 +40,10 @@ export const NavbarView = ({
     <NavbarInvisibleContainer>
       <StyledNavbar
         className="navbar"
-        color={themeColors.secondary.main}
-        backgroundColor={themeColors.background.default}
-        invertedColor={themeColors.background.default}
-        invertedBackgroundColor={themeColors.secondary.main}
+        color={themeColors.navbar.background}
+        backgroundColor={themeColors.navbar.contrast}
+        invertedColor={themeColors.navbar.contrast}
+        invertedBackgroundColor={themeColors.navbar.background}
       >
         <NavbarLogo src={navLogo} />
         <NavLinksContainer>

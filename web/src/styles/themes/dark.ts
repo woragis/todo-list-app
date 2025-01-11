@@ -40,6 +40,10 @@ export default {
     paper: "#1E1E1E", // Surface background (cards, modals)
     contrast: "#FFFFFF", // Contrast for light text
   },
+  navbar: {
+    background: "#09C36F",
+    contrast: "#161413",
+  },
   text: {
     primary: "#E0E0E0", // Main text color
     secondary: "#A0A0A0", // Secondary text color

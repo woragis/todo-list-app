@@ -14,6 +14,7 @@ export const GlobalStyles = () => {
       list-style-type: none;
       font-family: "Roboto", sans-serif;
       font-style: normal;
+      color: ${theme.colors.background.contrast};
     }
 
     body {
