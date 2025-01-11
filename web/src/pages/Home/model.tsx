@@ -7,9 +7,11 @@ import { useAppDispatch } from "../../features/hooks";
 export const useHomeModel = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   const todos = useSelector((state: RootState) => state.posts.data.posts);
+  const themeColors = useSelector((state: RootState) => state.theme.colors);
+  const dividerColor = themeColors.background.contrast;
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getPosts(token));
   }, []);
-  return { todos };
+  return { todos, dividerColor };
 };
