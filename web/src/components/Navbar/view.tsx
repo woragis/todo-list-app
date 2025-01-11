@@ -50,10 +50,10 @@ export const NavbarView = ({
           {navLinksComponent}
           {authLinksComponent}
           <LanguageSwitcher />
-          <details>
-            <summary>Theme</summary>
-            <ToggleThemeButton />
-          </details>
+          <ToggleThemeButton
+            navbarColor={themeColors.navbar.background}
+            navbarBackgroundColor={themeColors.navbar.contrast}
+          />
         </NavLinksContainer>
       </StyledNavbar>
     </NavbarInvisibleContainer>

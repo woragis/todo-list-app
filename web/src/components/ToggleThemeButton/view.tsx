@@ -12,9 +12,14 @@ import {
 export const ToggleThemeButtonView = ({
   toggleCurrentTheme,
   isDarkMode,
+  navbarColor,
+  navbarBackgroundColor,
 }: ReturnType<typeof useToggleThemeButtonModel>) => {
   return (
-    <ThemeButtonContainer>
+    <ThemeButtonContainer
+      navbarColor={navbarColor}
+      navbarBackgroundColor={navbarBackgroundColor}
+    >
       <InvisibleInput
         type="checkbox"
         id="toggle"

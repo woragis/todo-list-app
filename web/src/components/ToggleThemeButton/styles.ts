@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
+import { ThemeButtonProps } from "../../types/themeButton.types";
 
-export const ThemeButtonContainer = styled.div`
+export const ThemeButtonContainer = styled.div<ThemeButtonProps>`
   --ball-radius: 30px;
-  height: 100px;
-  width: 100px;
-  margin-right: 300px;
+  --color: ${(_) => _.navbarColor};
+  --background-color: ${(_) => _.navbarBackgroundColor};
+  --shaded-color: ${(_) => _.navbarColor};
+  --shaded-background-color: ${(_) => _.navbarBackgroundColor};
 `;
 
 export const InvisibleInput = styled.input`
@@ -45,7 +47,7 @@ export const DisplayedDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background-color: var(--background-color);
 `;
 
 export const ThemeLabel = styled.label`
