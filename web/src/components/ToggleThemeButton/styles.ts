@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 
 export const ThemeButtonContainer = styled.div`
-  /* font-size: 3em; */
-  height: 30px;
+  --ball-radius: 30px;
+  height: 100px;
   width: 100px;
+  margin-right: 300px;
 `;
 
 export const InvisibleInput = styled.input`
@@ -33,21 +34,23 @@ export const InvisibleInput = styled.input`
     opacity: 1;
   }
 `;
+
 export const DisplayedDiv = styled.div`
   * {
     transition: 500ms;
   }
 
-  width: 100%;
-  height: 100vh;
+  width: 80px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: white;
 `;
+
 export const ThemeLabel = styled.label`
-  width: 400px;
-  height: 200px;
+  width: 70px;
+  height: 40px;
   border-radius: 999px;
   background: #f3f3f3;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05) inset;
@@ -55,13 +58,14 @@ export const ThemeLabel = styled.label`
   position: relative;
 
   &:active .circle {
-    width: 200px;
+    width: 100px;
   }
 `;
+
 export const ThemeCircle = styled.div`
-  width: 160px;
-  height: 160px;
-  border-radius: 99px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   background: white;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05),
     -10px -10px 30px rgba(0, 0, 0, 0.05) inset;
@@ -74,17 +78,17 @@ export const ThemeCircle = styled.div`
   justify-content: center;
   overflow: hidden;
 `;
-// export const ThemeSvg = styled.svg``;
 
 export const SunSvg = styled.svg`
-  width: 80px;
+  width: 18px;
   position: absolute;
   color: #ffd600;
   margin-top: 0%;
   opacity: 1;
 `;
+
 export const MoonSvg = styled.svg`
-  width: 80px;
+  width: 16px;
   position: absolute;
   margin-top: -150%;
   color: white;

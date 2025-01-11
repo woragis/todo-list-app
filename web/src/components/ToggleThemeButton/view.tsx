@@ -15,7 +15,12 @@ export const ToggleThemeButtonView = ({
 }: ReturnType<typeof useToggleThemeButtonModel>) => {
   return (
     <ThemeButtonContainer>
-      <InvisibleInput type="checkbox" id="toggle" checked={isDarkMode} />
+      <InvisibleInput
+        type="checkbox"
+        id="toggle"
+        checked={!isDarkMode}
+        onClick={toggleCurrentTheme}
+      />
 
       <DisplayedDiv className="display">
         <ThemeLabel htmlFor="toggle">

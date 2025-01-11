@@ -15,6 +15,10 @@ export const GlobalStyles = () => {
       font-family: "Roboto", sans-serif;
       font-style: normal;
       color: ${theme.colors.background.contrast};
+      transition: background-color 500ms;
+      transition: color 500ms;
+      transition: fill 500ms;
+      transition: border 500ms;
     }
 
     body {
