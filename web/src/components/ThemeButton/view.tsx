@@ -1,4 +1,4 @@
-import { useToggleThemeButtonModel } from "./model";
+import { useThemeButtonModel } from "./model";
 import {
   DisplayedDiv,
   MoonSvg,
@@ -9,12 +9,12 @@ import {
   ThemeButtonContainer,
 } from "./styles";
 
-export const ToggleThemeButtonView = ({
+export const ThemeButtonView = ({
   toggleCurrentTheme,
   isDarkMode,
   navbarColor,
   navbarBackgroundColor,
-}: ReturnType<typeof useToggleThemeButtonModel>) => {
+}: ReturnType<typeof useThemeButtonModel>) => {
   return (
     <ThemeButtonContainer
       navbarColor={navbarColor}

@@ -4,7 +4,7 @@ import { toggleTheme } from "../../features/slices/themeSlice";
 import { RootState } from "../../features/store";
 import { ThemeButtonProps } from "../../types/themeButton.types";
 
-export const useToggleThemeButtonModel = ({
+export const useThemeButtonModel = ({
   navbarColor,
   navbarBackgroundColor,
 }: ThemeButtonProps) => {

@@ -1,5 +1,5 @@
 import LanguageSwitcher from "../LanguageSwitcher";
-import ToggleThemeButton from "../ToggleThemeButton";
+import ThemeButton from "../ThemeButton";
 import { useNavbarModel } from "./model";
 import {
   NavbarInvisibleContainer,
@@ -50,7 +50,7 @@ export const NavbarView = ({
           {navLinksComponent}
           {authLinksComponent}
           <LanguageSwitcher />
-          <ToggleThemeButton
+          <ThemeButton
             navbarColor={themeColors.navbar.background}
             navbarBackgroundColor={themeColors.navbar.contrast}
           />
