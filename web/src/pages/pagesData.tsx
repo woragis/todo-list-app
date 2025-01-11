@@ -11,4 +11,6 @@ export const pagesData: PagesDataInterface[] = [
   { title: Pages.Register, path: Pages.Register, element: <Register /> },
   { title: Pages.About, path: Pages.About, element: <About /> },
   { title: Pages.Logout, path: Pages.Logout, element: <Logout /> },
+  { title: Pages.Profile, path: Pages.Profile, element: <Login /> },
+  { title: Pages.Todo, path: Pages.Todo, element: <Login /> },
 ];

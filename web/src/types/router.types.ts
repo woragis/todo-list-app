@@ -5,6 +5,7 @@ export enum Pages {
   About = "about",
   Profile = "profile",
   Logout = "logout",
+  Todo = "todo",
 }
 
 export interface NavPages {
