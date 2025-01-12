@@ -1,7 +1,7 @@
 services:
   todo-web-1:
     container_name: todo-web-1
-    restart: always
+    restart: on-failure:3
     build:
       context: .
     ports:
@@ -13,7 +13,7 @@ services:
 
   todo-web-2:
     container_name: todo-web-2
-    restart: always
+    restart: on-failure:3
     build:
       context: .
     ports:
@@ -25,7 +25,7 @@ services:
 
   todo-web-3:
     container_name: todo-web-3
-    restart: always
+    restart: on-failure:3
     build:
       context: .
     ports:
