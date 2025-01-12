@@ -7,6 +7,10 @@ export interface Todo {
   updated_at: string;
 }
 
+export interface TodosResponse {
+  todos: Todo[];
+}
+
 export interface CreateTodo {
   title: string;
   content: string;

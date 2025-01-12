@@ -4,13 +4,20 @@ import { useQuery } from "@tanstack/react-query";
 // src/hooks/useProductMutations.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../api/axiosInstance";
-import { UpdateTodo, Todo, CreateTodo } from "../types/todo.types";
+import {
+  UpdateTodo,
+  Todo,
+  CreateTodo,
+  TodosResponse,
+} from "../types/todo.types";
 
 export const useTodos = () => {
-  const { isLoading, error, data } = useQuery<Todo[]>({
+  const { isLoading, error, data } = useQuery<TodosResponse>({
     queryKey: ["todos"],
     queryFn: async () => {
-      const { data } = await api.get<Todo[]>("/todos");
+      console.log("Fetching todos/");
+      const { data } = await api.get<TodosResponse>("todos/");
+      console.log(data);
       return data;
     },
   });
