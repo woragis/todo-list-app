@@ -7,6 +7,7 @@ export const ThemeButtonContainer = styled.div<ThemeButtonProps>`
   --background-color: ${(_) => _.navbarBackgroundColor};
   --shaded-color: ${(_) => _.navbarColor};
   --shaded-background-color: ${(_) => _.navbarBackgroundColor};
+  background-color: none;
 `;
 
 export const InvisibleInput = styled.input`
@@ -14,16 +15,16 @@ export const InvisibleInput = styled.input`
   display: none;
 
   &[type="checkbox"]:checked + .display {
-    background: #2c2c2f;
+    /* background: #2c2c2f; */
   }
   &[type="checkbox"]:checked + .display label {
-    background: #1f1f21;
+    /* background: #1f1f21; */
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5) inset;
   }
   &[type="checkbox"]:checked + .display label .circle {
     left: 100%;
     transform: translate(-110%, -50%);
-    background: #2c2c2f;
+    /* background: #2c2c2f; */
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5),
       -10px -10px 30px rgba(0, 0, 0, 0.5) inset;
   }
@@ -47,7 +48,8 @@ export const DisplayedDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
+  background-color: none;
 `;
 
 export const ThemeLabel = styled.label`
