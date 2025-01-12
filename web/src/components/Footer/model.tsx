@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../features/store";
 
 export const useFooterModel = () => {
   interface ContactInterface {
@@ -10,6 +12,10 @@ export const useFooterModel = () => {
 
   const [contactData, setContactData] = useState<ContactInterface>(
     {} as ContactInterface
+  );
+
+  const footerColors = useSelector(
+    (state: RootState) => state.theme.colors.footer
   );
 
   const handleContactChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,5 +30,10 @@ export const useFooterModel = () => {
     console.log("Data to sent to server:", contactData);
   };
 
-  return { contactData, handleContactChange, handleContactSubmit };
+  return {
+    contactData,
+    handleContactChange,
+    handleContactSubmit,
+    footerColors,
+  };
 };

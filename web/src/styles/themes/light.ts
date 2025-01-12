@@ -44,6 +44,11 @@ export default {
     background: "#70F8BA",
     contrast: "#524948",
   },
+  footer: {
+    background: "#d2d3d5",
+    contrast: "#161413",
+    weak: "#666",
+  },
   text: {
     primary: "#212529", // Main text color
     secondary: "#495057", // Secondary text color

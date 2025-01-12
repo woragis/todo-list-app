@@ -1,21 +1,22 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
-export const StyledFooter = styled.footer`
-  color: #fff;
-  background: #121315;
-  padding: 50px;
-  border: 1px solid red;
+interface FooterStyleProps {
+  color: string;
+  weakColor: string;
+  backgroundColor: string;
+}
+export const StyledFooter = styled.footer<FooterStyleProps>`
+  --color: ${(_) => _.color};
+  --weak-color: ${(_) => _.weakColor};
+  --background: ${(_) => _.backgroundColor};
+  color: var(--color);
+  background-color: var(--background);
+  padding: 30px;
   text-align: center;
 
-  p {
-    color: #ccc;
-    max-width: 25em;
-    font-size: 0.9em;
-    line-height: 23px;
-  }
   a {
-    color: #fff;
+    color: var(--color);
     text-decoration: none;
   }
 
@@ -36,21 +37,19 @@ export const FooterMediaIcons = styled.ul`
     display: inline-block;
   }
   a {
+    border-radius: 50%;
+    border: 1px var(--weak-color) solid;
     font-size: 1.1em;
     width: 2em;
     height: 2em;
-    border: 1px #fff solid;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 300ms;
-
+    svg {
+      fill: var(--weak-color);
+    }
     &:hover {
-      background-color: #fff;
       svg {
-        fill: #111;
+        fill: var(--color);
       }
+      border-color: var(--color);
     }
   }
 `;
@@ -63,7 +62,7 @@ export const FooterBrand = styled(Link)`
   margin: 0;
 `;
 
-export const FooterListItems = styled.li`
+export const FooterListItem = styled.li`
   display: inline-block;
   margin: 1em;
   text-align: center;
@@ -74,24 +73,26 @@ export const FooterMenu = styled.ul`
   a {
     transition: 300ms;
     font-weight: 300;
-    color: #ccc;
+    color: var(--weak-color);
     &:hover {
-      color: #fff;
+      color: var(--color);
       text-decoration: none;
     }
   }
 `;
 
-export const FooterParagraph = styled.p`
-  color: #ccc;
-  max-width: 25em;
-  font-size: 0.9em;
-  line-height: 23px;
-`;
-
 export const FooterLink = styled(Link)`
-  color: #fff;
+  color: var(--weak-color);
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 300ms;
+
+  &:hover {
+    color: var(--color);
+    text-decoration: underline;
+  }
 `;
 
 export const FooterTitle = styled.h4`

@@ -11,39 +11,45 @@ import {
   FooterBrand,
   FooterContainer,
   FooterLink,
-  FooterListItems,
+  FooterListItem,
   FooterMediaIcons,
   FooterMenu,
   StyledFooter,
 } from "./styles";
 
-export const FooterView = ({}: ReturnType<typeof useFooterModel>) => {
+export const FooterView = ({
+  footerColors,
+}: ReturnType<typeof useFooterModel>) => {
   return (
-    <StyledFooter>
+    <StyledFooter
+      color={footerColors.contrast}
+      backgroundColor={footerColors.background}
+      weakColor={footerColors.weak}
+    >
       <FooterContainer>
         <div className="col1">
           <FooterBrand to="">Brand</FooterBrand>
         </div>
         <div className="col2">
           <FooterMenu className="menu">
-            <FooterListItems>
+            <FooterListItem>
               <FooterLink to="">Home</FooterLink>
-            </FooterListItems>
-            <FooterListItems>
+            </FooterListItem>
+            <FooterListItem>
               <FooterLink to="">About</FooterLink>
-            </FooterListItems>
-            <FooterListItems>
+            </FooterListItem>
+            <FooterListItem>
               <FooterLink to="">Contact</FooterLink>
-            </FooterListItems>
-            <FooterListItems>
+            </FooterListItem>
+            <FooterListItem>
               <FooterLink to="">Blog</FooterLink>
-            </FooterListItems>
-            <FooterListItems>
+            </FooterListItem>
+            <FooterListItem>
               <FooterLink to="">Services</FooterLink>
-            </FooterListItems>
-            <FooterListItems>
+            </FooterListItem>
+            <FooterListItem>
               <FooterLink to="">Pricing</FooterLink>
-            </FooterListItems>
+            </FooterListItem>
           </FooterMenu>
         </div>
         <div className="col3">
