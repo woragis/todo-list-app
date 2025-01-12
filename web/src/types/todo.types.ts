@@ -11,6 +11,10 @@ export interface TodosResponse {
   todos: Todo[];
 }
 
+export interface TodoResponse {
+  todo: Todo;
+}
+
 export interface CreateTodo {
   title: string;
   content: string;

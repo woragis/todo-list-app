@@ -9,6 +9,7 @@ import {
   Todo,
   CreateTodo,
   TodosResponse,
+  TodoResponse,
 } from "../types/todo.types";
 
 export const useTodos = () => {
@@ -28,12 +29,12 @@ export const useTodoMutations = () => {
   const queryClient = useQueryClient();
 
   const addTodo = useMutation<
-    Todo,
+    TodoResponse,
     Error,
     Omit<Todo, "id" | "created_at" | "updated_at">
   >({
     mutationFn: async (newTodo: CreateTodo) => {
-      const { data } = await api.post<Todo>("/todos", newTodo);
+      const { data } = await api.post<TodoResponse>("/todos", newTodo);
       return data;
     },
     onSuccess: () => {
@@ -41,9 +42,9 @@ export const useTodoMutations = () => {
     },
   });
 
-  const updateTodo = useMutation<Todo, Error, Todo>({
+  const updateTodo = useMutation<TodoResponse, Error, Todo>({
     mutationFn: async (updatedTodo: UpdateTodo) => {
-      const { data } = await api.put<Todo>(
+      const { data } = await api.put<TodoResponse>(
         `/todos/${updatedTodo.id}`,
         updatedTodo
       );
