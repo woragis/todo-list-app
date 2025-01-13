@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   AuthState,
-  LoginInterface,
-  RegisterInterface,
+  LoginRequest,
+  RegisterRequest,
 } from "../../types/auth.types";
 import { loginService, registerService } from "../../api/services/authService";
 import Cookies from "js-cookie";
@@ -24,12 +24,14 @@ const initialState: AuthState = getInitialAuthState();
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials: LoginInterface, { rejectWithValue }) => {
+  async (credentials: LoginRequest, { rejectWithValue }) => {
     try {
-      const { token, user } = await loginService(credentials);
-      Cookies.set("auth_token", token, { expires: 7 });
+      const { user, token, message } = await loginService(credentials);
+      // Cookies.set("auth_token", token, { expires: 7 });
       localStorage.setItem("auth_user", JSON.stringify(user));
-      return { token, user };
+      console.log("user:", user);
+      console.log("message:", message);
+      return { user, token, message };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
@@ -38,12 +40,14 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (details: RegisterInterface, { rejectWithValue }) => {
+  async (registerData: RegisterRequest, { rejectWithValue }) => {
     try {
-      const { token, user } = await registerService(details);
-      Cookies.set("auth_token", token, { expires: 7 });
+      const { user, token, message } = await registerService(registerData);
+      // Cookies.set("auth_token", token, { expires: 7 });
       localStorage.setItem("auth_user", JSON.stringify(user));
-      return { token, user };
+      console.log("user:", user);
+      console.log("message:", message);
+      return { user, token, message };
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Register failed"

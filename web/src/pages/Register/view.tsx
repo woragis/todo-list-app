@@ -1,4 +1,6 @@
 import Form from "../../components/Form";
+import FormButton from "../../components/Form/FormButton";
+import FormInput from "../../components/Form/FormInput";
 import { useRegisterModel } from "./model";
 import { StyledRegisterPage } from "./styles";
 
@@ -8,11 +10,14 @@ export const RegisterView = ({
   handleRegisterChange,
   handleRegisterSubmit,
 }: ReturnType<typeof useRegisterModel>) => {
+  if (auth.user) {
+    return <h1>You are already logged in</h1>;
+  }
   return (
     <StyledRegisterPage>
       <Form onSubmit={handleRegisterSubmit}>
         <h1>Register</h1>
-        <input
+        <FormInput
           type="text"
           name="name"
           id="name"
@@ -20,7 +25,7 @@ export const RegisterView = ({
           value={registerData.name || ""}
           onChange={handleRegisterChange}
         />
-        <input
+        <FormInput
           type="text"
           name="email"
           id="email"
@@ -28,7 +33,7 @@ export const RegisterView = ({
           value={registerData.email || ""}
           onChange={handleRegisterChange}
         />
-        <input
+        <FormInput
           type="password"
           name="password"
           id="password"
@@ -36,7 +41,7 @@ export const RegisterView = ({
           value={registerData.password || ""}
           onChange={handleRegisterChange}
         />
-        <button>Register</button>
+        <FormButton>Register</FormButton>
         {auth.status === "loading" && <p>Loading...</p>}
         {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
       </Form>

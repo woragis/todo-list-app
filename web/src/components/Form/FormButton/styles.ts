@@ -5,4 +5,5 @@ export const StyledFormButton = styled.button`
   height: 30px;
   font-weight: 500;
   font-size: 16px;
+  background-color: #111;
 `;

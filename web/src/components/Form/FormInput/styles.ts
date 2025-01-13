@@ -5,4 +5,5 @@ export const StyledFormInput = styled.input`
   height: 30px;
   font-weight: 500;
   font-size: 16px;
+  background-color: #222;
 `;

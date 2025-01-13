@@ -3,6 +3,7 @@ import About from "./About";
 import Home from "./Home";
 import Login from "./Login";
 import Logout from "./Logout";
+import Profile from "./Profile";
 import Register from "./Register";
 
 export const pagesData: PagesDataInterface[] = [
@@ -11,6 +12,6 @@ export const pagesData: PagesDataInterface[] = [
   { title: Pages.Register, path: Pages.Register, element: <Register /> },
   { title: Pages.About, path: Pages.About, element: <About /> },
   { title: Pages.Logout, path: Pages.Logout, element: <Logout /> },
-  { title: Pages.Profile, path: Pages.Profile, element: <Login /> },
-  { title: Pages.Todo, path: Pages.Todo, element: <Login /> },
+  { title: Pages.Profile, path: Pages.Profile, element: <Profile /> },
+  { title: Pages.Todos, path: Pages.Todos, element: <Login /> },
 ];

@@ -1,17 +1,17 @@
 import axiosInstance from "../../api/axiosInstance";
-import { API_ENDPOINTS } from "../../api/endpoints";
 import {
   AuthResponse,
-  LoginInterface,
-  RegisterInterface,
+  LoginRequest,
+  RegisterRequest,
 } from "../../types/auth.types";
+import { API_ENDPOINTS } from "../endpoints";
 
-export const loginService = async (credentials: LoginInterface) => {
-  const response = await axiosInstance.post(API_ENDPOINTS.LOGIN, credentials);
+export const loginService = async (user: LoginRequest) => {
+  const response = await axiosInstance.post(API_ENDPOINTS.AUTH.LOGIN, user);
   return response.data as AuthResponse;
 };
 
-export const registerService = async (newUser: RegisterInterface) => {
-  const response = await axiosInstance.post(API_ENDPOINTS.REGISTER, newUser);
+export const registerService = async (user: RegisterRequest) => {
+  const response = await axiosInstance.post(API_ENDPOINTS.AUTH.REGISTER, user);
   return response.data as AuthResponse;
 };

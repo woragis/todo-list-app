@@ -2,18 +2,9 @@ import { ReduxStatus } from "./redux.types";
 
 export interface AuthUser {
   id: number;
-  first_name: string;
-  last_name: string;
+  name: string;
   email: string;
-  role: string;
-  blog_role: string;
-  store_role: string;
-  youtube_role: string;
-  fanfic_role: string;
-  profile_picture?: string;
-  phone_number?: string;
-  is_verified: boolean;
-  last_login?: string;
+  password: string;
   created_at: string;
   updated_at: string;
 }
@@ -26,18 +17,19 @@ export interface AuthState {
   error: string | null;
 }
 
-export interface RegisterInterface {
+export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
 }
 
-export interface LoginInterface {
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
 export interface AuthResponse {
+  message: string;
   token: string;
   user: AuthUser;
 }

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"todo-api/database"
+	"todo-api/models"
 	"todo-api/utils"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,8 @@ import (
 )
 
 func Login(c *gin.Context) {
+	var user models.User
+
 	var input struct {
 		Email    string `json:"email" binding:"required,email"`
 		Password string `json:"password" binding:"required"`
@@ -23,39 +26,40 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	var userID int64
-	var hashedPassword string
-
-	query := `SELECT id, password FROM users WHERE email = $1`
+	query := `SELECT id, name, email, password, created_at, updated_at FROM users WHERE email = $1`
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := database.DB.QueryRow(ctx, query, input.Email).Scan(&userID, &hashedPassword)
+	err := database.DB.QueryRow(ctx, query, input.Email).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(input.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
-	token, err := utils.GenerateJWT(userID)
+	token, err := utils.GenerateJWT(int64(user.ID))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{"token": token, "user": user, "message": "Successfully logged in"})
 }
 
 func Register(c *gin.Context) {
+	var user models.User
 	var input struct {
 		Name     string `json:"name" binding:"required"`
 		Email    string `json:"email" binding:"required,email"`
 		Password string `json:"password" binding:"required"`
 	}
+	user.Name = input.Name
+	user.Email = input.Email
+	user.Password = input.Password
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -68,17 +72,21 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	query := `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id`
-	var userID int64
+	query := `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, created_at, updated_at`
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err = database.DB.QueryRow(ctx, query, input.Name, input.Email, string(hashedPassword)).Scan(&userID)
+	err = database.DB.QueryRow(ctx, query, input.Name, input.Email, string(hashedPassword)).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
+	token, err := utils.GenerateJWT(int64(user.ID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully", "user_id": userID})
+	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully", "token": token, "user": user})
 }

@@ -9,6 +9,9 @@ export const LoginView = ({
   handleLoginChange,
   handleLoginSubmit,
 }: ReturnType<typeof useLoginModel>) => {
+  if (auth.user) {
+    return <h1>You are already logged in</h1>;
+  }
   return (
     <Form onSubmit={handleLoginSubmit}>
       <h1>Login</h1>
@@ -29,8 +32,6 @@ export const LoginView = ({
         onChange={handleLoginChange}
       />
       <FormButton>Send</FormButton>
-      {auth.status === "loading" && <p>Loading...</p>}
-      {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
     </Form>
   );
 };
