@@ -99,6 +99,9 @@ services:
 
 networks:
   todo-network:
+    name: todo-network
+    driver: bridge
 
 volumes:
   todo_db_data:
+    name: todo-database
