@@ -2,8 +2,8 @@ package main
 
 import (
 	"time"
-	"todo-api/database"
-	"todo-api/handlers"
+	"todo-backend/database"
+	"todo-backend/handlers"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

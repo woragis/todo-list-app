@@ -1,4 +1,4 @@
-module todo-api
+module todo-backend
 
 go 1.23.4
 

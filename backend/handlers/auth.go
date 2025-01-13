@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"todo-api/database"
-	"todo-api/models"
-	"todo-api/utils"
+	"todo-backend/database"
+	"todo-backend/models"
+	"todo-backend/utils"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"

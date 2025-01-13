@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"todo-api/database"
-	"todo-api/models"
+	"todo-backend/database"
+	"todo-backend/models"
 
 	"github.com/gin-gonic/gin"
 )
