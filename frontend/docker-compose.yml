@@ -1,35 +1,11 @@
 services:
-  todo-web-1:
-    container_name: todo-web-1
+  todo-frontend:
+    container_name: todo-frontend
     restart: on-failure:3
     build:
       context: .
     ports:
-      - "5174:5173"
-    volumes:
-      - .:/app
-    networks:
-      - todo-network
-
-  todo-web-2:
-    container_name: todo-web-2
-    restart: on-failure:3
-    build:
-      context: .
-    ports:
-      - "5175:5173"
-    volumes:
-      - .:/app
-    networks:
-      - todo-network
-
-  todo-web-3:
-    container_name: todo-web-3
-    restart: on-failure:3
-    build:
-      context: .
-    ports:
-      - "5176:5173"
+      - "5173:5173"
     volumes:
       - .:/app
     networks:
@@ -37,15 +13,13 @@ services:
 
   nginx:
     image: nginx:1.27.3
-    container_name: todo-nginx-web
+    container_name: todo-nginx-frontend
     depends_on:
-      - todo-web-1
-      - todo-web-2
-      - todo-web-3
+      - todo-frontend
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/web/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/frontend/nginx.conf:ro
     networks:
       - todo-network
 

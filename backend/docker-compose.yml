@@ -1,7 +1,7 @@
 services:
-  todo-db:
+  todo-database:
     image: postgres:16.6
-    container_name: todo-postgres
+    container_name: todo-database
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - todo_db_data:/var/lib/postgresql/data
+      - todo_database_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-d", "todo"]
       interval: 10s
@@ -35,67 +35,32 @@ services:
 
   # nginx:
   #   image: nginx:1.27.3
-  #   container_name: todo-nginx-api
+  #   container_name: todo-nginx-backend
   #   depends_on:
-  #     - todo-api
+  #     - todo-backend
   #   ports:
   #     - "8080:80"
   #   volumes:
-  #     - ./nginx.conf:/etc/nginx/api/nginx.conf:ro
+  #     - ./nginx.conf:/etc/nginx/backend/nginx.conf:ro
   #   networks:
   #     - todo-network
 
-  todo-api:
-    container_name: todo-api
+  todo-backend:
+    container_name: todo-backend
     restart: on-failure:3
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-      # - "8081:8080"
-      # - "8082:8080"
-      # - "8083:8080"
     depends_on:
-      - todo-db
+      - todo-database
       - todo-redis
     environment:
-      - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
+      - DATABASE_URL=postgres://postgres:password@todo-database:5432/todo?sslmode=disable
       - REDIS_URL=redis://todo-redis:6379
     networks:
       - todo-network
-  # todo-api-2:
-  #   container_name: todo-api-2
-  #   restart: on-failure:3
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8082:8080"
-  #   depends_on:
-  #     - todo-db
-  #     - todo-redis
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
-  #     - REDIS_URL=redis://todo-redis:6379
-  #   networks:
-  #     - todo-network
-  # todo-api-3:
-  #   container_name: todo-api-3
-  #   restart: on-failure:3
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8083:8080"
-  #   depends_on:
-  #     - todo-db
-  #     - todo-redis
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:password@todo-db:5432/todo?sslmode=disable
-  #     - REDIS_URL=redis://todo-redis:6379
-  #   networks:
-  #     - todo-network
 
 networks:
   todo-network:
@@ -103,5 +68,5 @@ networks:
     driver: bridge
 
 volumes:
-  todo_db_data:
+  todo_database_data:
     name: todo-database
