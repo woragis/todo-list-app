@@ -34,7 +34,7 @@ services:
       - todo-network
 
   # nginx:
-  #   image: nginx:latest
+  #   image: nginx:1.27.3
   #   container_name: todo-nginx-api
   #   depends_on:
   #     - todo-api
