@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // src/hooks/useProductMutations.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import api from "../api/axiosInstance";
 import {
   UpdateTodo,
@@ -13,6 +14,7 @@ import {
 } from "../types/todo.types";
 
 export const useTodos = () => {
+  console.log("Starting to fetch todos");
   const { isLoading, error, data } = useQuery<TodosResponse>({
     queryKey: ["todos"],
     queryFn: async () => {

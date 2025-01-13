@@ -11,7 +11,10 @@ export const HomeView = ({
   todos,
   dividerColor,
 }: ReturnType<typeof useHomeModel>) => {
-  const todosComponent = todos.data?.todos.map((todo) => {
+  if (!todos.data?.todos) {
+    return <h1>No todos</h1>;
+  }
+  const todosComponent = todos.data.todos.map((todo) => {
     return (
       <Link to={`todos/${todo.id}`}>
         <TodoCard key={`listed_todo_${todo.id}`}>
