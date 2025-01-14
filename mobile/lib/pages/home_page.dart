@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void saveNewTask() {
-    if (_controller.text.length > 0) {
+    if (_controller.text.isNotEmpty) {
       setState(() {
         todoList.add([_controller.text, false]);
         _controller.clear();
