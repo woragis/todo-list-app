@@ -11,16 +11,16 @@ export const useNavbarModel = () => {
 
   const navLinks: NavPages[] = [
     { title: t(Pages.Home), path: "" as Pages },
-    { title: t(Pages.About), path: Pages.About },
+    { title: t("about.title"), path: Pages.About },
   ];
 
   const unloggedLinks: NavPages[] = [
-    { title: t(Pages.Login), path: Pages.Login },
-    { title: t(Pages.Register), path: Pages.Register },
+    { title: t("login.title"), path: Pages.Login },
+    { title: t("register.title"), path: Pages.Register },
   ];
   const loggedLinks: NavPages[] = [
-    { title: t(Pages.Profile), path: Pages.Profile },
-    { title: t(Pages.Logout), path: Pages.Logout },
+    { title: t("profile.title"), path: Pages.Profile },
+    { title: t("logout.title"), path: Pages.Logout },
   ];
   const authLinks = auth.loggedIn ? loggedLinks : unloggedLinks;
 

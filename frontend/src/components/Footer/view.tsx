@@ -1,11 +1,3 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTumblr,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa6";
 import { useFooterModel } from "./model";
 import {
   FooterBrand,
@@ -19,7 +11,22 @@ import {
 
 export const FooterView = ({
   footerColors,
+  brandName,
+  menuLinks,
+  mediaLinks,
 }: ReturnType<typeof useFooterModel>) => {
+  const menuComponent = menuLinks.map((link) => {
+    return (
+      <FooterListItem>
+        <FooterLink to={link.path}>{link.title}</FooterLink>
+      </FooterListItem>
+    );
+  });
+
+  const socialMediaComponent = mediaLinks.map((socialMedia) => {
+    return <FooterLink to={socialMedia.path}>{socialMedia.element}</FooterLink>;
+  });
+
   return (
     <StyledFooter
       color={footerColors.contrast}
@@ -28,50 +35,14 @@ export const FooterView = ({
     >
       <FooterContainer>
         <div className="col1">
-          <FooterBrand to="">Brand</FooterBrand>
+          <FooterBrand to="">{brandName}</FooterBrand>
         </div>
         <div className="col2">
-          <FooterMenu className="menu">
-            <FooterListItem>
-              <FooterLink to="">Home</FooterLink>
-            </FooterListItem>
-            <FooterListItem>
-              <FooterLink to="">About</FooterLink>
-            </FooterListItem>
-            <FooterListItem>
-              <FooterLink to="">Contact</FooterLink>
-            </FooterListItem>
-            <FooterListItem>
-              <FooterLink to="">Blog</FooterLink>
-            </FooterListItem>
-            <FooterListItem>
-              <FooterLink to="">Services</FooterLink>
-            </FooterListItem>
-            <FooterListItem>
-              <FooterLink to="">Pricing</FooterLink>
-            </FooterListItem>
-          </FooterMenu>
+          <FooterMenu className="menu">{menuComponent}</FooterMenu>
         </div>
         <div className="col3">
           <FooterMediaIcons className="media-icons">
-            <FooterLink to="">
-              <FaFacebook />
-            </FooterLink>
-            <FooterLink to="">
-              <FaTwitter />
-            </FooterLink>
-            <FooterLink to="">
-              <FaInstagram />
-            </FooterLink>
-            <FooterLink to="">
-              <FaYoutube />
-            </FooterLink>
-            <FooterLink to="">
-              <FaLinkedin />
-            </FooterLink>
-            <FooterLink to="">
-              <FaTumblr />
-            </FooterLink>
+            {socialMediaComponent}
           </FooterMediaIcons>
         </div>
       </FooterContainer>

@@ -1,39 +1,49 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../features/store";
+import { useTranslation } from "react-i18next";
+import {
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
+import { FooterLinks, socialMediaLinks } from "../../types/footer.types";
 
 export const useFooterModel = () => {
-  interface ContactInterface {
-    title: string;
-    body: string;
-    email: string;
-    tel_number: string;
-  }
-
-  const [contactData, setContactData] = useState<ContactInterface>(
-    {} as ContactInterface
-  );
-
   const footerColors = useSelector(
     (state: RootState) => state.theme.colors.footer
   );
 
-  const handleContactChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setContactData(
-      (prevState) =>
-        (prevState = { ...prevState, [event.target.name]: event.target.value })
-    );
-  };
+  const { t } = useTranslation();
 
-  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("Data to sent to server:", contactData);
-  };
+  const brandName: string = t("brand");
+
+  const menuLinks: FooterLinks[] = [
+    { title: t("home"), path: "/" },
+    { title: t("about.title"), path: "about/" },
+    { title: t("contact.title"), path: "contact/" },
+    { title: t("blog"), path: "blog/" },
+    { title: t("pricing"), path: "pricing/" },
+  ];
+
+  const mediaLinks: socialMediaLinks[] = [
+    { element: <FaFacebook />, path: "http://facebook.com/" },
+    { element: <FaTwitter />, path: "http://twitter.com/" },
+    {
+      element: <FaInstagram />,
+      path: "http://instagram.com/y.jezreel.andrade",
+    },
+    { element: <FaYoutube />, path: "http://youtube.com/subscriptions" },
+    { element: <FaLinkedin />, path: "http://linkedin.com/in/jezreel-andrade" },
+    { element: <FaGithub />, path: "http://github.com/woragis" },
+  ];
 
   return {
-    contactData,
-    handleContactChange,
-    handleContactSubmit,
     footerColors,
+    brandName,
+    menuLinks,
+    mediaLinks,
   };
 };

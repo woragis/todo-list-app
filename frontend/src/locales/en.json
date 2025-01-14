@@ -1,9 +1,43 @@
 {
   "home": "Home",
-  "login": "Login",
-  "register": "Register",
-  "about": "About",
-  "profile": "Profile",
-  "logout": "Logout",
-  "changeLanguage": "Change Language"
+  "login": {
+    "title": "Login",
+    "message": "You logged in successfully",
+    "inputs": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "register": {
+    "title": "Register",
+    "message": "You registered successfully",
+    "inputs": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "profile": {
+    "title": "Your Profile"
+  },
+  "logout": {
+    "title": "Logout",
+    "message": "You logged out successfully"
+  },
+  "about": {
+    "title": "About",
+    "about": ""
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "todos": {
+    "not-found": "No todos found",
+    "title": "Todos"
+  },
+  "changeLanguage": "Change Language",
+  "brand": "Jezreel de Andrade",
+  "blog": "Blog",
+  "services": "Services",
+  "pricing": "Pricing"
 }

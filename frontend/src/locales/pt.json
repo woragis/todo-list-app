@@ -1,9 +1,43 @@
 {
   "home": "Home",
-  "login": "Entrar",
-  "register": "Registrar-se",
-  "about": "Sobre",
-  "profile": "Perfil",
-  "logout": "Sair",
-  "changeLanguage": "Mudar idioma"
+  "login": {
+    "title": "Login",
+    "message": "Entrou com sucesso",
+    "inputs": {
+      "email": "Email",
+      "password": "Senha"
+    }
+  },
+  "register": {
+    "title": "Registrar-se",
+    "message": "Registrou com sucesso",
+    "inputs": {
+      "name": "Nome",
+      "email": "Email",
+      "password": "Senha"
+    }
+  },
+  "profile": {
+    "title": "Seu perfil"
+  },
+  "logout": {
+    "title": "Logout",
+    "message": "Saiu da sua conta com sucesso"
+  },
+  "about": {
+    "title": "Sobre",
+    "about": ""
+  },
+  "contact": {
+    "title": "Contato"
+  },
+  "todos": {
+    "not-found": "Nao foi encontrada nenhuma tarefa",
+    "title": "Tarefas"
+  },
+  "changeLanguage": "Mudar idioma",
+  "brand": "Jezreel de Andrade",
+  "blog": "Blog",
+  "services": "Servicos",
+  "pricing": "Precificacao"
 }
