@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _controller = TextEditingController();
   List todoList = [
     ['Build todo frontend app with react', true],
     ['Build todo mobile app with flutter', false],
@@ -23,6 +24,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void saveNewTask() {
+    if (_controller.text.length > 0) {
+      setState(() {
+        todoList.add([_controller.text, false]);
+        _controller.clear();
+      });
+    } else {}
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      todoList.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +49,57 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.white,
       ),
       body: ListView.builder(
-          itemCount: todoList.length,
-          itemBuilder: (BuildContext context, index) {
-            return TodoList(
-              taskName: todoList[index][0],
-              taskCompleted: todoList[index][1],
-              onChanged: (value) => checkBoxChanged(index),
-            );
-          }),
+        itemCount: todoList.length,
+        itemBuilder: (BuildContext context, index) {
+          return TodoList(
+            taskName: todoList[index][0],
+            taskCompleted: todoList[index][1],
+            onChanged: (value) => checkBoxChanged(index),
+            deleteFunction: (context) => deleteTask(index),
+          );
+        },
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 0,
+                ),
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: "Add new todo",
+                    filled: true,
+                    fillColor: Colors.deepPurple.shade200,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.deepPurple,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.deepPurple,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            FloatingActionButton(
+              onPressed: saveNewTask,
+              child: const Icon(
+                Icons.add,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
