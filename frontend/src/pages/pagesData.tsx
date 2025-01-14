@@ -5,7 +5,7 @@ import Login from "./Login";
 import Logout from "./Logout";
 import Profile from "./Profile";
 import Register from "./Register";
-import Todo from "./Todos";
+import Todo from "./Todo";
 
 export const pagesData: PagesDataInterface[] = [
   { title: Pages.Home, path: "" as Pages, element: <Home /> },

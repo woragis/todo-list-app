@@ -4,6 +4,7 @@ export const TodoView = ({ todo }: ReturnType<typeof useTodoModel>) => {
   if (!todo) {
     return <h1>Did not find todo</h1>;
   }
+
   return (
     <div>
       <p>id: {todo.id}</p>

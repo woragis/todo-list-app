@@ -6,12 +6,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import api from "../api/axiosInstance";
 import {
-  UpdateTodo,
+  PutTodoRequest,
   Todo,
-  CreateTodo,
+  PostTodoRequest,
   TodosResponse,
   TodoResponse,
-} from "../types/todo.types";
+} from "../types/todos.types";
 
 export const useTodos = () => {
   console.log("Starting to fetch todos");
@@ -21,7 +21,7 @@ export const useTodos = () => {
       console.log("Fetching todos/");
       const { data } = await api.get<TodosResponse>("todos/");
       console.log(data);
-      return data;
+      return data as TodosResponse;
     },
   });
   return { isLoading, error, data };
@@ -35,18 +35,18 @@ export const useTodoMutations = () => {
     Error,
     Omit<Todo, "id" | "created_at" | "updated_at">
   >({
-    mutationFn: async (newTodo: CreateTodo) => {
+    mutationFn: async (newTodo: PostTodoRequest) => {
       const { data } = await api.post<TodoResponse>("/todos", newTodo);
-      return data;
+      return data as TodoResponse;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: "todos" });
     },
   });
 
-  const updateTodo = useMutation<TodoResponse, Error, Todo>({
-    mutationFn: async (updatedTodo: UpdateTodo) => {
-      const { data } = await api.put<TodoResponse>(
+  const updateTodo = useMutation<TodosResponse, Error, Todo>({
+    mutationFn: async (updatedTodo: PutTodoRequest) => {
+      const { data } = await api.put<TodosResponse>(
         `/todos/${updatedTodo.id}`,
         updatedTodo
       );

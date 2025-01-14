@@ -23,8 +23,8 @@ export const ThemeButtonView = ({
       <InvisibleInput
         type="checkbox"
         id="toggle"
-        checked={!isDarkMode}
-        onClick={toggleCurrentTheme}
+        defaultChecked={!isDarkMode}
+        onChange={toggleCurrentTheme}
       />
 
       <DisplayedDiv className="display">
