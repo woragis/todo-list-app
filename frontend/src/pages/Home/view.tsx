@@ -8,11 +8,20 @@ import {
 } from "./styles";
 
 export const HomeView = ({
+  todosTitle,
+  todosNotFound,
   todos,
   dividerColor,
 }: ReturnType<typeof useHomeModel>) => {
   if (!todos.data?.todos) {
-    return <h1>No todos</h1>;
+    return (
+      <main>
+        <HomeHeroSection>
+          <h1>{todosNotFound}</h1>
+          <HomeDivider dividerColor={dividerColor} />
+        </HomeHeroSection>
+      </main>
+    );
   }
   const todosComponent = todos.data.todos.map((todo) => {
     return (
@@ -29,7 +38,7 @@ export const HomeView = ({
   return (
     <main>
       <HomeHeroSection>
-        <h1>'user' Todos</h1>
+        <h1>{todosTitle}</h1>
         <HomeDivider dividerColor={dividerColor} />
         {todos.isLoading && <h1>Loading...</h1>}
         {todos.error && <h1>Error while loading todos...</h1>}

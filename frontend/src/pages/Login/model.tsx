@@ -5,8 +5,10 @@ import { useAppDispatch } from "../../features/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../features/store";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const useLoginModel = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state: RootState) => state.auth);
@@ -26,5 +28,12 @@ export const useLoginModel = () => {
     navigate("/profile");
   };
 
-  return { auth, loginData, handleLoginChange, handleLoginSubmit };
+  const textData = {
+    title: t("login.title"),
+    emailInput: t("login.inputs.email"),
+    passwordInput: t("login.inputs.password"),
+    formButton: t("login.inputs.button"),
+  };
+
+  return { textData, auth, loginData, handleLoginChange, handleLoginSubmit };
 };

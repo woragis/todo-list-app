@@ -5,6 +5,7 @@ import { useRegisterModel } from "./model";
 import { StyledRegisterPage } from "./styles";
 
 export const RegisterView = ({
+  textData,
   auth,
   registerData,
   handleRegisterChange,
@@ -16,12 +17,12 @@ export const RegisterView = ({
   return (
     <StyledRegisterPage>
       <Form onSubmit={handleRegisterSubmit}>
-        <h1>Register</h1>
+        <h1>{textData.title}</h1>
         <FormInput
           type="text"
           name="name"
           id="name"
-          placeholder="Name"
+          placeholder={textData.nameInput}
           value={registerData.name || ""}
           onChange={handleRegisterChange}
         />
@@ -29,7 +30,7 @@ export const RegisterView = ({
           type="text"
           name="email"
           id="email"
-          placeholder="Email"
+          placeholder={textData.emailInput}
           value={registerData.email || ""}
           onChange={handleRegisterChange}
         />
@@ -37,11 +38,11 @@ export const RegisterView = ({
           type="password"
           name="password"
           id="password"
-          placeholder="Password"
+          placeholder={textData.passwordInput}
           value={registerData.password || ""}
           onChange={handleRegisterChange}
         />
-        <FormButton>Register</FormButton>
+        <FormButton>{textData.formButton}</FormButton>
         {auth.status === "loading" && <p>Loading...</p>}
         {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
       </Form>

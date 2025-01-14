@@ -4,6 +4,7 @@ import FormInput from "../../components/Form/FormInput";
 import { useLoginModel } from "./model";
 
 export const LoginView = ({
+  textData,
   auth,
   loginData,
   handleLoginChange,
@@ -14,12 +15,12 @@ export const LoginView = ({
   }
   return (
     <Form onSubmit={handleLoginSubmit}>
-      <h1>Login</h1>
+      <h1>{textData.title}</h1>
       <FormInput
         type="text"
         name="email"
         id="email"
-        placeholder="Email"
+        placeholder={textData.emailInput}
         value={loginData.email}
         onChange={handleLoginChange}
       />
@@ -27,11 +28,11 @@ export const LoginView = ({
         type="text"
         name="password"
         id="password"
-        placeholder="Password"
+        placeholder={textData.passwordInput}
         value={loginData.password}
         onChange={handleLoginChange}
       />
-      <FormButton>Send</FormButton>
+      <FormButton>{textData.formButton}</FormButton>
     </Form>
   );
 };

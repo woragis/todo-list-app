@@ -5,8 +5,10 @@ import { RootState } from "../../features/store";
 import { register } from "../../features/slices/authSlice";
 import { RegisterRequest } from "../../types/auth.types";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const useRegisterModel = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state: RootState) => state.auth);
@@ -29,5 +31,19 @@ export const useRegisterModel = () => {
     navigate("/profile");
   };
 
-  return { auth, registerData, handleRegisterChange, handleRegisterSubmit };
+  const textData = {
+    title: t("register.title"),
+    nameInput: t("register.inputs.name"),
+    emailInput: t("register.inputs.email"),
+    passwordInput: t("register.inputs.password"),
+    formButton: t("register.inputs.button"),
+  };
+
+  return {
+    textData,
+    auth,
+    registerData,
+    handleRegisterChange,
+    handleRegisterSubmit,
+  };
 };

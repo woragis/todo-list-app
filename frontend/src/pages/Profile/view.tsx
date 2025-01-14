@@ -1,18 +1,31 @@
 import { useProfileModel } from "./model";
 
-export const ProfileView = ({ user }: ReturnType<typeof useProfileModel>) => {
+export const ProfileView = ({
+  textData,
+  user,
+}: ReturnType<typeof useProfileModel>) => {
   if (!user) {
     return <h1>You are not logged in</h1>;
   }
   return (
     <div>
-      <h1>Profile</h1>
-      <h2>{user.name}</h2>
+      <h1>{textData.title}</h1>
+      <h2>
+        {textData.nameField}: {user.name}
+      </h2>
       <hr />
-      <p>Email: {user.email}</p>
-      <p>Password: {user.password}</p>
-      <p>Created At: {user.created_at}</p>
-      <p>Updated At: {user.updated_at}</p>
+      <p>
+        {textData.emailField}: {user.email}
+      </p>
+      <p>
+        {textData.passwordField}: {user.password}
+      </p>
+      <p>
+        {textData.createdField}: {user.created_at}
+      </p>
+      <p>
+        {textData.updatedField}: {user.updated_at}
+      </p>
       <br />
       <small>Id: {user.id}</small>
     </div>
