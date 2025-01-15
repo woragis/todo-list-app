@@ -94,21 +94,34 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
             content: Text('Todo completion updated: ${response.data.name}')),
       );
+      _fetchTodos();
+      // setState(() {
+      //   todoList[index].toggleCompleted();
+      // });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error updating todo completion: $e')),
       );
-    } finally {
-      setState(() {
-        todoList[index].toggleCompleted();
-      });
     }
   }
 
-  void deleteTask(int index) {
-    setState(() {
-      todoList.removeAt(index);
-    });
+  Future<void> deleteTask(int index) async {
+    final todoId = todoList[index].id;
+    try {
+      final _ = await _todoService.deleteTodo(todoId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Todo successfully deleted")),
+      );
+      // setState(() {
+      //   todoList.removeAt(index);
+      // });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error deleting todo: $e")),
+      );
+    } finally {
+      _fetchTodos();
+    }
   }
 
   @override
