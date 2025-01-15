@@ -5,11 +5,11 @@ import '../models/todos_response_model.dart';
 import '../models/todo_response_model.dart';
 
 class TodoService {
-  static const String baseUrl = 'http://localhost:8080/todos/';
+  static const String baseUrl = 'http://localhost:8080/todos';
 
   Future<TodosResponseModel> fetchTodos() async {
     try {
-      final response = await http.get(Uri.parse(baseUrl));
+      final response = await http.get(Uri.parse('$baseUrl/'));
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
@@ -50,7 +50,7 @@ class TodoService {
   Future<TodoResponseModel> createTodo(Todo todo) async {
     try {
       final response = await http.post(
-        Uri.parse(baseUrl),
+        Uri.parse('$baseUrl/'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(todo.toJson()),
       );
@@ -71,7 +71,7 @@ class TodoService {
   Future<TodoResponseModel> updateTodo(int id, Todo todo) async {
     try {
       final response = await http.put(
-        Uri.parse('$baseUrl$id'),
+        Uri.parse('$baseUrl/$id'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(todo.toJson()),
       );
