@@ -22,7 +22,13 @@ func Login(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.SendResponse(
+			c,
+			http.StatusBadRequest,
+			"Failed to login: invalid input",
+			err,
+			nil,
+		)
 		return
 	}
 
@@ -32,22 +38,49 @@ func Login(c *gin.Context) {
 
 	err := database.DB.QueryRow(ctx, query, input.Email).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		utils.SendResponse(
+			c,
+			http.StatusUnauthorized,
+			"Failed to login: invalid credentials",
+			err,
+			nil,
+		)
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		utils.SendResponse(
+			c,
+			http.StatusUnauthorized,
+			"Failed to login: invalid credentials",
+			err,
+			nil,
+		)
 		return
 	}
 
 	token, err := utils.GenerateJWT(int64(user.ID))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to login: failed to generate token",
+			err,
+			nil,
+		)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token, "user": user, "message": "Successfully logged in"})
+	utils.SendResponse(
+		c,
+		http.StatusOK,
+		"Successfully logged in",
+		nil,
+		map[string]interface{}{
+			"token": token,
+			"user": user,
+		},
+	)
 }
 
 func Register(c *gin.Context) {
@@ -62,13 +95,25 @@ func Register(c *gin.Context) {
 	user.Password = input.Password
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		utils.SendResponse(
+			c,
+			http.StatusBadRequest,
+			"Failed to register: invalid input",
+			err,
+			nil,
+		)
 		return
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to register: failed to hash password",
+			err,
+			nil,
+		)
 		return
 	}
 
@@ -79,14 +124,35 @@ func Register(c *gin.Context) {
 
 	err = database.DB.QueryRow(ctx, query, input.Name, input.Email, string(hashedPassword)).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to register: failed to create user",
+			err,
+			nil,
+		)
 		return
 	}
 	token, err := utils.GenerateJWT(int64(user.ID))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to register: failed to generate token",
+			err,
+			nil,
+		)
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully", "token": token, "user": user})
+	utils.SendResponse(
+		c,
+		http.StatusCreated,
+		"Successfully registered",
+		nil,
+		map[string]interface{}{
+			"user": user,
+			"token": token,
+		},
+	)
 }
