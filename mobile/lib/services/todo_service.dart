@@ -76,7 +76,7 @@ class TodoService {
         body: json.encode(todo.toJson()),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         return TodoResponseModel.fromJson(jsonData);
       } else {
