@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { LoginRequest } from "../../types/auth.types";
 import { login } from "../../features/slices/authSlice";
 import { useAppDispatch } from "../../features/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../features/store";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LoginRequestInterface } from "../../types/axios.types";
 
 export const useLoginModel = () => {
   const { t } = useTranslation();
@@ -13,7 +13,9 @@ export const useLoginModel = () => {
   const navigate = useNavigate();
   const auth = useSelector((state: RootState) => state.auth);
 
-  const [loginData, setLoginData] = useState<LoginRequest>({} as LoginRequest);
+  const [loginData, setLoginData] = useState<LoginRequestInterface>(
+    {} as LoginRequestInterface
+  );
 
   const handleLoginChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLoginData(

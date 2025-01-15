@@ -3,9 +3,9 @@ import { useAppDispatch } from "../../features/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../features/store";
 import { register } from "../../features/slices/authSlice";
-import { RegisterRequest } from "../../types/auth.types";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { RegisterRequestInterface } from "../../types/axios.types";
 
 export const useRegisterModel = () => {
   const { t } = useTranslation();
@@ -13,8 +13,8 @@ export const useRegisterModel = () => {
   const navigate = useNavigate();
   const auth = useSelector((state: RootState) => state.auth);
 
-  const [registerData, setRegisterData] = useState<RegisterRequest>(
-    {} as RegisterRequest
+  const [registerData, setRegisterData] = useState<RegisterRequestInterface>(
+    {} as RegisterRequestInterface
   );
 
   const handleRegisterChange = (event: ChangeEvent<HTMLInputElement>) => {

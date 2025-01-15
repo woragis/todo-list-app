@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import {
-  PostTodoRequest,
-  Todo,
-  TodoResponse,
-  TodosResponse,
-  TodosState,
-} from "../../types/todos.types";
+import { PostTodoRequest, Todo, TodosState } from "../../types/todos.types";
 import { useTodoMutations, useTodos } from "../../hooks/useTodos";
+import {
+  TodoResponseInterface,
+  TodosResponseInterface,
+} from "../../types/axios.types";
 
 const getInitialTodosState = (): TodosState => {
   const data = Cookies.get("todos_data") || JSON.stringify([]);
@@ -42,12 +40,11 @@ export const postTodo = createAsyncThunk(
   async (action: PostTodoRequest, { rejectWithValue }) => {
     try {
       const response = useTodoMutations().addTodo.mutate({
-        title: action.title,
-        content: action.content,
+        name: action.name,
         author_id: action.author_id,
       });
       console.log("add todo resonse:", response);
-      return response as TodoResponse;
+      return response as TodoResponseInterface;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Register failed"
@@ -61,7 +58,7 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     getTodo: (state, action) => {
-      state.currentTodo = state.data.todos.find((todo) => {
+      state.currentTodo = state.data.find((todo) => {
         return todo.id === (action.payload as Todo["id"]) ? todo : null;
       });
     },
@@ -75,13 +72,15 @@ const todosSlice = createSlice({
       })
       .addCase(getTodos.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload.data as TodosResponse;
+        state.data = action.payload.data
+          ?.data as TodosResponseInterface["data"];
       })
       .addCase(getTodos.rejected, (state, action) => {
-        state.data = {} as TodosResponse;
+        state.data = {} as TodosResponseInterface["data"];
         state.status = "failed";
         state.error = (action.payload as string) || null;
       })
+
       // Post Todo cases
       .addCase(postTodo.pending, (state) => {
         state.status = "loading";
@@ -89,8 +88,8 @@ const todosSlice = createSlice({
       })
       .addCase(postTodo.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data.todos.push(action.payload.todo);
-        state.error = null;
+        state.data.push(action.payload.data);
+        state.error = action.payload.error;
       })
       .addCase(postTodo.rejected, (state, action) => {
         state.status = "failed";

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  AuthState,
-  LoginRequest,
-  RegisterRequest,
-} from "../../types/auth.types";
+import { AuthState } from "../../types/auth.types";
 import { loginService, registerService } from "../../api/services/authService";
 import Cookies from "js-cookie";
+import {
+  LoginRequestInterface,
+  RegisterRequestInterface,
+} from "../../types/axios.types";
 
 const getInitialAuthState = (): AuthState => {
   const token = Cookies.get("auth_token") || "";
@@ -24,14 +24,14 @@ const initialState: AuthState = getInitialAuthState();
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials: LoginRequest, { rejectWithValue }) => {
+  async (credentials: LoginRequestInterface, { rejectWithValue }) => {
     try {
-      const { user, token, message } = await loginService(credentials);
+      const { data, message, error, status } = await loginService(credentials);
       // Cookies.set("auth_token", token, { expires: 7 });
-      localStorage.setItem("auth_user", JSON.stringify(user));
-      console.log("user:", user);
+      localStorage.setItem("auth_user", JSON.stringify(data.user));
+      console.log("user:", data.user);
       console.log("message:", message);
-      return { user, token, message };
+      return { user: data.user, token: data.token, message };
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
@@ -40,14 +40,16 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (registerData: RegisterRequest, { rejectWithValue }) => {
+  async (registerData: RegisterRequestInterface, { rejectWithValue }) => {
     try {
-      const { user, token, message } = await registerService(registerData);
+      const { data, message, error, status } = await registerService(
+        registerData
+      );
       // Cookies.set("auth_token", token, { expires: 7 });
-      localStorage.setItem("auth_user", JSON.stringify(user));
-      console.log("user:", user);
+      localStorage.setItem("auth_user", JSON.stringify(data.user));
+      console.log("user:", data.user);
       console.log("message:", message);
-      return { user, token, message };
+      return { user: data.user, token: data.token, message };
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Register failed"
