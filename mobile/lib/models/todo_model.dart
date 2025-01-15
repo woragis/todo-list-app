@@ -1,7 +1,7 @@
 class Todo {
   final int id;
   final String name;
-  final int author_id = 1;
+  final int authorId = 1;
   bool completed;
 
   Todo({
@@ -28,7 +28,7 @@ class Todo {
     return {
       'id': id,
       'name': name,
-      'author_id': author_id,
+      'author_id': authorId,
       'completed': completed,
     };
   }
