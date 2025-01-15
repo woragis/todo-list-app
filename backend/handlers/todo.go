@@ -43,6 +43,11 @@ func GetAllTodos(c *gin.Context) {
 		todos = append(todos, todo)
 	}
 
+	// Ensure that if `todos` is nil, you send an empty array
+	if todos == nil {
+		todos = []models.Todo{}
+	}
+
 	utils.SendResponse(
 		c,
 		http.StatusOK,
