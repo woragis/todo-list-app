@@ -47,7 +47,7 @@ func InitializeTables() {
 		id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
 		author_id INT REFERENCES users(id) ON DELETE CASCADE,
-		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
 
 	queries := []string{createUsersTable, createTodosTable}
