@@ -1,34 +1,22 @@
+import { TodosResponseInterface } from "./axios.types";
 import { ReduxStatus } from "./redux.types";
 
 export interface Todo {
   id: number;
-  title: string;
-  content: string;
+  name: string;
   author_id: string;
   created_at: string;
-  updated_at: string;
-}
-
-interface DefaultResponse {}
-
-export interface TodoResponse extends DefaultResponse {
-  todo: Todo;
-}
-
-export interface TodosResponse extends DefaultResponse {
-  todos: Todo[];
 }
 
 export interface TodosState {
-  data: TodosResponse;
+  data: TodosResponseInterface["data"];
   currentTodo: Todo | undefined;
   status: ReduxStatus;
   error: string | null;
 }
 
 export interface PostTodoRequest {
-  title: Todo["title"];
-  content: Todo["content"];
+  name: Todo["name"];
   author_id: Todo["author_id"];
 }
 
