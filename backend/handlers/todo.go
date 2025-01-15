@@ -10,34 +10,8 @@ import (
 )
 
 
-func CreateTodo(c *gin.Context) {
-	var todo models.Todo
-
-	if err := c.ShouldBindJSON(&todo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-		return
-	}
-
-	query := `INSERT INTO todos (title, content, author_id) VALUES ($1, $2, $3) RETURNING id, created_at, updated_at`
-	err := database.DB.QueryRow(
-		c.Request.Context(),
-		query,
-		todo.Title,
-		todo.Content,
-		todo.AuthorID,
-	).Scan(&todo.ID, &todo.CreatedAt, &todo.UpdatedAt)
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create post"})
-		return
-	}
-
-	c.JSON(http.StatusCreated, todo)
-}
-
-
 func GetAllTodos(c *gin.Context) {
-	query := `SELECT id, title, content, author_id, created_at, updated_at FROM todos`
+	query := `SELECT id, name, author_id, created_at FROM todos`
 	rows, err := database.DB.Query(c.Request.Context(), query)
 
 	if err != nil {
@@ -49,32 +23,62 @@ func GetAllTodos(c *gin.Context) {
 	var todos []models.Todo
 	for rows.Next() {
 		var todo models.Todo
-		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Content, &todo.AuthorID, &todo.CreatedAt, &todo.UpdatedAt); err != nil {
+		if err := rows.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process todo data"})
 			return
 		}
 		todos = append(todos, todo)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"todos": todos})
+	var response = gin.H{"todos": todos}
+
+	c.JSON(http.StatusOK, response)
 }
 
 
 func GetTodoByID(c *gin.Context) {
 	id := c.Param("id")
 
-	query := `SELECT id, title, content, author_id, created_at, updated_at FROM todos WHERE id=$1`
+	query := `SELECT id, name, author_id, created_at FROM todos WHERE id=$1;`
 	row := database.DB.QueryRow(c.Request.Context(), query, id)
 
 	var todo models.Todo
-	err := row.Scan(&todo.ID, &todo.Title, &todo.Content, &todo.AuthorID, &todo.CreatedAt, &todo.UpdatedAt)
+	err := row.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, todo)
+	var response = gin.H{"todo": todo}
+
+	c.JSON(http.StatusOK, response)
+}
+
+func CreateTodo(c *gin.Context) {
+	var todo models.Todo
+
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	query := `INSERT INTO todos (name, author_id) VALUES ($1, $2) RETURNING id, created_at;`
+	err := database.DB.QueryRow(
+		c.Request.Context(),
+		query,
+		todo.Name,
+		todo.AuthorID,
+	).Scan(&todo.ID, &todo.CreatedAt)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create post"})
+		return
+	}
+
+	var response = gin.H{"todo": todo}
+
+	c.JSON(http.StatusCreated, response)
 }
 
 
@@ -87,22 +91,23 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	query := `UPDATE todos SET title=$1, content=$2, author_id=$3, updated_at=CURRENT_TIMESTAMP WHERE id=$4 RETURNING id, created_at, updated_at`
+	query := `UPDATE todos SET name=$1, author_id=$2 WHERE id=$3 RETURNING id, created_at;`
 	err := database.DB.QueryRow(
 		c.Request.Context(),
 		query,
-		todo.Title,
-		todo.Content,
+		todo.Name,
 		todo.AuthorID,
 		id,
-	).Scan(&todo.ID, &todo.CreatedAt, &todo.UpdatedAt)
+	).Scan(&todo.ID, &todo.CreatedAt)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update todo"})
 		return
 	}
+	
+	var response = gin.H{"todo": todo}
 
-	c.JSON(http.StatusOK, todo)
+	c.JSON(http.StatusOK, response)
 }
 
 
