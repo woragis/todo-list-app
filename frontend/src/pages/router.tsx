@@ -7,7 +7,11 @@ const AppRouter = () => {
   const routes = pagesData.map(
     ({ title, path, element }: PagesDataInterface) => {
       return (
-        <Route key={title + "_page"} path={`/${path}`} element={element} />
+        <Route
+          key={title + "_page"}
+          path={`/${path}`}
+          element={<main>{element}</main>}
+        />
       );
     }
   );

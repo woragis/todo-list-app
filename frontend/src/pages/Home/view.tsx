@@ -15,12 +15,10 @@ export const HomeView = ({
 }: ReturnType<typeof useHomeModel>) => {
   if (!todos.data?.todos) {
     return (
-      <main>
-        <HomeHeroSection>
-          <h1>{todosNotFound}</h1>
-          <HomeDivider dividerColor={dividerColor} />
-        </HomeHeroSection>
-      </main>
+      <HomeHeroSection>
+        <h1>{todosNotFound}</h1>
+        <HomeDivider dividerColor={dividerColor} />
+      </HomeHeroSection>
     );
   }
   const todosComponent = todos.data.todos.map((todo) => {
@@ -36,14 +34,12 @@ export const HomeView = ({
   });
 
   return (
-    <main>
-      <HomeHeroSection>
-        <h1>{todosTitle}</h1>
-        <HomeDivider dividerColor={dividerColor} />
-        {todos.isLoading && <h1>Loading...</h1>}
-        {todos.error && <h1>Error while loading todos...</h1>}
-        <TodosContainer>{todosComponent}</TodosContainer>
-      </HomeHeroSection>
-    </main>
+    <HomeHeroSection>
+      <h1>{todosTitle}</h1>
+      <HomeDivider dividerColor={dividerColor} />
+      {todos.isLoading && <h1>Loading...</h1>}
+      {todos.error && <h1>Error while loading todos...</h1>}
+      <TodosContainer>{todosComponent}</TodosContainer>
+    </HomeHeroSection>
   );
 };

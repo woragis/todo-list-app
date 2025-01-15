@@ -24,6 +24,13 @@ export const GlobalStyles = () => {
     body {
       background-color: ${theme.colors.background.default};
     }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     nav {
       max-height: 130px;
     }

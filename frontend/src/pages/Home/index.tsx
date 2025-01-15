@@ -5,7 +5,6 @@ import { HomeView } from "./view";
 const Home = () => {
   const model = useHomeModel();
 
-  // return <HeroSection children={<HomeView {...model} />} />;
   return <HomeView {...model} />;
 };
 
