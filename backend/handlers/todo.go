@@ -12,7 +12,7 @@ import (
 
 
 func GetAllTodos(c *gin.Context) {
-	query := `SELECT id, name, author_id, created_at FROM todos`
+	query := `SELECT id, name, completed, author_id, created_at FROM todos`
 	rows, err := database.DB.Query(c.Request.Context(), query)
 
 	if err != nil {
@@ -30,7 +30,7 @@ func GetAllTodos(c *gin.Context) {
 	var todos []models.Todo
 	for rows.Next() {
 		var todo models.Todo
-		if err := rows.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt); err != nil {
+		if err := rows.Scan(&todo.ID, &todo.Name, &todo.Completed, &todo.AuthorID, &todo.CreatedAt); err != nil {
 			utils.SendResponse(
 				c,
 				http.StatusInternalServerError,
@@ -61,12 +61,12 @@ func GetAllTodos(c *gin.Context) {
 func GetTodoByID(c *gin.Context) {
 	id := c.Param("id")
 
-	query := `SELECT id, name, author_id, created_at FROM todos WHERE id=$1;`
+	query := `SELECT id, name, completed, author_id, created_at FROM todos WHERE id=$1;`
 	row := database.DB.QueryRow(c.Request.Context(), query, id)
 
 	var todo models.Todo
 
-	err := row.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt)
+	err := row.Scan(&todo.ID, &todo.Name, &todo.Completed, &todo.AuthorID, &todo.CreatedAt)
 
 	if err != nil {
 		utils.SendResponse(
@@ -102,13 +102,13 @@ func CreateTodo(c *gin.Context) {
 		return
 	}
 
-	query := `INSERT INTO todos (name, author_id) VALUES ($1, $2) RETURNING id, created_at;`
+	query := `INSERT INTO todos (name, author_id) VALUES ($1, $2) RETURNING id, completed, created_at;`
 	err := database.DB.QueryRow(
 		c.Request.Context(),
 		query,
 		todo.Name,
 		todo.AuthorID,
-	).Scan(&todo.ID, &todo.CreatedAt)
+	).Scan(&todo.ID, &todo.Completed, &todo.CreatedAt)
 
 	if err != nil {
 		utils.SendResponse(
@@ -146,11 +146,12 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	query := `UPDATE todos SET name=$1, author_id=$2 WHERE id=$3 RETURNING id, created_at;`
+	query := `UPDATE todos SET name=$1, completed=$2, author_id=$3 WHERE id=$4 RETURNING id, created_at;`
 	err := database.DB.QueryRow(
 		c.Request.Context(),
 		query,
 		todo.Name,
+		todo.Completed,
 		todo.AuthorID,
 		id,
 	).Scan(&todo.ID, &todo.CreatedAt)
@@ -168,7 +169,7 @@ func UpdateTodo(c *gin.Context) {
 	
 	utils.SendResponse(
 		c,
-		http.StatusCreated,
+		http.StatusOK,
 		"Successfully updated todo",
 		nil,
 		todo,
@@ -194,7 +195,7 @@ func DeleteTodo(c *gin.Context) {
 
 	utils.SendResponse(
 		c,
-		http.StatusCreated,
+		http.StatusOK,
 		"Successfully deleted todo",
 		nil,
 		true,

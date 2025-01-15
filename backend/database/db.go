@@ -46,6 +46,7 @@ func InitializeTables() {
 	CREATE TABLE IF NOT EXISTS todos (
 		id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
+		completed BOOLEAN DEFAULT FALSE,
 		author_id INT REFERENCES users(id) ON DELETE CASCADE,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
