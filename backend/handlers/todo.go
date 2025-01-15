@@ -16,7 +16,13 @@ func GetAllTodos(c *gin.Context) {
 	rows, err := database.DB.Query(c.Request.Context(), query)
 
 	if err != nil {
-		utils.SendResponse(c, http.StatusInternalServerError, "Failed to retrieve todos", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to retrieve todos",
+			err,
+			nil,
+		)
 		return
 	}
 	defer rows.Close()
@@ -25,13 +31,25 @@ func GetAllTodos(c *gin.Context) {
 	for rows.Next() {
 		var todo models.Todo
 		if err := rows.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt); err != nil {
-			utils.SendResponse(c, http.StatusInternalServerError, "Failed to process todo data", err, nil)
+			utils.SendResponse(
+				c,
+				http.StatusInternalServerError,
+				"Failed to process todo data",
+				err,
+				nil,
+			)
 			return
 		}
 		todos = append(todos, todo)
 	}
 
-	utils.SendResponse(c, http.StatusOK, "Successfully retrieved todo", nil, todos)
+	utils.SendResponse(
+		c,
+		http.StatusOK,
+		"Successfully retrieved todo",
+		nil,
+		todos,
+	)
 }
 
 
@@ -46,18 +64,36 @@ func GetTodoByID(c *gin.Context) {
 	err := row.Scan(&todo.ID, &todo.Name, &todo.AuthorID, &todo.CreatedAt)
 
 	if err != nil {
-		utils.SendResponse(c, http.StatusNotFound, "Failed to retrieve todo: todo not found", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusNotFound,
+			"Failed to retrieve todo: todo not found",
+			err,
+			nil,
+		)
 		return
 	}
 
-	utils.SendResponse(c, http.StatusOK, "Successfully retrieved todo", nil, todo)
+	utils.SendResponse(
+		c,
+		http.StatusOK,
+		"Successfully retrieved todo",
+		nil,
+		todo,
+	)
 }
 
 func CreateTodo(c *gin.Context) {
 	var todo models.Todo
 
 	if err := c.ShouldBindJSON(&todo); err != nil {
-		utils.SendResponse(c, http.StatusBadRequest, "Failed to create todo: invalid input", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusBadRequest,
+			"Failed to create todo: invalid input",
+			err,
+			nil,
+		)
 		return
 	}
 
@@ -70,11 +106,23 @@ func CreateTodo(c *gin.Context) {
 	).Scan(&todo.ID, &todo.CreatedAt)
 
 	if err != nil {
-		utils.SendResponse(c, http.StatusInternalServerError, "Failed to create todo", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Failed to create todo",
+			err,
+			nil,
+		)
 		return
 	}
 
-	utils.SendResponse(c, http.StatusCreated, "Successfully created todo", nil, todo)
+	utils.SendResponse(
+		c,
+		http.StatusCreated,
+		"Successfully created todo",
+		nil,
+		todo,
+	)
 }
 
 
@@ -83,7 +131,13 @@ func UpdateTodo(c *gin.Context) {
 	var todo models.Todo
 
 	if err := c.ShouldBindJSON(&todo); err != nil {
-		utils.SendResponse(c, http.StatusBadRequest, "Could not update todo: invalid input", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusBadRequest,
+			"Could not update todo: invalid input",
+			err,
+			nil,
+		)
 		return
 	}
 
@@ -97,11 +151,23 @@ func UpdateTodo(c *gin.Context) {
 	).Scan(&todo.ID, &todo.CreatedAt)
 
 	if err != nil {
-		utils.SendResponse(c, http.StatusInternalServerError, "Could not update todo", err, nil)
+		utils.SendResponse(
+			c,
+			http.StatusInternalServerError,
+			"Could not update todo",
+			err,
+			nil,
+		)
 		return
 	}
 	
-	utils.SendResponse(c, http.StatusCreated, "Successfully updated todo", nil, todo)
+	utils.SendResponse(
+		c,
+		http.StatusCreated,
+		"Successfully updated todo",
+		nil,
+		todo,
+	)
 }
 
 
@@ -112,9 +178,20 @@ func DeleteTodo(c *gin.Context) {
 	_, err := database.DB.Exec(c.Request.Context(), query, id)
 
 	if err != nil {
-		utils.SendResponse(c, http.StatusInternalServerError, "Could not delete todo", err, false)
+		utils.SendResponse(c,
+			http.StatusInternalServerError,
+			"Could not delete todo",
+			err,
+			false,
+		)
 		return
 	}
 
-	utils.SendResponse(c, http.StatusCreated, "Successfully deleted todo", nil, true)
+	utils.SendResponse(
+		c,
+		http.StatusCreated,
+		"Successfully deleted todo",
+		nil,
+		true,
+	)
 }
