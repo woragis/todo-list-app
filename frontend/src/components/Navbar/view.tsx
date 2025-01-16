@@ -1,4 +1,6 @@
 import LanguageSwitcher from "../LanguageSwitcher";
+import Login from "../Login";
+import Register from "../Register";
 import ThemeButton from "../ThemeButton";
 import { useNavbarModel } from "./model";
 import {
@@ -15,18 +17,25 @@ export const NavbarView = ({
   authLinks,
   themeColors,
   navLogo,
+  loginVisible,
+  registerVisible,
 }: ReturnType<typeof useNavbarModel>) => {
-  const navLinksComponent = navLinks.map(({ title, path }) => {
+  const navLinksComponent = navLinks.map(({ title, path, onClick }) => {
     return (
       <NavLinkItem key={title + "_nav_link"}>
-        <NavLink to={path}>{title}</NavLink>
+        <NavLink to={path ? path : ""} onClick={onClick}>
+          {title}
+        </NavLink>
       </NavLinkItem>
     );
   });
-  const authLinksComponent = authLinks.map(({ title, path }) => {
+
+  const authLinksComponent = authLinks.map(({ title, path, onClick }) => {
     return (
       <NavLinkItem key={title + "_nav_link"}>
-        <NavLink to={path}>{title}</NavLink>
+        <NavLink to={path ? path : ""} onClick={onClick}>
+          {title}
+        </NavLink>
       </NavLinkItem>
     );
   });
@@ -56,6 +65,8 @@ export const NavbarView = ({
           />
         </NavLinksContainer>
       </StyledNavbar>
+      {loginVisible && <Login />}
+      {registerVisible && <Register />}
     </NavbarInvisibleContainer>
   );
 };

@@ -1,11 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { PostTodoRequest, Todo, TodosState } from "../../types/todos.types";
-import { useTodoMutations, useTodos } from "../../hooks/useTodos";
-import {
-  TodoResponseInterface,
-  TodosResponseInterface,
-} from "../../types/axios.types";
+import { Todo, TodosState } from "../../types/todos.types";
+import { useTodos } from "../../hooks/useTodos";
+import { TodosResponseInterface } from "../../types/axios.types";
 
 const getInitialTodosState = (): TodosState => {
   const data = Cookies.get("todos_data") || JSON.stringify([]);
@@ -27,24 +24,6 @@ export const getTodos = createAsyncThunk(
       const { data, error, isLoading } = useTodos();
       localStorage.setItem("todos_data", JSON.stringify(data));
       return { data, error, isLoading };
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Register failed"
-      );
-    }
-  }
-);
-
-export const postTodo = createAsyncThunk(
-  "todos/post",
-  async (action: PostTodoRequest, { rejectWithValue }) => {
-    try {
-      const response = useTodoMutations().addTodo.mutate({
-        name: action.name,
-        author_id: action.author_id,
-      });
-      console.log("add todo resonse:", response);
-      return response as TodoResponseInterface;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Register failed"
@@ -77,21 +56,6 @@ const todosSlice = createSlice({
       })
       .addCase(getTodos.rejected, (state, action) => {
         state.data = {} as TodosResponseInterface["data"];
-        state.status = "failed";
-        state.error = (action.payload as string) || null;
-      })
-
-      // Post Todo cases
-      .addCase(postTodo.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(postTodo.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.data.push(action.payload.data);
-        state.error = action.payload.error;
-      })
-      .addCase(postTodo.rejected, (state, action) => {
         state.status = "failed";
         state.error = (action.payload as string) || null;
       });

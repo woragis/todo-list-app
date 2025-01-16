@@ -1,6 +1,4 @@
-import Form from "../../components/Form";
-import FormButton from "../../components/Form/FormButton";
-import FormInput from "../../components/Form/FormInput";
+import { Button, Form, FormContainer, Input } from "../ui/Form.styles";
 import { useLoginModel } from "./model";
 
 export const LoginView = ({
@@ -10,13 +8,10 @@ export const LoginView = ({
   handleLoginChange,
   handleLoginSubmit,
 }: ReturnType<typeof useLoginModel>) => {
-  if (auth.user) {
-    return <h1>You are already logged in</h1>;
-  }
-  return (
+  const formComponent = (
     <Form onSubmit={handleLoginSubmit}>
       <h1>{textData.title}</h1>
-      <FormInput
+      <Input
         type="text"
         name="email"
         id="email"
@@ -24,7 +19,7 @@ export const LoginView = ({
         value={loginData.email}
         onChange={handleLoginChange}
       />
-      <FormInput
+      <Input
         type="text"
         name="password"
         id="password"
@@ -32,7 +27,14 @@ export const LoginView = ({
         value={loginData.password}
         onChange={handleLoginChange}
       />
-      <FormButton>{textData.formButton}</FormButton>
+      <Button>{textData.formButton}</Button>
     </Form>
+  );
+
+  return (
+    <FormContainer>
+      {auth.user && <h1>You are already logged in</h1>}
+      {!auth.user && formComponent}
+    </FormContainer>
   );
 };

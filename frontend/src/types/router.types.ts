@@ -1,16 +1,16 @@
 export enum Pages {
   Home = "home",
-  Login = "login",
-  Register = "register",
-  About = "about",
   Profile = "profile",
-  Logout = "logout",
-  Todos = "todos",
+  // Login = "login",
+  // Register = "register",
+  // Logout = "logout",
+  // Todos = "todos",
 }
 
 export interface NavPages {
   title: string;
-  path: Pages;
+  path: string;
+  onClick?: VoidFunction;
 }
 
 export interface PagesDataInterface {

@@ -5,7 +5,6 @@ export const HomeHeroSection = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 120px;
   gap: 20px;
   margin: 0 30px 50px;
 `;

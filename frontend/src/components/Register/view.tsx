@@ -1,8 +1,5 @@
-import Form from "../../components/Form";
-import FormButton from "../../components/Form/FormButton";
-import FormInput from "../../components/Form/FormInput";
+import { Button, Form, FormContainer, Input } from "../ui/Form.styles";
 import { useRegisterModel } from "./model";
-import { StyledRegisterPage } from "./styles";
 
 export const RegisterView = ({
   textData,
@@ -15,10 +12,10 @@ export const RegisterView = ({
     return <h1>You are already logged in</h1>;
   }
   return (
-    <StyledRegisterPage>
+    <FormContainer>
       <Form onSubmit={handleRegisterSubmit}>
         <h1>{textData.title}</h1>
-        <FormInput
+        <Input
           type="text"
           name="name"
           id="name"
@@ -26,7 +23,7 @@ export const RegisterView = ({
           value={registerData.name || ""}
           onChange={handleRegisterChange}
         />
-        <FormInput
+        <Input
           type="text"
           name="email"
           id="email"
@@ -34,7 +31,7 @@ export const RegisterView = ({
           value={registerData.email || ""}
           onChange={handleRegisterChange}
         />
-        <FormInput
+        <Input
           type="password"
           name="password"
           id="password"
@@ -42,10 +39,10 @@ export const RegisterView = ({
           value={registerData.password || ""}
           onChange={handleRegisterChange}
         />
-        <FormButton>{textData.formButton}</FormButton>
+        <Button>{textData.formButton}</Button>
         {auth.status === "loading" && <p>Loading...</p>}
         {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
       </Form>
-    </StyledRegisterPage>
+    </FormContainer>
   );
 };
