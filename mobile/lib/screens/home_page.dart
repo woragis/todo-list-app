@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/utils/todo_list.dart';
 import 'package:todo_mobile/services/todo_service.dart';
 import 'package:todo_mobile/models/todo_model.dart';
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.deepPurple.shade300,
       appBar: AppBar(
-        title: const Text("Simple Todo"),
+        title: Text("Simple Todo"),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
