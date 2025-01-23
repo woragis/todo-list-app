@@ -1,5 +1,5 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // import 'package:todo_mobile/data/models/todo_model.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
@@ -24,27 +24,31 @@ class TodoDbProvider {
   }
 
   Future<Database> _initDatabase() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, _dbName);
-    return openDatabase(
+    var databaseFactory = databaseFactoryFfi;
+    var databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, _dbName);
+    var db = await databaseFactory.openDatabase(
       path,
-      version: 1,
-      onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
+      // version: 1,
+      // onCreate: _onCreate,
+      // onUpgrade: _onUpgrade,
     );
-  }
-
-  // Create the table(s) on database creation
-  Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $_tableName (
+      CREATE TABLE IF NOT EXISTS $_tableName (
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
         completed INTEGER NOT NULL DEFAULT 0
       )
     ''');
+    print("Db initialized");
+    return db;
   }
+
+  // Create the table(s) on database creation
+  // Future<void> _onCreate(Database db, int version) async {
+  //   await db.execute();
+  // }
 
   // Handle database upgrades
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
