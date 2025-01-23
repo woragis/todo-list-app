@@ -19,13 +19,14 @@ class Todo {
         id: json['id'],
         title: json['title'],
         description: json['description'],
-        completed: json['completed'],
+        completed:
+            (json['completed'] as int) == 1, // convert to int then to boolean
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "completed": completed,
+        'id': id,
+        'title': title,
+        'description': description,
+        'completed': completed ? 1 : 0, // convert to int because of sqlite
       };
 }
