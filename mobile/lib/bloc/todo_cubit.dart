@@ -17,13 +17,8 @@ class Todo {
   });
 
   // Toggle the completion status
-  Todo toggleCompleted() {
-    return Todo(
-      id: id,
-      title: title,
-      description: description,
-      completed: !completed,
-    );
+  void toggleCompleted() {
+    completed = !completed;
   }
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
@@ -103,7 +98,8 @@ class TodoCubit extends Cubit<List<Todo>> {
   void toggleCompleted(String id) {
     final updatedTodos = state.map((todo) {
       if (todo.id == id) {
-        return todo.toggleCompleted(); // Toggle completion for matching note
+        todo.toggleCompleted(); // Toggle completion for matching note
+        return todo;
       }
       return todo; // Leave other Todos unchanged
     }).toList();
