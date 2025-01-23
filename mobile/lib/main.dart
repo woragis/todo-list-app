@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/bloc/counter_cubit.dart';
+// import 'package:todo_mobile/bloc/counter_cubit.dart';
+import 'package:todo_mobile/bloc/todo_cubit.dart';
 // import 'package:todo_mobile/screens/home_page.dart';
 // import 'package:todo_mobile/screens/counter_page.dart';
 import 'package:todo_mobile/screens/todos_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (context) => TodoCubit(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,12 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (_) => CounterCubit(),
-        // child: CounterPage(),
-        // child: HomePage(),
-        child: TodosPage(),
-      ),
+      home: TodosPage(),
+      // CounterPage(),
+      // HomePage(),
     );
   }
 }
