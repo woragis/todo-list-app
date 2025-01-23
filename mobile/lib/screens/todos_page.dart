@@ -50,7 +50,26 @@ class TodosPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Todos"),
+        title: Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Todos",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.grey[850],
+        elevation: 0,
       ),
       backgroundColor: Colors.grey[900],
       body: BlocBuilder<TodoCubit, List<Todo>>(
@@ -60,10 +79,26 @@ class TodosPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final todo = todos[index];
               return ListTile(
-                title: Text(
-                  todo.title,
-                  style: TextStyle(
-                    color: Colors.white,
+                title: Container(
+                  padding: EdgeInsets.all(0),
+                  margin: EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        todo.title,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        todo.description,
+                        style: TextStyle(
+                          color: Colors.white60,
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 trailing: Icon(
