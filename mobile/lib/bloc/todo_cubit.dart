@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
 class Todo {
   String id;
@@ -21,6 +24,62 @@ class Todo {
       description: description,
       completed: !completed,
     );
+  }
+
+  factory Todo.fromJson(Map<String, dynamic> json) => Todo(
+        id: json['id'],
+        title: json['title'],
+        description: json['description'],
+        completed: json['completed'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "completed": completed,
+      };
+}
+
+Future<Todo> fetchTodoById(String id) async {
+  final uri = Uri.parse('http://localhost:8080/todos/$id');
+  final response = await http.get(uri);
+  if (response.statusCode == 200) {
+    return Todo.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load todo');
+  }
+}
+
+Future<Todo> createTodo(Todo newTodo) async {
+  final uri = Uri.parse('http://localhost:8080/todos/');
+  final response = await http.post(uri, body: newTodo.toJson());
+  if (response.statusCode == 201) {
+    return Todo.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load todo');
+  }
+}
+
+Future<Todo> updateTodo(Todo todo) async {
+  final uri = Uri.parse('http://localhost:8080/todos/');
+  final response = await http.put(uri, body: todo.toJson());
+  if (response.statusCode == 200) {
+    return Todo.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load todo');
+  }
+}
+
+Future<Todo?>? deleteTodo(Todo todo) async {
+  String id = todo.id;
+  final uri = Uri.parse('http://localhost:8080/todos/$id');
+  final response = await http.delete(uri);
+  if (response.statusCode == 200) {
+    return null;
+    // return Todo.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to delete todo');
   }
 }
 
