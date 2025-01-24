@@ -1,5 +1,5 @@
-import 'package:todo_mobile/data/data_providers/auth_api_provider.dart';
-import 'package:todo_mobile/data/data_providers/auth_db_provider.dart';
+import 'package:todo_mobile/data/providers/auth_api_provider.dart';
+import 'package:todo_mobile/data/providers/auth_db_provider.dart';
 import 'package:todo_mobile/data/models/auth_model.dart';
 import 'package:todo_mobile/data/models/response_models.dart';
 

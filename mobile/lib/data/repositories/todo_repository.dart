@@ -1,5 +1,5 @@
-import 'package:todo_mobile/data/data_providers/todo_api_provider.dart';
-import 'package:todo_mobile/data/data_providers/todo_db_provider.dart';
+import 'package:todo_mobile/data/providers/todo_api_provider.dart';
+import 'package:todo_mobile/data/providers/todo_db_provider.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
 class TodoRepository {

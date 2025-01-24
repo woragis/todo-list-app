@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:todo_mobile/data/data_providers/auth_api_provider.dart';
-import 'package:todo_mobile/data/data_providers/auth_db_provider.dart';
+import 'package:todo_mobile/data/providers/auth_api_provider.dart';
+import 'package:todo_mobile/data/providers/auth_db_provider.dart';
 import 'package:todo_mobile/data/repositories/auth_repository.dart';
 import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
-import 'package:todo_mobile/data/data_providers/todo_api_provider.dart';
-import 'package:todo_mobile/data/data_providers/todo_db_provider.dart';
+import 'package:todo_mobile/data/providers/todo_api_provider.dart';
+import 'package:todo_mobile/data/providers/todo_db_provider.dart';
 import 'package:todo_mobile/data/repositories/todo_repository.dart';
 import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
 import 'package:todo_mobile/presentation/pages/register_page.dart';
