@@ -50,7 +50,7 @@ func GetAllTodos(c *gin.Context) {
 	utils.SendResponse(
 		c,
 		http.StatusOK,
-		"Successfully retrieved todo",
+		"Successfully retrieved todos",
 		nil,
 		todos,
 	)

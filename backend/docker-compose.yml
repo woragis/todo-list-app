@@ -49,7 +49,7 @@ services:
 
   todo-backend:
     container_name: todo-backend
-    restart: on-failure:3
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile

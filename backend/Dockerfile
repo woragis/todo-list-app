@@ -13,22 +13,28 @@ RUN go mod download
 # Step 5: Copy the source code into the container
 COPY . .
 
+# Step 6: Build the application
+RUN go build -o /app/main ./main.go
+
 # CMD [ "go", "run", "main.go" ]
-# # Step 6: Build the application
-RUN go build -o ./build/main ./main.go
 
-# # Step 7: Use a minimal image for production
-FROM alpine:latest
+# Step 7: Use a minimal image for production
+FROM ubuntu:22.04
 
-# # Step 8: Install certificates (if needed for HTTPS requests)
-RUN apk add --no-cache ca-certificates
+# Step 8: Install certificates (if needed for HTTPS requests)
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# # Step 9: Set working directory and copy the binary
+# Step 9: Set working directory and copy the binary
 WORKDIR /app
-COPY --from=builder /app/build/main .
+COPY --from=builder /app/main .
 
-# # Step 10: Expose the application port
+# Step 10: Expose the application port
 EXPOSE 8080
 
 # # Step 11: Run the application
+RUN ["sleep", "10"]
+
 CMD ["./main"]
