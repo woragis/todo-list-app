@@ -78,6 +78,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
               title: todo.title,
               description: todo.description,
               completed: !todo.completed,
+              createdAt: "",
+              updatedAt: "",
             );
           }
           return todo;

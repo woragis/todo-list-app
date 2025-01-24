@@ -13,7 +13,12 @@ class TodoCubit extends Cubit<List<Todo>> {
 
   // Add a new note
   void addNote(String id, String title, String description) {
-    final newTodo = Todo(id: id, title: title, description: description);
+    final newTodo = Todo(
+        id: id,
+        title: title,
+        description: description,
+        createdAt: "",
+        updatedAt: "");
     emit([...state, newTodo]); // Add new Todo to the list
   }
 

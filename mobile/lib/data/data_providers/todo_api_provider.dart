@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:todo_mobile/data/models/response_models.dart';
 // import 'package:todo_mobile/data/models/todo.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
@@ -12,9 +13,10 @@ class TodoApiProvider {
     final uri = Uri.parse('$baseUrl/todos');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
-      // final List<dynamic> data = json.decode(response.body);
-      final List<dynamic> data = json.decode(response.body).data;
-      return data.map((json) => Todo.fromJson(json)).toList();
+      TodosResponseModel data =
+          TodosResponseModel.fromJson(json.decode(response.body));
+      print(data.data);
+      return data.data;
     } else {
       throw Exception('Failed to fetch todos');
     }
