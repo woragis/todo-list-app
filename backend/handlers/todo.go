@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 func GetAllTodos(c *gin.Context) {
 	query := `SELECT id, title, description, completed, author_id, created_at FROM todos;`
 	rows, err := database.DB.Query(c.Request.Context(), query)
@@ -56,7 +55,6 @@ func GetAllTodos(c *gin.Context) {
 		todos,
 	)
 }
-
 
 func GetTodoByID(c *gin.Context) {
 	id := c.Param("id")
@@ -131,7 +129,6 @@ func CreateTodo(c *gin.Context) {
 	)
 }
 
-
 func UpdateTodo(c *gin.Context) {
 	id := c.Param("id")
 	var todo models.Todo
@@ -168,7 +165,7 @@ func UpdateTodo(c *gin.Context) {
 		)
 		return
 	}
-	
+
 	utils.SendResponse(
 		c,
 		http.StatusOK,
@@ -177,7 +174,6 @@ func UpdateTodo(c *gin.Context) {
 		todo,
 	)
 }
-
 
 func DeleteTodo(c *gin.Context) {
 	id := c.Param("id")

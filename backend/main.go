@@ -23,10 +23,10 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins: true,
 		// AllowAllOrigins:     []string{"*"}, // Allowed origins
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},        // Allowed methods
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},        // Allowed headers
-		ExposeHeaders:    []string{"Content-Length"},                                 // Exposed headers
-		AllowCredentials: true,                                                       // Allow credentials like cookies
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, // Allowed methods
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"}, // Allowed headers
+		ExposeHeaders:    []string{"Content-Length"},                          // Exposed headers
+		AllowCredentials: true,                                                // Allow credentials like cookies
 		MaxAge:           12 * time.Hour,
 	}))
 

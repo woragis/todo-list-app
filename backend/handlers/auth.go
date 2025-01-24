@@ -14,7 +14,7 @@ import (
 )
 
 func Login(c *gin.Context) {
-	user := models.User {
+	user := models.User{
 		Email:    `json:"email" binding:"required,email"`,
 		Password: `json:"password" binding:"required"`,
 	}
@@ -78,15 +78,15 @@ func Login(c *gin.Context) {
 		nil,
 		map[string]interface{}{
 			"token": token,
-			"user": user,
+			"user":  user,
 		},
 	)
 }
 
 func Register(c *gin.Context) {
-	user := models.User {
-		Name: `json:"name" binding:"required"`,
-		Email: `json:"email" binding:"required,email"`,
+	user := models.User{
+		Name:     `json:"name" binding:"required"`,
+		Email:    `json:"email" binding:"required,email"`,
 		Password: `json:"password" binding:"required"`,
 	}
 
@@ -150,7 +150,7 @@ func Register(c *gin.Context) {
 		"Successfully registered",
 		nil,
 		map[string]interface{}{
-			"user": user,
+			"user":  user,
 			"token": token,
 		},
 	)
