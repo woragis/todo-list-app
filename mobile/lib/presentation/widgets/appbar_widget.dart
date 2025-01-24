@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final VoidCallback? onIconPressed;
+
   const AppBarWidget({
-    super.key,
-  });
+    Key? key,
+    required this.title,
+    required this.icon,
+    this.onIconPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +19,16 @@ class AppBarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Todos",
+          Text(
+            title,
             style: TextStyle(
               color: Colors.white,
             ),
           ),
-          Icon(
-            Icons.person,
+          IconButton(
+            icon: Icon(icon),
             color: Colors.white,
+            onPressed: onIconPressed,
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
+import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
 class TodosPage extends StatelessWidget {
   const TodosPage({super.key});
@@ -10,7 +11,8 @@ class TodosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todos'),
+        backgroundColor: Colors.grey[900],
+        title: AppBarWidget(title: 'Todos', icon: Icons.person),
       ),
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {

@@ -10,7 +10,7 @@ class TodoApiProvider {
   TodoApiProvider({required this.baseUrl});
 
   Future<List<Todo>> fetchTodos() async {
-    final uri = Uri.parse('$baseUrl/todos');
+    final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       TodosResponseModel data =
@@ -33,7 +33,7 @@ class TodoApiProvider {
   }
 
   Future<Todo> createTodo(Todo newTodo) async {
-    final uri = Uri.parse('$baseUrl/todos');
+    final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.post(
       uri,
       headers: {'Content-Type': 'application/json'},

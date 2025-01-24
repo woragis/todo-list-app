@@ -8,10 +8,6 @@ import 'package:todo_mobile/data/repositories/todo_repository.dart';
 import 'package:todo_mobile/presentation/pages/todos_page.dart'; // Your TodosPage
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // final todoDbProvider = TodoDbProvider();
-  // final db = await todoDbProvider.database;
-  // print('Database initialized at: ${db.path}');
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
@@ -29,7 +25,6 @@ class MyApp extends StatelessWidget {
       apiProvider: todoApiProvider,
       dbProvider: todoDbProvider,
     );
-    print("Main Page");
 
     return MultiRepositoryProvider(
       providers: [
@@ -46,8 +41,9 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Todo App',
-          theme: ThemeData(primarySwatch: Colors.blue),
+          theme: ThemeData(primarySwatch: Colors.grey),
           home: const TodosPage(),
         ),
       ),
