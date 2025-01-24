@@ -1,3 +1,4 @@
+import 'package:todo_mobile/data/models/auth_model.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
 class ResponseModel {
@@ -88,6 +89,38 @@ class TodoResponseModel {
   }
 
   // Convert ResponseModel back to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'error': error,
+      'data': data,
+    };
+  }
+}
+
+class AuthResponseModel {
+  final int status;
+  final String message;
+  final String? error;
+  final User data;
+
+  AuthResponseModel({
+    required this.status,
+    required this.message,
+    this.error,
+    required this.data,
+  });
+
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
+    return AuthResponseModel(
+      status: json['status'],
+      message: json['message'],
+      error: json['error'],
+      data: json['data'],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'status': status,
