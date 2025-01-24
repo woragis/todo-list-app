@@ -1,69 +1,41 @@
+import 'package:todo_mobile/data/data_providers/auth_api_provider.dart';
+import 'package:todo_mobile/data/data_providers/auth_db_provider.dart';
 import 'package:todo_mobile/data/models/auth_model.dart';
-import 'package:sqflite/sqflite.dart';
 
 class AuthRepository {
-  final Database database;
+  final AuthApiProvider apiProvider;
+  final AuthDbProvider dbProvider;
 
-  AuthRepository({required this.database});
+  AuthRepository({
+    required this.apiProvider,
+    required this.dbProvider,
+  });
 
-  Future<User> login({required String email, required String password}) async {
-    // Replace this with your API call
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () => {
-        "id": "1",
-        "name": "Test User",
-        "email": email,
-        "password": password,
-        "created_at": "2023-01-01",
-        "updated_at": "2023-01-01"
-      },
-    );
-
-    final user = User.fromJson(response);
-    await _saveUserToStorage(user);
-    return user;
+  Future<User> login({required Login user}) async {
+    User loggedInUser = await apiProvider.loginUser(user);
+    // await dbProvider.
+    return loggedInUser;
   }
 
-  Future<User> register({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    // Replace this with your API call
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () => {
-        "id": "1",
-        "name": name,
-        "email": email,
-        "password": password,
-        "created_at": "2023-01-01",
-        "updated_at": "2023-01-01"
-      },
-    );
-
-    final user = User.fromJson(response);
-    await _saveUserToStorage(user);
-    return user;
+  Future<User> register({required Register user}) async {
+    User createdTodo = await apiProvider.registerUser(user);
+    await dbProvider.createUser(createdTodo);
+    return createdTodo;
   }
 
-  Future<void> logout() async {
+  Future<void> logout(User user) async {
     // Clear user data from local storage
-    await database.delete("user");
+    await dbProvider.deleteUser(user);
   }
 
-  Future<User?> loadUserFromStorage() async {
+  Future<User?> loadUserFromStorage(User user) async {
     // Load user from local storage
-    final userMap = await database.query("user", limit: 1);
-    if (userMap.isNotEmpty) {
-      return User.fromJson(userMap.first);
-    }
-    return null;
+    final localUser = await dbProvider.getUser(user);
+    return localUser;
   }
 
   Future<void> _saveUserToStorage(User user) async {
-    await database.insert("user", user.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    // await dbProvider.insert("user", user.toJson(),
+    //     conflictAlgorithm: ConflictAlgorithm.replace);
   }
 }
