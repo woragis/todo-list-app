@@ -35,3 +35,27 @@ class Todo {
         'completed': completed ? 1 : 0,
       };
 }
+
+class NewTodo {
+  String title;
+  String description;
+  bool completed;
+
+  NewTodo({
+    required this.title,
+    required this.description,
+    this.completed = false,
+  });
+
+  factory NewTodo.fromJson(Map<String, dynamic> json) => NewTodo(
+        title: json['title'],
+        description: json['description'],
+        completed: (json['completed'] as int) == 1,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'description': description,
+        'completed': completed ? 1 : 0,
+      };
+}

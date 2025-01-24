@@ -31,7 +31,7 @@ class TodoApiProvider {
     }
   }
 
-  Future<Todo> createTodo(Todo newTodo) async {
+  Future<Todo> createTodo(NewTodo newTodo) async {
     final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.post(
       uri,

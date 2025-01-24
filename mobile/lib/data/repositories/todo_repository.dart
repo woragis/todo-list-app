@@ -32,9 +32,10 @@ class TodoRepository {
     }
   }
 
-  Future<void> createTodo(Todo todo) async {
-    await dbProvider.createTodo(todo);
-    await apiProvider.createTodo(todo);
+  Future<Todo> createTodo(NewTodo todo) async {
+    Todo createdTodo = await apiProvider.createTodo(todo);
+    await dbProvider.createTodo(createdTodo);
+    return createdTodo;
   }
 
   Future<void> updateTodo(Todo todo) async {

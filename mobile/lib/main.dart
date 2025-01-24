@@ -5,6 +5,7 @@ import 'package:todo_mobile/presentation/bloc/todo_bloc.dart'; // Your TodoBloc 
 import 'package:todo_mobile/data/data_providers/todo_api_provider.dart';
 import 'package:todo_mobile/data/data_providers/todo_db_provider.dart';
 import 'package:todo_mobile/data/repositories/todo_repository.dart';
+import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
 import 'package:todo_mobile/presentation/pages/todos_page.dart'; // Your TodosPage
 
 void main() async {
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
           title: 'Todo App',
           theme: ThemeData(primarySwatch: Colors.grey),
           home: const TodosPage(),
+          routes: {
+            '/create-todo': (context) => const CreateTodoPage(),
+          },
         ),
       ),
     );

@@ -21,12 +21,11 @@ class ToggleTodoCompletionEvent extends TodoEvent {
 }
 
 class AddTodoEvent extends TodoEvent {
-  final Todo newTodo;
+  final NewTodo newTodo;
 
-  AddTodoEvent(this.newTodo);
-
-  @override
-  List<Object?> get props => [newTodo];
+  AddTodoEvent({
+    required this.newTodo,
+  });
 }
 
 class DeleteTodoEvent extends TodoEvent {
@@ -120,8 +119,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       if (state is TodoLoaded) {
         final currentTodos = (state as TodoLoaded).todos;
         final newTodo = event.newTodo;
-        await repository.createTodo(newTodo); // Add to repository
-        final updatedTodos = List<Todo>.from(currentTodos)..add(newTodo);
+        Todo createdTodo = await repository.createTodo(newTodo);
+        final updatedTodos = List<Todo>.from(currentTodos)..add(createdTodo);
         emit(TodoLoaded(updatedTodos));
       }
     } catch (e) {

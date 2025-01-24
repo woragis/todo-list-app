@@ -21,19 +21,19 @@ class TodosPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TodoLoaded) {
             final todos = state.todos;
+
+            if (todos.isEmpty) {
+              return Center(
+                child: Text(
+                  'No Todos',
+                ),
+              );
+            }
+
             return ListView.builder(
               itemCount: todos.length,
               itemBuilder: (context, index) {
                 final Todo todo = todos[index];
-
-                if (todos.isEmpty) {
-                  print('Todos is empty');
-                  return Center(
-                    child: Text(
-                      'No Todos',
-                    ),
-                  );
-                }
 
                 return TodosWidget(todo: todo);
                 // return ListTile(
@@ -63,9 +63,8 @@ class TodosPage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Open a form to add a new todo
-        },
+        // Open a form to add a new todo
+        onPressed: () => Navigator.of(context).pushNamed('/create-todo'),
         child: const Icon(Icons.add),
       ),
     );
