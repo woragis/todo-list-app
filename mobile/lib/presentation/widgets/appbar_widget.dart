@@ -28,7 +28,9 @@ class AppBarWidget extends StatelessWidget {
           IconButton(
             icon: Icon(icon),
             color: Colors.white,
-            onPressed: onIconPressed,
+            onPressed: () {
+              Navigator.pushNamed(context, '/auth/register');
+            },
           ),
         ],
       ),

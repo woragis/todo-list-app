@@ -10,6 +10,7 @@ import 'package:todo_mobile/data/data_providers/todo_api_provider.dart';
 import 'package:todo_mobile/data/data_providers/todo_db_provider.dart';
 import 'package:todo_mobile/data/repositories/todo_repository.dart';
 import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
+import 'package:todo_mobile/presentation/pages/register_page.dart';
 import 'package:todo_mobile/presentation/pages/todos_page.dart';
 
 void main() async {
@@ -68,6 +69,8 @@ class MyApp extends StatelessWidget {
           home: const TodosPage(),
           routes: {
             '/create-todo': (context) => const CreateTodoPage(),
+            '/auth/register': (context) => const RegisterPage(),
+            // '/auth/login': (context) => const LoginPage(),
           },
         ),
       ),
