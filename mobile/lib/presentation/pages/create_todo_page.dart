@@ -61,8 +61,13 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Todo'),
+        title: const Text('Create Todo',
+            style: TextStyle(
+              color: Colors.white,
+            )),
+        backgroundColor: Colors.grey.shade300,
       ),
+      backgroundColor: Colors.green.shade300,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
