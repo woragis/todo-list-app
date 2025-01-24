@@ -10,7 +10,7 @@ class AuthApiProvider {
 
   AuthApiProvider({required this.baseUrl});
 
-  Future<User> registerUser(Register user) async {
+  Future<AuthResponseData> registerUser(Register user) async {
     final uri = Uri.parse('$baseUrl/register');
     final response = await http.post(
       uri,
@@ -26,7 +26,7 @@ class AuthApiProvider {
     }
   }
 
-  Future<User> loginUser(Login user) async {
+  Future<AuthResponseData> loginUser(Login user) async {
     final uri = Uri.parse('$baseUrl/login');
     final response = await http.post(
       uri,

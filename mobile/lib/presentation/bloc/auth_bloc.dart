@@ -33,7 +33,16 @@ class RegisterEvent extends AuthEvent {
   List<Object?> get props => [user.name, user.email, user.password];
 }
 
-class LogoutEvent extends AuthEvent {}
+class LogoutEvent extends AuthEvent {
+  final User user;
+
+  const LogoutEvent({
+    required this.user,
+  });
+
+  @override
+  List<Object?> get props => [user];
+}
 
 class LoadAuthEvent extends AuthEvent {}
 
@@ -77,10 +86,10 @@ class AuthErrorState extends AuthState {
 
 /// BLOC
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
+  final AuthRepository repository;
 
   AuthBloc({
-    required this.authRepository,
+    required this.repository,
   }) : super(AuthInitialState()) {
     on<LoginEvent>(_onLogin);
     on<RegisterEvent>(_onRegister);
@@ -88,13 +97,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoadAuthEvent>(_onLoadAuth);
   }
 
-  Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {}
+  Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
+    try {
+      final response = await repository.login(user: event.user);
+      emit(AuthAuthenticatedState(token: response.token, user: response.user));
+    } catch (e) {
+      throw Exception("Error on login with bloc");
+    }
+  }
 
-  Future<void> _onRegister(
-      RegisterEvent event, Emitter<AuthState> emit) async {}
+  Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
+    try {
+      final response = await repository.register(user: event.user);
+      emit(AuthAuthenticatedState(token: response.token, user: response.user));
+    } catch (e) {
+      throw Exception("Error on register with bloc");
+    }
+  }
 
-  Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {}
+  Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {
+    try {
+      await repository.logout(event.user);
+      emit(AuthUnauthenticatedState());
+    } catch (e) {
+      throw Exception("Error on logout with bloc");
+    }
+  }
 
-  Future<void> _onLoadAuth(
-      LoadAuthEvent event, Emitter<AuthState> emit) async {}
+  Future<void> _onLoadAuth(LoadAuthEvent event, Emitter<AuthState> emit) async {
+    // try {
+    //   emit(LoadAuthEvent());
+    // } catch (e) {
+    //   throw Exception("Error on logout with bloc");
+    // }
+  }
 }

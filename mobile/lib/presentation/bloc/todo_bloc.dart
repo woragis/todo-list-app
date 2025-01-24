@@ -23,9 +23,7 @@ class ToggleTodoCompletionEvent extends TodoEvent {
 class AddTodoEvent extends TodoEvent {
   final NewTodo newTodo;
 
-  AddTodoEvent({
-    required this.newTodo,
-  });
+  AddTodoEvent({required this.newTodo});
 }
 
 class DeleteTodoEvent extends TodoEvent {

@@ -1,6 +1,7 @@
 import 'package:todo_mobile/data/data_providers/auth_api_provider.dart';
 import 'package:todo_mobile/data/data_providers/auth_db_provider.dart';
 import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/response_models.dart';
 
 class AuthRepository {
   final AuthApiProvider apiProvider;
@@ -11,15 +12,15 @@ class AuthRepository {
     required this.dbProvider,
   });
 
-  Future<User> login({required Login user}) async {
-    User loggedInUser = await apiProvider.loginUser(user);
+  Future<AuthResponseData> login({required Login user}) async {
+    AuthResponseData loggedInUser = await apiProvider.loginUser(user);
     // await dbProvider.
     return loggedInUser;
   }
 
-  Future<User> register({required Register user}) async {
-    User createdTodo = await apiProvider.registerUser(user);
-    await dbProvider.createUser(createdTodo);
+  Future<AuthResponseData> register({required Register user}) async {
+    AuthResponseData createdTodo = await apiProvider.registerUser(user);
+    await dbProvider.createUser(createdTodo.user);
     return createdTodo;
   }
 
@@ -34,8 +35,8 @@ class AuthRepository {
     return localUser;
   }
 
-  Future<void> _saveUserToStorage(User user) async {
-    // await dbProvider.insert("user", user.toJson(),
-    //     conflictAlgorithm: ConflictAlgorithm.replace);
-  }
+  // Future<void> _saveUserToStorage(User user) async {
+  //   await dbProvider.insert("user", user.toJson(),
+  //       conflictAlgorithm: ConflictAlgorithm.replace);
+  // }
 }

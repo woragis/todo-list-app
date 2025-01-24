@@ -99,11 +99,21 @@ class TodoResponseModel {
   }
 }
 
+class AuthResponseData {
+  final String token;
+  final User user;
+
+  AuthResponseData({
+    required this.token,
+    required this.user,
+  });
+}
+
 class AuthResponseModel {
   final int status;
   final String message;
   final String? error;
-  final User data;
+  final AuthResponseData data;
 
   AuthResponseModel({
     required this.status,
