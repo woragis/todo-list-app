@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - todo_database_data:/var/lib/postgresql/data
+      - todo_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-d", "todo"]
       interval: 10s
@@ -19,11 +19,13 @@ services:
     networks:
       - todo-network
 
-  todo-redis:
+  todo-cache:
     image: redis:7.2.5
-    container_name: todo-redis
+    container_name: todo-cache
     ports:
       - "6379:6379"
+    volumes:
+      - todo_cache:/cache
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -55,10 +57,10 @@ services:
       - "8080:8080"
     depends_on:
       - todo-database
-      - todo-redis
+      - todo-cache
     environment:
       - DATABASE_URL=postgres://postgres:password@todo-database:5432/todo?sslmode=disable
-      - REDIS_URL=redis://todo-redis:6379
+      - REDIS_URL=redis://todo-cache:6379
     networks:
       - todo-network
 
@@ -68,5 +70,7 @@ networks:
     driver: bridge
 
 volumes:
-  todo_database_data:
-    name: todo-database
+  todo_cache:
+    name: todo-cache
+  todo_data:
+    name: todo-data
