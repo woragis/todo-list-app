@@ -15,7 +15,6 @@ class TodoApiProvider {
     if (response.statusCode == 200) {
       TodosResponseModel data =
           TodosResponseModel.fromJson(json.decode(response.body));
-      print(data.data);
       return data.data;
     } else {
       throw Exception('Failed to fetch todos');

@@ -24,15 +24,11 @@ class TodoDbProvider {
   }
 
   Future<Database> _initDatabase() async {
-    var databaseFactory = databaseFactoryFfi;
+    // databaseFactory = databaseFactoryFfi;
     var databasesPath = await getDatabasesPath();
     final path = join(databasesPath, _dbName);
-    var db = await databaseFactory.openDatabase(
-      path,
-      // version: 1,
-      // onCreate: _onCreate,
-      // onUpgrade: _onUpgrade,
-    );
+    var db = await databaseFactory.openDatabase(path);
+    print("Db initialized");
     await db.execute('''
       CREATE TABLE IF NOT EXISTS $_tableName (
         id TEXT PRIMARY KEY,
@@ -41,25 +37,25 @@ class TodoDbProvider {
         completed INTEGER NOT NULL DEFAULT 0
       )
     ''');
-    print("Db initialized");
+    print("Table $_tableName created");
     return db;
   }
 
-  // Create the table(s) on database creation
-  // Future<void> _onCreate(Database db, int version) async {
-  //   await db.execute();
-  // }
-
-  // Handle database upgrades
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < newVersion) {
-      // Add your migration scripts here if needed
+  Future<void> saveTodos(List<Todo> todos) async {
+    final db = await database;
+    for (var todo in todos) {
+      await db.insert(
+        _tableName,
+        todo.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
   }
 
   Future<List<Todo>> getTodos() async {
+    print("Todo_db_provider function: getTodos");
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('todos');
+    final List<Map<String, dynamic>> maps = await db.query(_tableName);
     return List.generate(
       maps.length,
       (i) => Todo.fromJson(maps[i]),
@@ -69,7 +65,7 @@ class TodoDbProvider {
   Future<Todo> getTodoById(String id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
-      'todos',
+      _tableName,
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -84,7 +80,7 @@ class TodoDbProvider {
   Future<void> createTodo(Todo todo) async {
     final db = await database;
     await db.insert(
-      'todos',
+      _tableName,
       todo.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );

@@ -25,6 +25,7 @@ class TodosPage extends StatelessWidget {
               itemCount: todos.length,
               itemBuilder: (context, index) {
                 final Todo todo = todos[index];
+
                 if (todos.isEmpty) {
                   print('Todos is empty');
                   return Center(
@@ -33,6 +34,7 @@ class TodosPage extends StatelessWidget {
                     ),
                   );
                 }
+
                 return TodosWidget(todo: todo);
                 // return ListTile(
                 //   title: Text(todo.title),

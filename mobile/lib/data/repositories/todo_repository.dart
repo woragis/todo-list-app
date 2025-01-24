@@ -12,14 +12,13 @@ class TodoRepository {
   });
 
   Future<List<Todo>> getTodos({bool fromLocal = false}) async {
-    if (fromLocal) {
-      return await dbProvider.getTodos();
-    } else {
+    try {
+      print("Fetching api");
       final todos = await apiProvider.fetchTodos();
-      for (var todo in todos) {
-        await dbProvider.createTodo(todo); // Sync local database
-      }
+      await dbProvider.saveTodos(todos);
       return todos;
+    } catch (e) {
+      return await dbProvider.getTodos();
     }
   }
 
