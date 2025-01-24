@@ -17,9 +17,9 @@ class TodosPage extends StatelessWidget {
       ),
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {
-          if (state is TodoLoading) {
+          if (state is TodoLoadingState) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is TodoLoaded) {
+          } else if (state is TodoLoadedState) {
             final todos = state.todos;
 
             if (todos.isEmpty) {
@@ -54,7 +54,7 @@ class TodosPage extends StatelessWidget {
                 // );
               },
             );
-          } else if (state is TodoError) {
+          } else if (state is TodoErrorState) {
             return Center(
               child: Text('Error: ${state.message}'),
             );

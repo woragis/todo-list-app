@@ -41,21 +41,21 @@ abstract class TodoState extends Equatable {
   List<Object?> get props => [];
 }
 
-class TodoLoading extends TodoState {}
+class TodoLoadingState extends TodoState {}
 
-class TodoLoaded extends TodoState {
+class TodoLoadedState extends TodoState {
   final List<Todo> todos;
 
-  TodoLoaded(this.todos);
+  TodoLoadedState(this.todos);
 
   @override
   List<Object?> get props => [todos];
 }
 
-class TodoError extends TodoState {
+class TodoErrorState extends TodoState {
   final String message;
 
-  TodoError(this.message);
+  TodoErrorState(this.message);
 
   @override
   List<Object?> get props => [message];
@@ -65,7 +65,7 @@ class TodoError extends TodoState {
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final TodoRepository repository;
 
-  TodoBloc({required this.repository}) : super(TodoLoading()) {
+  TodoBloc({required this.repository}) : super(TodoLoadingState()) {
     on<FetchTodosEvent>(_onFetchTodos);
     on<ToggleTodoCompletionEvent>(_onToggleTodoCompletion);
     on<AddTodoEvent>(_onAddTodo);
@@ -74,21 +74,21 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Future<void> _onFetchTodos(
       FetchTodosEvent event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    emit(TodoLoadingState());
     print("Event called");
     try {
       final todos = await repository.getTodos(fromLocal: true);
-      emit(TodoLoaded(todos));
+      emit(TodoLoadedState(todos));
     } catch (e) {
-      emit(TodoError('Failed to fetch todos: ${e.toString()}'));
+      emit(TodoErrorState('Failed to fetch todos: ${e.toString()}'));
     }
   }
 
   Future<void> _onToggleTodoCompletion(
       ToggleTodoCompletionEvent event, Emitter<TodoState> emit) async {
     try {
-      if (state is TodoLoaded) {
-        final currentTodos = (state as TodoLoaded).todos;
+      if (state is TodoLoadedState) {
+        final currentTodos = (state as TodoLoadedState).todos;
         final updatedTodos = currentTodos.map((todo) {
           if (todo.id == event.todoId) {
             final updatedTodo = Todo(
@@ -105,39 +105,39 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
           return todo;
         }).toList();
 
-        emit(TodoLoaded(updatedTodos));
+        emit(TodoLoadedState(updatedTodos));
       }
     } catch (e) {
-      emit(TodoError('Failed to toggle todo completion: ${e.toString()}'));
+      emit(TodoErrorState('Failed to toggle todo completion: ${e.toString()}'));
     }
   }
 
   Future<void> _onAddTodo(AddTodoEvent event, Emitter<TodoState> emit) async {
     try {
-      if (state is TodoLoaded) {
-        final currentTodos = (state as TodoLoaded).todos;
+      if (state is TodoLoadedState) {
+        final currentTodos = (state as TodoLoadedState).todos;
         final newTodo = event.newTodo;
         Todo createdTodo = await repository.createTodo(newTodo);
         final updatedTodos = List<Todo>.from(currentTodos)..add(createdTodo);
-        emit(TodoLoaded(updatedTodos));
+        emit(TodoLoadedState(updatedTodos));
       }
     } catch (e) {
-      emit(TodoError('Failed to add todo: ${e.toString()}'));
+      emit(TodoErrorState('Failed to add todo: ${e.toString()}'));
     }
   }
 
   Future<void> _onDeleteTodo(
       DeleteTodoEvent event, Emitter<TodoState> emit) async {
     try {
-      if (state is TodoLoaded) {
-        final currentTodos = (state as TodoLoaded).todos;
+      if (state is TodoLoadedState) {
+        final currentTodos = (state as TodoLoadedState).todos;
         await repository.deleteTodoById(event.todoId); // Delete from repository
         final updatedTodos =
             currentTodos.where((todo) => todo.id != event.todoId).toList();
-        emit(TodoLoaded(updatedTodos));
+        emit(TodoLoadedState(updatedTodos));
       }
     } catch (e) {
-      emit(TodoError('Failed to delete todo: ${e.toString()}'));
+      emit(TodoErrorState('Failed to delete todo: ${e.toString()}'));
     }
   }
 }

@@ -102,7 +102,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await repository.login(user: event.user);
       emit(AuthAuthenticatedState(token: response.token, user: response.user));
     } catch (e) {
-      throw Exception("Error on login with bloc");
+      emit(AuthErrorState(message: "Error on login with bloc: $e"));
     }
   }
 
@@ -111,7 +111,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await repository.register(user: event.user);
       emit(AuthAuthenticatedState(token: response.token, user: response.user));
     } catch (e) {
-      throw Exception("Error on register with bloc");
+      emit(AuthErrorState(message: "Error on register with bloc: $e"));
     }
   }
 
@@ -120,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await repository.logout(event.user);
       emit(AuthUnauthenticatedState());
     } catch (e) {
-      throw Exception("Error on logout with bloc");
+      emit(AuthErrorState(message: "Error on lgout with bloc: $e"));
     }
   }
 
