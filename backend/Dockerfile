@@ -35,6 +35,4 @@ COPY --from=builder /app/main .
 EXPOSE 8080
 
 # # Step 11: Run the application
-RUN ["sleep", "10"]
-
 CMD ["./main"]

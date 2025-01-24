@@ -130,8 +130,6 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	user.Password = string(hashedPassword)
-
 	token, err := utils.GenerateJWT(user.ID)
 	if err != nil {
 		utils.SendResponse(
@@ -143,6 +141,8 @@ func Register(c *gin.Context) {
 		)
 		return
 	}
+
+	user.Password = string(hashedPassword)
 
 	utils.SendResponse(
 		c,
