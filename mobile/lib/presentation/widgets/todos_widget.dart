@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/presentation/bloc/todo_cubit.dart';
+import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
 class TodosWidget extends StatelessWidget {
@@ -41,7 +41,7 @@ class TodosWidget extends StatelessWidget {
         color: todo.completed ? Colors.green[300] : Colors.grey,
       ),
       onTap: () {
-        context.read<TodoCubit>().toggleCompleted(todo.id);
+        context.read<TodoBloc>().add(ToggleTodoCompletionEvent(todo.id));
       },
     );
   }

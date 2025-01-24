@@ -95,6 +95,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
               id: todo.id,
               title: todo.title,
               description: todo.description,
+              authorId: todo.authorId,
               completed: !todo.completed,
               createdAt: todo.createdAt,
               updatedAt: todo.updatedAt,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
+import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 
 class CreateTodoPage extends StatefulWidget {
-  const CreateTodoPage({Key? key}) : super(key: key);
+  const CreateTodoPage({super.key});
 
   @override
-  _CreateTodoPageState createState() => _CreateTodoPageState();
+  State<CreateTodoPage> createState() => _CreateTodoPageState();
 }
 
 class _CreateTodoPageState extends State<CreateTodoPage> {
@@ -32,18 +33,28 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       return;
     }
 
-    // Dispatch an event to create a new todo
-    context.read<TodoBloc>().add(
-          AddTodoEvent(
-            newTodo: NewTodo(
-              title: title,
-              description: description,
-            ),
-          ),
-        );
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthAuthenticatedState) {
+      final authorId = authState.user.id;
 
-    // Navigate back after creating the todo
-    Navigator.of(context).pop();
+      // Dispatch an event to create a new todo
+      context.read<TodoBloc>().add(
+            AddTodoEvent(
+              newTodo: NewTodo(
+                title: title,
+                description: description,
+                authorId: authorId,
+              ),
+            ),
+          );
+
+      // Navigate back after creating the todo
+      Navigator.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('You must be logged in'),
+      ));
+    }
   }
 
   @override
