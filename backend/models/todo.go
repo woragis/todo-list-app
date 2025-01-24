@@ -1,11 +1,15 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Todo struct {
-	ID         int       `json:"id"`
+	ID         uuid.UUID `json:"id"`
 	Name       string    `json:"name"`
 	Completed  bool      `json:"completed"`
-	AuthorID   int       `json:"author_id"`
+	AuthorID   uuid.UUID `json:"author_id"`
 	CreatedAt  time.Time `json:"created_at"`
 }

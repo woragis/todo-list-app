@@ -32,9 +32,13 @@ func InitializeTables() {
 		log.Fatal("Database connection is not initialized")
 	}
 
+	createUuidExtension := `
+	CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+	`
+
 	createUsersTable := `
 	CREATE TABLE IF NOT EXISTS users (
-		id SERIAL PRIMARY KEY,
+		id UUID PRIMARY KEY,
 		name VARCHAR(100) NOT NULL,
 		email VARCHAR(100) UNIQUE NOT NULL,
 		password VARCHAR(255) NOT NULL,
@@ -44,14 +48,14 @@ func InitializeTables() {
 	`
 	createTodosTable := `
 	CREATE TABLE IF NOT EXISTS todos (
-		id SERIAL PRIMARY KEY,
+		id UUID PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
 		completed BOOLEAN DEFAULT FALSE,
-		author_id INT REFERENCES users(id) ON DELETE CASCADE,
+		author_id UUID REFERENCES users(id) ON DELETE CASCADE,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
 
-	queries := []string{createUsersTable, createTodosTable}
+	queries := []string{createUuidExtension, createUsersTable, createTodosTable}
 
 	for _, query := range queries {
 		_, err := DB.Exec(context.Background(), query)

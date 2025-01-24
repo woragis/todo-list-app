@@ -180,7 +180,7 @@ func UpdateTodo(c *gin.Context) {
 func DeleteTodo(c *gin.Context) {
 	id := c.Param("id")
 
-	query := `DELETE FROM todos WHERE id=$1`
+	query := `DELETE FROM todos WHERE id=$1;`
 	_, err := database.DB.Exec(c.Request.Context(), query, id)
 
 	if err != nil {

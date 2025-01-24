@@ -14,14 +14,12 @@ import (
 )
 
 func Login(c *gin.Context) {
-	var user models.User
-
-	var input struct {
-		Email    string `json:"email" binding:"required,email"`
-		Password string `json:"password" binding:"required"`
+	user := models.User {
+		Email:    `json:"email" binding:"required,email"`,
+		Password: `json:"password" binding:"required"`,
 	}
 
-	if err := c.ShouldBindJSON(&input); err != nil {
+	if err := c.ShouldBindJSON(&user); err != nil {
 		utils.SendResponse(
 			c,
 			http.StatusBadRequest,
@@ -32,11 +30,13 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	query := `SELECT id, name, email, password, created_at, updated_at FROM users WHERE email = $1`
+	inputPassword := user.Password
+
+	query := `SELECT id, name, password, created_at, updated_at FROM users WHERE email = $1`
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := database.DB.QueryRow(ctx, query, input.Email).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
+	err := database.DB.QueryRow(ctx, query, user.Email).Scan(&user.ID, &user.Name, &user.Password, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		utils.SendResponse(
 			c,
@@ -48,7 +48,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(inputPassword)); err != nil {
 		utils.SendResponse(
 			c,
 			http.StatusUnauthorized,
@@ -59,7 +59,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateJWT(int64(user.ID))
+	token, err := utils.GenerateJWT(user.ID)
 	if err != nil {
 		utils.SendResponse(
 			c,
@@ -84,17 +84,13 @@ func Login(c *gin.Context) {
 }
 
 func Register(c *gin.Context) {
-	var user models.User
-	var input struct {
-		Name     string `json:"name" binding:"required"`
-		Email    string `json:"email" binding:"required,email"`
-		Password string `json:"password" binding:"required"`
+	user := models.User {
+		Name: `json:"name" binding:"required"`,
+		Email: `json:"email" binding:"required,email"`,
+		Password: `json:"password" binding:"required"`,
 	}
-	user.Name = input.Name
-	user.Email = input.Email
-	user.Password = input.Password
 
-	if err := c.ShouldBindJSON(&input); err != nil {
+	if err := c.ShouldBindJSON(&user); err != nil {
 		utils.SendResponse(
 			c,
 			http.StatusBadRequest,
@@ -105,7 +101,7 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
 		utils.SendResponse(
 			c,
@@ -122,7 +118,7 @@ func Register(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err = database.DB.QueryRow(ctx, query, input.Name, input.Email, string(hashedPassword)).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
+	err = database.DB.QueryRow(ctx, query, user.Name, user.Email, string(hashedPassword)).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		utils.SendResponse(
 			c,
@@ -133,7 +129,10 @@ func Register(c *gin.Context) {
 		)
 		return
 	}
-	token, err := utils.GenerateJWT(int64(user.ID))
+
+	user.Password = string(hashedPassword)
+
+	token, err := utils.GenerateJWT(user.ID)
 	if err != nil {
 		utils.SendResponse(
 			c,

@@ -4,14 +4,15 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/google/uuid"
 )
 
 var jwtSecret = []byte("banana") // Replace with a strong secret
 
 // GenerateJWT generates a new JWT token
-func GenerateJWT(userID int64) (string, error) {
+func GenerateJWT(userID uuid.UUID) (string, error) {
     claims := jwt.MapClaims{
-        "id":  userID,
+        "id":  userID.String(),
         "exp": time.Now().Add(time.Hour * 24).Unix(), // Token expires in 24 hours
     }
 
