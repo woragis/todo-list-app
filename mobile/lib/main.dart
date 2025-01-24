@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final todoApiProvider = TodoApiProvider(baseUrl: "http://localhost:8080");
     final todoDbProvider = TodoDbProvider();
-    todoApiProvider.fetchTodos();
+    // todoApiProvider.fetchTodos();
     final todoRepository = TodoRepository(
       apiProvider: todoApiProvider,
       dbProvider: todoDbProvider,

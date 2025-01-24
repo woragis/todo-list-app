@@ -11,7 +11,7 @@ class TodoRepository {
     required this.dbProvider,
   });
 
-  Future<List<Todo>> getTodos({bool fromLocal = true}) async {
+  Future<List<Todo>> getTodos({bool fromLocal = false}) async {
     if (fromLocal) {
       return await dbProvider.getTodos();
     } else {

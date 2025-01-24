@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
+import 'package:todo_mobile/presentation/widgets/todos_widget.dart';
 
 class TodosPage extends StatelessWidget {
   const TodosPage({super.key});
@@ -24,22 +25,31 @@ class TodosPage extends StatelessWidget {
               itemCount: todos.length,
               itemBuilder: (context, index) {
                 final Todo todo = todos[index];
-                return ListTile(
-                  title: Text(todo.title),
-                  subtitle: Text(todo.description),
-                  trailing: Icon(
-                    todo.completed
-                        ? Icons.check_box
-                        : Icons.check_box_outline_blank,
-                    color: todo.completed ? Colors.green[700] : Colors.grey,
-                  ),
-                  onTap: () {
-                    // Trigger toggle event
-                    context
-                        .read<TodoBloc>()
-                        .add(ToggleTodoCompletionEvent(todo.id));
-                  },
-                );
+                if (todos.isEmpty) {
+                  print('Todos is empty');
+                  return Center(
+                    child: Text(
+                      'No Todos',
+                    ),
+                  );
+                }
+                return TodosWidget(todo: todo);
+                // return ListTile(
+                //   title: Text(todo.title),
+                //   subtitle: Text(todo.description),
+                //   trailing: Icon(
+                //     todo.completed
+                //         ? Icons.check_box
+                //         : Icons.check_box_outline_blank,
+                //     color: todo.completed ? Colors.green[700] : Colors.grey,
+                //   ),
+                //   onTap: () {
+                //     // Trigger toggle event
+                //     context
+                //         .read<TodoBloc>()
+                //         .add(ToggleTodoCompletionEvent(todo.id));
+                //   },
+                // );
               },
             );
           } else if (state is TodoError) {
