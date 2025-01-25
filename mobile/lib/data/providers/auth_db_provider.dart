@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 
 import 'package:path/path.dart' show join;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -65,7 +65,7 @@ class AuthDbProvider {
   //   );
   // }
 
-  Future<User> getUser(User user) async {
+  Future<UserModel> getUser(UserModel user) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       _tableName,
@@ -74,13 +74,13 @@ class AuthDbProvider {
     );
 
     if (maps.isNotEmpty) {
-      return User.fromJson(maps.first);
+      return UserModel.fromJson(maps.first);
     } else {
       throw Exception('User not found');
     }
   }
 
-  Future<void> createUser(User user) async {
+  Future<void> createUser(UserModel user) async {
     final db = await database;
     await db.insert(
       _tableName,
@@ -89,7 +89,7 @@ class AuthDbProvider {
     );
   }
 
-  Future<void> updateUser(User user) async {
+  Future<void> updateUser(UserModel user) async {
     final db = await database;
     await db.update(
       _tableName,
@@ -99,7 +99,7 @@ class AuthDbProvider {
     );
   }
 
-  Future<void> deleteUser(User user) async {
+  Future<void> deleteUser(UserModel user) async {
     final db = await database;
     await db.delete(
       _tableName,

@@ -1,4 +1,4 @@
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
 class ResponseModel {

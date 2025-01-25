@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
 import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Dispatch an event to create a new todo
     context.read<AuthBloc>().add(
-          LoginEvent(user: Login(email: email, password: password)),
+          LoginEvent(user: UserLoginModel(email: email, password: password)),
         );
 
     // Navigate back after creating the todo

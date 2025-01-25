@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
 import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
@@ -39,7 +39,8 @@ class _RegisterPageState extends State<RegisterPage> {
     // Dispatch an event to create a new todo
     context.read<AuthBloc>().add(
           RegisterEvent(
-              user: Register(name: name, email: email, password: password)),
+              user: UserRegisterModel(
+                  name: name, email: email, password: password)),
         );
 
     // Navigate back after creating the todo

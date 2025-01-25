@@ -40,7 +40,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       // Dispatch an event to create a new todo
       context.read<TodoBloc>().add(
             AddTodoEvent(
-              newTodo: NewTodo(
+              newTodo: NewTodoModel(
                 title: title,
                 description: description,
                 authorId: authorId,

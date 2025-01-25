@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/data/models/response_models.dart';
 
 import 'package:http/http.dart' as http;
@@ -10,7 +10,7 @@ class AuthApiProvider {
 
   AuthApiProvider({required this.baseUrl});
 
-  Future<AuthResponseData> registerUser(Register user) async {
+  Future<AuthResponseData> registerUser(UserRegisterModel user) async {
     final uri = Uri.parse('$baseUrl/register');
     final response = await http.post(
       uri,
@@ -26,7 +26,7 @@ class AuthApiProvider {
     }
   }
 
-  Future<AuthResponseData> loginUser(Login user) async {
+  Future<AuthResponseData> loginUser(UserLoginModel user) async {
     final uri = Uri.parse('$baseUrl/login');
     final response = await http.post(
       uri,

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/auth_model.dart';
+import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/data/repositories/auth_repository.dart';
 
 /// EVENTS
@@ -12,7 +12,7 @@ abstract class AuthEvent extends Equatable {
 }
 
 class LoginEvent extends AuthEvent {
-  final Login user;
+  final UserLoginModel user;
 
   const LoginEvent({
     required this.user,
@@ -23,7 +23,7 @@ class LoginEvent extends AuthEvent {
 }
 
 class RegisterEvent extends AuthEvent {
-  final Register user;
+  final UserRegisterModel user;
 
   const RegisterEvent({
     required this.user,
@@ -34,7 +34,7 @@ class RegisterEvent extends AuthEvent {
 }
 
 class LogoutEvent extends AuthEvent {
-  final User user;
+  final UserModel user;
 
   const LogoutEvent({
     required this.user,
@@ -60,7 +60,7 @@ class AuthLoadingState extends AuthState {}
 
 class AuthAuthenticatedState extends AuthState {
   final String token;
-  final User user;
+  final UserModel user;
 
   const AuthAuthenticatedState({
     required this.token,
