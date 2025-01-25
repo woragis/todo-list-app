@@ -9,7 +9,7 @@ class TodoApiProvider {
 
   TodoApiProvider({required this.baseUrl});
 
-  Future<List<Todo>> fetchTodos() async {
+  Future<List<TodoModel>> fetchTodos() async {
     final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -21,17 +21,17 @@ class TodoApiProvider {
     }
   }
 
-  Future<Todo> fetchTodoById(String id) async {
+  Future<TodoModel> fetchTodoById(String id) async {
     final uri = Uri.parse('$baseUrl/todos/$id');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
-      return Todo.fromJson(json.decode(response.body).data);
+      return TodoModel.fromJson(json.decode(response.body).data);
     } else {
       throw Exception('Failed to fetch todo');
     }
   }
 
-  Future<Todo> createTodo(NewTodo newTodo) async {
+  Future<TodoModel> createTodo(NewTodo newTodo) async {
     final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.post(
       uri,
@@ -39,13 +39,13 @@ class TodoApiProvider {
       body: json.encode(newTodo.toJson()),
     );
     if (response.statusCode == 201) {
-      return Todo.fromJson(json.decode(response.body).data);
+      return TodoModel.fromJson(json.decode(response.body).data);
     } else {
       throw Exception('Failed to create todo');
     }
   }
 
-  Future<Todo> updateTodo(Todo todo) async {
+  Future<TodoModel> updateTodo(TodoModel todo) async {
     final uri = Uri.parse('$baseUrl/todos/${todo.id}');
     final response = await http.put(
       uri,
@@ -53,7 +53,7 @@ class TodoApiProvider {
       body: json.encode(todo.toJson()),
     );
     if (response.statusCode == 200) {
-      return Todo.fromJson(json.decode(response.body).data);
+      return TodoModel.fromJson(json.decode(response.body).data);
     } else {
       throw Exception('Failed to update todo');
     }

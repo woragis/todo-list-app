@@ -5,7 +5,7 @@ class ResponseModel {
   final int status;
   final String message;
   final String? error;
-  final List<Todo> data;
+  final List<TodoModel> data;
 
   ResponseModel({
     required this.status,
@@ -19,7 +19,9 @@ class ResponseModel {
       status: json['status'],
       message: json['message'],
       error: json['error'],
-      data: (json['data'] as List).map((todo) => Todo.fromJson(todo)).toList(),
+      data: (json['data'] as List)
+          .map((todo) => TodoModel.fromJson(todo))
+          .toList(),
     );
   }
 
@@ -37,7 +39,7 @@ class TodosResponseModel {
   final int status;
   final String message;
   final String? error;
-  final List<Todo> data;
+  final List<TodoModel> data;
 
   TodosResponseModel({
     required this.status,
@@ -51,7 +53,9 @@ class TodosResponseModel {
       status: json['status'],
       message: json['message'],
       error: json['error'],
-      data: (json['data'] as List).map((todo) => Todo.fromJson(todo)).toList(),
+      data: (json['data'] as List)
+          .map((todo) => TodoModel.fromJson(todo))
+          .toList(),
     );
   }
 
@@ -69,7 +73,7 @@ class TodoResponseModel {
   final int status;
   final String message;
   final String? error;
-  final Todo data;
+  final TodoModel data;
 
   TodoResponseModel({
     required this.status,

@@ -41,7 +41,7 @@ class TodoDbProvider {
     return db;
   }
 
-  Future<void> saveTodos(List<Todo> todos) async {
+  Future<void> saveTodos(List<TodoModel> todos) async {
     final db = await database;
     for (var todo in todos) {
       await db.insert(
@@ -52,17 +52,17 @@ class TodoDbProvider {
     }
   }
 
-  Future<List<Todo>> getTodos() async {
+  Future<List<TodoModel>> getTodos() async {
     print("Todo_db_provider function: getTodos");
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(_tableName);
     return List.generate(
       maps.length,
-      (i) => Todo.fromJson(maps[i]),
+      (i) => TodoModel.fromJson(maps[i]),
     );
   }
 
-  Future<Todo> getTodoById(String id) async {
+  Future<TodoModel> getTodoById(String id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       _tableName,
@@ -71,13 +71,13 @@ class TodoDbProvider {
     );
 
     if (maps.isNotEmpty) {
-      return Todo.fromJson(maps.first);
+      return TodoModel.fromJson(maps.first);
     } else {
       throw Exception('Todo not found');
     }
   }
 
-  Future<void> createTodo(Todo todo) async {
+  Future<void> createTodo(TodoModel todo) async {
     final db = await database;
     await db.insert(
       _tableName,
@@ -86,7 +86,7 @@ class TodoDbProvider {
     );
   }
 
-  Future<void> updateTodo(Todo todo) async {
+  Future<void> updateTodo(TodoModel todo) async {
     final db = await database;
     await db.update(
       'todos',

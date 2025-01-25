@@ -33,7 +33,7 @@ class TodosPage extends StatelessWidget {
             return ListView.builder(
               itemCount: todos.length,
               itemBuilder: (context, index) {
-                final Todo todo = todos[index];
+                final TodoModel todo = todos[index];
 
                 return TodosWidget(todo: todo);
                 // return ListTile(

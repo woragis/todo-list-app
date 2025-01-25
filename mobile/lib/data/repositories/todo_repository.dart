@@ -11,7 +11,7 @@ class TodoRepository {
     required this.dbProvider,
   });
 
-  Future<List<Todo>> getTodos({bool fromLocal = false}) async {
+  Future<List<TodoModel>> getTodos({bool fromLocal = false}) async {
     try {
       print("Fetching api");
       final todos = await apiProvider.fetchTodos();
@@ -22,7 +22,7 @@ class TodoRepository {
     }
   }
 
-  Future<Todo> getTodoById(String id, {bool fromLocal = true}) async {
+  Future<TodoModel> getTodoById(String id, {bool fromLocal = true}) async {
     if (fromLocal) {
       return await dbProvider.getTodoById(id);
     } else {
@@ -32,13 +32,13 @@ class TodoRepository {
     }
   }
 
-  Future<Todo> createTodo(NewTodo todo) async {
-    Todo createdTodo = await apiProvider.createTodo(todo);
+  Future<TodoModel> createTodo(NewTodo todo) async {
+    TodoModel createdTodo = await apiProvider.createTodo(todo);
     await dbProvider.createTodo(createdTodo);
     return createdTodo;
   }
 
-  Future<void> updateTodo(Todo todo) async {
+  Future<void> updateTodo(TodoModel todo) async {
     await dbProvider.updateTodo(todo);
     await apiProvider.updateTodo(todo);
   }

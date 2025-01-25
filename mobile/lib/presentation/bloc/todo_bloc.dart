@@ -44,7 +44,7 @@ abstract class TodoState extends Equatable {
 class TodoLoadingState extends TodoState {}
 
 class TodoLoadedState extends TodoState {
-  final List<Todo> todos;
+  final List<TodoModel> todos;
 
   TodoLoadedState(this.todos);
 
@@ -91,7 +91,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         final currentTodos = (state as TodoLoadedState).todos;
         final updatedTodos = currentTodos.map((todo) {
           if (todo.id == event.todoId) {
-            final updatedTodo = Todo(
+            final updatedTodo = TodoModel(
               id: todo.id,
               title: todo.title,
               description: todo.description,
@@ -118,8 +118,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       if (state is TodoLoadedState) {
         final currentTodos = (state as TodoLoadedState).todos;
         final newTodo = event.newTodo;
-        Todo createdTodo = await repository.createTodo(newTodo);
-        final updatedTodos = List<Todo>.from(currentTodos)..add(createdTodo);
+        TodoModel createdTodo = await repository.createTodo(newTodo);
+        final updatedTodos = List<TodoModel>.from(currentTodos)
+          ..add(createdTodo);
         emit(TodoLoadedState(updatedTodos));
       }
     } catch (e) {

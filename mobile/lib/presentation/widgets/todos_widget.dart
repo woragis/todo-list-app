@@ -9,7 +9,7 @@ class TodosWidget extends StatelessWidget {
     required this.todo,
   });
 
-  final Todo todo;
+  final TodoModel todo;
 
   @override
   Widget build(BuildContext context) {

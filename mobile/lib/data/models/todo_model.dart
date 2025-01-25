@@ -1,13 +1,13 @@
-class Todo {
+class TodoModel {
   String id;
   String title;
   String description;
   bool completed;
   String authorId;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  Todo({
+  TodoModel({
     required this.id,
     required this.title,
     required this.description,
@@ -21,14 +21,14 @@ class Todo {
     completed = !completed;
   }
 
-  factory Todo.fromJson(Map<String, dynamic> json) => Todo(
+  factory TodoModel.fromJson(Map<String, dynamic> json) => TodoModel(
         id: json['id'],
         title: json['title'],
         description: json['description'],
         authorId: json['author_id'],
         completed: (json['completed'] as int) == 1,
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
+        createdAt: DateTime.parse(json['created_at']),
+        updatedAt: DateTime.parse(json['updated_at']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,8 +37,8 @@ class Todo {
         'description': description,
         'author_id': authorId,
         'completed': completed ? 1 : 0,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
+        'created_at': createdAt.toIso8601String(),
+        'updated_at': updatedAt.toIso8601String(),
       };
 }
 
@@ -54,13 +54,6 @@ class NewTodo {
     this.completed = false,
     required this.authorId,
   });
-
-  factory NewTodo.fromJson(Map<String, dynamic> json) => NewTodo(
-        title: json['title'],
-        description: json['description'],
-        completed: (json['completed'] as int) == 1,
-        authorId: json['author_id'],
-      );
 
   Map<String, dynamic> toJson() => {
         'title': title,
