@@ -1,12 +1,12 @@
-class User {
+class UserModel {
   String id;
   String name;
   String email;
   String password;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  User({
+  UserModel({
     required this.id,
     required this.name,
     required this.email,
@@ -15,13 +15,13 @@ class User {
     required this.updatedAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         name: json['name'],
         email: json['email'],
         password: json['password'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
+        createdAt: DateTime.parse(json['created_at']),
+        updatedAt: DateTime.parse(json['updated_at']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,22 +29,19 @@ class User {
         'name': name,
         'email': email,
         'password': password,
+        'created_at': createdAt.toIso8601String(),
+        'updated_at': updatedAt.toIso8601String(),
       };
 }
 
-class Login {
+class UserLoginModel {
   String email;
   String password;
 
-  Login({
+  UserLoginModel({
     required this.email,
     required this.password,
   });
-
-  factory Login.fromJson(Map<String, dynamic> json) => Login(
-        email: json['email'],
-        password: json['password'],
-      );
 
   Map<String, dynamic> toJson() => {
         'email': email,
@@ -52,22 +49,16 @@ class Login {
       };
 }
 
-class Register {
+class UserRegisterModel {
   String name;
   String email;
   String password;
 
-  Register({
+  UserRegisterModel({
     required this.name,
     required this.email,
     required this.password,
   });
-
-  factory Register.fromJson(Map<String, dynamic> json) => Register(
-        name: json['name'],
-        email: json['email'],
-        password: json['password'],
-      );
 
   Map<String, dynamic> toJson() => {
         'name': name,

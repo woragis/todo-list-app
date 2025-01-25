@@ -105,7 +105,7 @@ class TodoResponseModel {
 
 class AuthResponseData {
   final String token;
-  final User user;
+  final UserModel user;
 
   AuthResponseData({
     required this.token,

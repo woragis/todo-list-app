@@ -12,24 +12,24 @@ class AuthRepository {
     required this.dbProvider,
   });
 
-  Future<AuthResponseData> login({required Login user}) async {
+  Future<AuthResponseData> login({required UserLoginModel user}) async {
     AuthResponseData loggedInUser = await apiProvider.loginUser(user);
     // await dbProvider.
     return loggedInUser;
   }
 
-  Future<AuthResponseData> register({required Register user}) async {
+  Future<AuthResponseData> register({required UserRegisterModel user}) async {
     AuthResponseData createdTodo = await apiProvider.registerUser(user);
     await dbProvider.createUser(createdTodo.user);
     return createdTodo;
   }
 
-  Future<void> logout(User user) async {
+  Future<void> logout(UserModel user) async {
     // Clear user data from local storage
     await dbProvider.deleteUser(user);
   }
 
-  Future<User?> loadUserFromStorage(User user) async {
+  Future<UserModel?> loadUserFromStorage(UserModel user) async {
     // Load user from local storage
     final localUser = await dbProvider.getUser(user);
     return localUser;
