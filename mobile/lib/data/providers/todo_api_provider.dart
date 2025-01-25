@@ -20,16 +20,6 @@ import 'package:todo_mobile/data/models/response_models.dart';
 //     }
 //   }
 
-//   Future<TodoModel> fetchTodoById(String id) async {
-//     final uri = Uri.parse('$baseUrl/todos/$id');
-//     final response = await http.get(uri);
-//     if (response.statusCode == 200) {
-//       return TodoModel.fromJson(json.decode(response.body).data);
-//     } else {
-//       throw Exception('Failed to fetch todo');
-//     }
-//   }
-
 //   Future<TodoModel> createTodo(NewTodo newTodo) async {
 //     final uri = Uri.parse('$baseUrl/todos/');
 //     final response = await http.post(
@@ -41,20 +31,6 @@ import 'package:todo_mobile/data/models/response_models.dart';
 //       return TodoModel.fromJson(json.decode(response.body).data);
 //     } else {
 //       throw Exception('Failed to create todo');
-//     }
-//   }
-
-//   Future<TodoModel> updateTodo(TodoModel todo) async {
-//     final uri = Uri.parse('$baseUrl/todos/${todo.id}');
-//     final response = await http.put(
-//       uri,
-//       headers: {'Content-Type': 'application/json'},
-//       body: json.encode(todo.toJson()),
-//     );
-//     if (response.statusCode == 200) {
-//       return TodoModel.fromJson(json.decode(response.body).data);
-//     } else {
-//       throw Exception('Failed to update todo');
 //     }
 //   }
 
@@ -83,6 +59,16 @@ class TodoApiProvider {
     }
   }
 
+  Future<TodoModel> fetchTodoById(String id) async {
+    final uri = Uri.parse('$baseUrl/todos/$id');
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      return TodoModel.fromJson(json.decode(response.body).data);
+    } else {
+      throw Exception('Failed to fetch todo');
+    }
+  }
+
   Future<TodoModel> createTodo(NewTodoModel newTodo) async {
     final uri = Uri.parse('$baseUrl/todos/');
     final response = await http.post(
@@ -94,6 +80,20 @@ class TodoApiProvider {
       return TodoModel.fromJson(json.decode(response.body)['data']);
     } else {
       throw Exception('Failed to create todo');
+    }
+  }
+
+  Future<TodoModel> updateTodo(TodoModel todo) async {
+    final uri = Uri.parse('$baseUrl/todos/${todo.id}');
+    final response = await http.put(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(todo.toJson()),
+    );
+    if (response.statusCode == 200) {
+      return TodoModel.fromJson(json.decode(response.body).data);
+    } else {
+      throw Exception('Failed to update todo');
     }
   }
 
