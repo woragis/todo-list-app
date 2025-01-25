@@ -24,3 +24,17 @@ class TodoMapper {
         updatedAt: entity.updatedAt,
       );
 }
+
+class NewTodoMapper {
+  static NewTodoEntity toEntity(TodoModel model) => NewTodoEntity(
+        title: model.title,
+        description: model.description,
+        authorId: model.authorId,
+      );
+
+  static NewTodoModel toModel(NewTodoEntity entity) => NewTodoModel(
+        title: entity.title,
+        description: entity.description,
+        authorId: entity.authorId,
+      );
+}

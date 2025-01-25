@@ -42,13 +42,13 @@ class TodoModel {
       };
 }
 
-class NewTodo {
+class NewTodoModel {
   String title;
   String description;
   bool completed;
   String authorId;
 
-  NewTodo({
+  NewTodoModel({
     required this.title,
     required this.description,
     this.completed = false,
