@@ -1,21 +1,20 @@
-import 'package:todo_mobile/data/models/user_model.dart';
 import 'package:todo_mobile/data/models/todo_model.dart';
 
-class ResponseModel {
+class DefaultResponseModel {
   final int status;
   final String message;
   final String? error;
   final List<TodoModel> data;
 
-  ResponseModel({
+  DefaultResponseModel({
     required this.status,
     required this.message,
     this.error,
     required this.data,
   });
 
-  factory ResponseModel.fromJson(Map<String, dynamic> json) {
-    return ResponseModel(
+  factory DefaultResponseModel.fromJson(Map<String, dynamic> json) {
+    return DefaultResponseModel(
       status: json['status'],
       message: json['message'],
       error: json['error'],
@@ -82,52 +81,8 @@ class TodoResponseModel {
     required this.data,
   });
 
-  // Factory method to parse JSON into a ResponseModel
   factory TodoResponseModel.fromJson(Map<String, dynamic> json) {
     return TodoResponseModel(
-      status: json['status'],
-      message: json['message'],
-      error: json['error'],
-      data: json['data'],
-    );
-  }
-
-  // Convert ResponseModel back to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'message': message,
-      'error': error,
-      'data': data,
-    };
-  }
-}
-
-class AuthResponseData {
-  final String token;
-  final UserModel user;
-
-  AuthResponseData({
-    required this.token,
-    required this.user,
-  });
-}
-
-class AuthResponseModel {
-  final int status;
-  final String message;
-  final String? error;
-  final AuthResponseData data;
-
-  AuthResponseModel({
-    required this.status,
-    required this.message,
-    this.error,
-    required this.data,
-  });
-
-  factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
-    return AuthResponseModel(
       status: json['status'],
       message: json['message'],
       error: json['error'],
