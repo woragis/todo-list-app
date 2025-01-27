@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:todo_mobile/data/models/todo_model.dart';
-import 'package:todo_mobile/data/models/response_models.dart';
+import 'package:todo_mobile/data/models/todo_response_model.dart';
 
 // class TodoApiProvider {
 //   final String baseUrl;

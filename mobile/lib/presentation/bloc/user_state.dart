@@ -6,16 +6,7 @@ abstract class UserState extends Equatable {
   List<Object?> get props => [];
 }
 
-class UserInitialState extends UserState {
-  final String token = '';
-  final UserEntity user = UserEntity(
-      id: '',
-      name: '',
-      email: '',
-      password: '',
-      createdAt: DateTime.parse(''),
-      updatedAt: DateTime.parse(''));
-}
+class UserInitialState extends UserState {}
 
 class UserLoadingState extends UserState {}
 

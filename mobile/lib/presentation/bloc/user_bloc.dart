@@ -10,7 +10,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserLoginEvent>(_onLogin);
     on<UserRegisterEvent>(_onRegister);
     on<UserLogoutEvent>(_onLogout);
+    on<UserLocalEvent>(_onLocal);
   }
+
   Future<void> _onLogin(UserLoginEvent event, Emitter<UserState> emit) async {
     try {
       final response = await repository.login(event.user);
@@ -36,6 +38,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserInitialState());
     } catch (e) {
       emit(UserErrorState(message: "Error on register: $e"));
+    }
+  }
+
+  Future<void> _onLocal(UserLocalEvent event, Emitter<UserState> emit) async {
+    try {
+      final localUser = await repository.local();
+      emit(UserLoadedState(token: '', user: localUser));
+    } catch (e) {
+      emit(UserErrorState(message: "Error retrieving local user: $e"));
     }
   }
 }

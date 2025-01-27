@@ -11,14 +11,21 @@ class UserDbProvider {
   });
 
   Future<void> login(UserLoginModel user) async {
+    await db.delete(tableName);
     await db.insert(tableName, user.toJson());
   }
 
   Future<void> register(UserRegisterModel user) async {
+    await db.delete(tableName);
     await db.insert(tableName, user.toJson());
   }
 
+  Future<UserModel> local() async {
+    final rows = await db.query(tableName, limit: 1);
+    return UserModel.fromJson(rows[0]);
+  }
+
   Future<void> logout(UserModel user) async {
-    await db.delete(tableName, where: 'id = ?', whereArgs: [user.id]);
+    await db.delete(tableName);
   }
 }

@@ -28,6 +28,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<UserEntity> local() async {
+    final model = await dbProvider.local();
+    return UserMapper.toEntity(model);
+  }
+
+  @override
   Future<void> logout(UserEntity user) async {
     final model = UserMapper.toModel(user);
     await dbProvider.logout(model);

@@ -24,6 +24,8 @@ class UserRegisterEvent extends UserEvent {
   List<Object?> get props => [user];
 }
 
+class UserLocalEvent extends UserEvent {}
+
 class UserLogoutEvent extends UserEvent {
   final UserEntity user;
 
