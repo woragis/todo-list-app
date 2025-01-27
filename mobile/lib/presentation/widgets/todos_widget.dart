@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_mobile/domain/entities/todo_entity.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
-import 'package:todo_mobile/data/models/todo_model.dart';
+import 'package:todo_mobile/presentation/bloc/todo_event.dart';
 
 class TodosWidget extends StatelessWidget {
   const TodosWidget({
@@ -9,7 +10,7 @@ class TodosWidget extends StatelessWidget {
     required this.todo,
   });
 
-  final TodoModel todo;
+  final TodoEntity todo;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class TodosWidget extends StatelessWidget {
         color: todo.completed ? Colors.green[300] : Colors.grey,
       ),
       onTap: () {
-        context.read<TodoBloc>().add(ToggleTodoCompletionEvent(todo.id));
+        context.read<TodoBloc>().add(TodoUpdateEvent(todo));
       },
     );
   }

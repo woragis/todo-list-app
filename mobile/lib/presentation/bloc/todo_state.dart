@@ -6,23 +6,26 @@ abstract class TodoState extends Equatable {
   List<Object?> get props => [];
 }
 
-class TodoInitial extends TodoState {}
+class TodoInitialState extends TodoState {
+  // test to see if is a good practice to leave it here since the beginning
+  static List<TodoEntity?> todos = [];
+}
 
-class TodoLoading extends TodoState {}
+class TodoLoadingState extends TodoState {}
 
-class TodoLoaded extends TodoState {
+class TodoLoadedState extends TodoState {
   final List<TodoEntity> todos;
 
-  TodoLoaded(this.todos);
+  TodoLoadedState(this.todos);
 
   @override
   List<Object?> get props => [todos];
 }
 
-class TodoError extends TodoState {
+class TodoErrorState extends TodoState {
   final String message;
 
-  TodoError(this.message);
+  TodoErrorState(this.message);
 
   @override
   List<Object?> get props => [message];

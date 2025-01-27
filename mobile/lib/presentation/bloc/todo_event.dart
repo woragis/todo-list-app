@@ -8,28 +8,28 @@ abstract class TodoEvent extends Equatable {
 
 class FetchTodosEvent extends TodoEvent {}
 
-class AddTodoEvent extends TodoEvent {
+class TodoCreateEvent extends TodoEvent {
   final NewTodoEntity todo;
 
-  AddTodoEvent(this.todo);
+  TodoCreateEvent(this.todo);
 
   @override
   List<Object?> get props => [todo];
 }
 
-class UpdateTodoEvent extends TodoEvent {
+class TodoUpdateEvent extends TodoEvent {
   final TodoEntity todo;
 
-  UpdateTodoEvent(this.todo);
+  TodoUpdateEvent(this.todo);
 
   @override
   List<Object?> get props => [todo];
 }
 
-class DeleteTodoEvent extends TodoEvent {
+class TodoDeleteEvent extends TodoEvent {
   final String id;
 
-  DeleteTodoEvent(this.id);
+  TodoDeleteEvent(this.id);
 
   @override
   List<Object?> get props => [id];

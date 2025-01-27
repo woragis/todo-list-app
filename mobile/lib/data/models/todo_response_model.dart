@@ -1,39 +1,5 @@
 import 'package:todo_mobile/data/models/todo_model.dart';
 
-class DefaultResponseModel {
-  final int status;
-  final String message;
-  final String? error;
-  final List<TodoModel> data;
-
-  DefaultResponseModel({
-    required this.status,
-    required this.message,
-    this.error,
-    required this.data,
-  });
-
-  factory DefaultResponseModel.fromJson(Map<String, dynamic> json) {
-    return DefaultResponseModel(
-      status: json['status'],
-      message: json['message'],
-      error: json['error'],
-      data: (json['data'] as List)
-          .map((todo) => TodoModel.fromJson(todo))
-          .toList(),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'message': message,
-      'error': error,
-      'data': data.map((todo) => todo.toJson()).toList(),
-    };
-  }
-}
-
 class TodosResponseModel {
   final int status;
   final String message;

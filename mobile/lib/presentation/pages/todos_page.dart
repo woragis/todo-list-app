@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/todo_model.dart';
+import 'package:todo_mobile/domain/entities/todo_entity.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
+import 'package:todo_mobile/presentation/bloc/todo_state.dart';
 import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 import 'package:todo_mobile/presentation/widgets/todos_widget.dart';
 
@@ -33,7 +34,7 @@ class TodosPage extends StatelessWidget {
             return ListView.builder(
               itemCount: todos.length,
               itemBuilder: (context, index) {
-                final TodoModel todo = todos[index];
+                final TodoEntity todo = todos[index];
 
                 return TodosWidget(todo: todo);
                 // return ListTile(

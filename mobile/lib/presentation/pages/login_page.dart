@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/user_model.dart';
-import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
+import 'package:todo_mobile/domain/entities/user_entity.dart';
+import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
+import 'package:todo_mobile/presentation/bloc/user_event.dart';
 import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     // Dispatch an event to create a new todo
-    context.read<AuthBloc>().add(
-          LoginEvent(user: UserLoginModel(email: email, password: password)),
+    context.read<UserBloc>().add(
+          UserLoginEvent(UserLoginEntity(email: email, password: password)),
         );
 
     // Navigate back after creating the todo

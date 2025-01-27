@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_mobile/data/models/todo_model.dart';
-import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
+import 'package:todo_mobile/domain/entities/todo_entity.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
+import 'package:todo_mobile/presentation/bloc/todo_event.dart';
+import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
+import 'package:todo_mobile/presentation/bloc/user_state.dart';
 
 class CreateTodoPage extends StatefulWidget {
   const CreateTodoPage({super.key});
@@ -33,14 +35,14 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       return;
     }
 
-    final authState = context.read<AuthBloc>().state;
-    if (authState is AuthAuthenticatedState) {
-      final authorId = authState.user.id;
+    final userState = context.read<UserBloc>().state;
+    if (userState is UserLoadedState) {
+      final authorId = userState.user.id;
 
       // Dispatch an event to create a new todo
       context.read<TodoBloc>().add(
-            AddTodoEvent(
-              newTodo: NewTodoModel(
+            TodoCreateEvent(
+              NewTodoEntity(
                 title: title,
                 description: description,
                 authorId: authorId,
