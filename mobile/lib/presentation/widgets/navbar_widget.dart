@@ -1,10 +1,11 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class NavbarWidget extends StatefulWidget {
-  const NavbarWidget({Key? key}) : super(key: key);
+  const NavbarWidget({super.key});
 
   @override
-  _NavbarWidgetState createState() => _NavbarWidgetState();
+  createState() => _NavbarWidgetState();
 }
 
 class _NavbarWidgetState extends State<NavbarWidget> {
@@ -20,20 +21,21 @@ class _NavbarWidgetState extends State<NavbarWidget> {
       body: Center(
         child: body[_currentIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (int newIndex) {
+      backgroundColor: Colors.deepPurple,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.deepPurple,
+        color: Colors.white,
+        animationDuration: Duration(milliseconds: 300),
+        onTap: (int index) {
           setState(() {
-            _currentIndex = newIndex;
+            _currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(
-            label: 'home',
-            icon: Icon(
-              Icons.person,
-            ),
-          )
+        items: [
+          Icon(Icons.home),
+          Icon(Icons.add),
+          Icon(Icons.person),
+          Icon(Icons.settings),
         ],
       ),
     );
