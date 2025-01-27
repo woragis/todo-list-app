@@ -17,27 +17,28 @@ class _NavbarWidgetState extends State<NavbarWidget> {
   ];
   @override
   Widget build(BuildContext context) {
+    var curvedNavigationBar = CurvedNavigationBar(
+      backgroundColor: Colors.deepPurple,
+      color: Colors.white,
+      animationDuration: Duration(milliseconds: 300),
+      onTap: (int index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      items: [
+        Icon(Icons.home),
+        Icon(Icons.add),
+        Icon(Icons.person),
+        Icon(Icons.settings),
+      ],
+    );
     return Scaffold(
       body: Center(
         child: body[_currentIndex],
       ),
       backgroundColor: Colors.deepPurple,
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.deepPurple,
-        color: Colors.white,
-        animationDuration: Duration(milliseconds: 300),
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          Icon(Icons.home),
-          Icon(Icons.add),
-          Icon(Icons.person),
-          Icon(Icons.settings),
-        ],
-      ),
+      bottomNavigationBar: curvedNavigationBar,
     );
   }
 }
