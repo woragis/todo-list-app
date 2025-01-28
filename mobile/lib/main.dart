@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -176,12 +177,66 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, Object>> pageProperties = const [
+      {
+        'key': 'home',
+        'name': 'Home',
+        'widget': Icon(Icons.home),
+      },
+      {
+        'key': 'create-todo',
+        'name': 'Create New Todo',
+        'widget': Icon(Icons.add),
+      },
+      {
+        'key': 'profie',
+        'name': 'Profile',
+        'widget': Icon(Icons.person),
+      },
+      // {
+      //   'key': 'settings',
+      //   'name': 'Settings',
+      //   'widget': Icon(Icons.settings),
+      // },
+    ];
     return Scaffold(
-      appBar: AppBarWidget(
-        title: getAppBarTitle(),
-        icon: Icons.abc,
-      ) as AppBar,
-      bottomNavigationBar: NavbarWidget(),
+      appBar: AppBar(
+        title: Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Title',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.abc),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/auth/register');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.deepPurple,
+        color: Colors.white,
+        animationDuration: Duration(milliseconds: 300),
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: pageProperties.map((page) {
+          return page['widget'] as Widget;
+        }).toList(),
+      ),
+      // bottomNavigationBar: NavbarWidget(),
       body: Navigator(
         key: _navigatorKey,
         onGenerateRoute: (RouteSettings settings) {
