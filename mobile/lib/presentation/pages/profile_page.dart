@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_state.dart';
-import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppBarWidget(title: "Profile", icon: Icons.person),
-      ),
-      body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
         if (state is UserLoadedState) {
           final user = state.user;
           final token = state.token;
@@ -36,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Text("Login"),
           );
         }
-      }),
+      },
     );
   }
 }

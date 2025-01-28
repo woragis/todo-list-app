@@ -12,6 +12,9 @@ import 'package:todo_mobile/domain/repositories/todo_repository.dart';
 import 'package:todo_mobile/domain/repositories/user_repository.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
+import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
+import 'package:todo_mobile/presentation/pages/profile_page.dart';
+import 'package:todo_mobile/presentation/pages/todos_page.dart';
 import 'package:todo_mobile/presentation/widgets/navigator_widget.dart';
 
 void main() async {
@@ -81,6 +84,7 @@ class _MainState extends State<Main> {
       {
         'key': 'home',
         'name': 'Home',
+        'page': TodosPage(),
         'widget': Icon(
           Icons.home,
           color: widgetColor,
@@ -89,6 +93,7 @@ class _MainState extends State<Main> {
       {
         'key': 'create-todo',
         'name': 'Create New Todo',
+        'page': CreateTodoPage(),
         'widget': Icon(
           Icons.add,
           color: widgetColor,
@@ -97,13 +102,14 @@ class _MainState extends State<Main> {
       {
         'key': 'profie',
         'name': 'Profile',
-        'text-styles': TextStyle(),
+        'page': ProfilePage(),
         'widget': Icon(
           Icons.person,
           color: widgetColor,
         ),
       },
     ];
+
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -137,7 +143,10 @@ class _MainState extends State<Main> {
           return page['widget'] as Widget;
         }).toList(),
       ),
-      body: NavigatorWidget(navigatorKey: _navigatorKey),
+      body: NavigatorWidget(
+          navigatorKey: _navigatorKey,
+          pagesData: pageProperties,
+          pageIndex: _currentIndex),
     );
   }
 }
