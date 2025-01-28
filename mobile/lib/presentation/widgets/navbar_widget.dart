@@ -15,6 +15,30 @@ class _NavbarWidgetState extends State<NavbarWidget> {
     Icon(Icons.menu),
     Icon(Icons.person),
   ];
+
+  List<Map<String, Object>> pageProperties = const [
+    {
+      'key': 'home',
+      'name': 'Home',
+      'widget': Icon(Icons.home),
+    },
+    {
+      'key': 'create-todo',
+      'name': 'Create New Todo',
+      'widget': Icon(Icons.add),
+    },
+    {
+      'key': 'profie',
+      'name': 'Profile',
+      'widget': Icon(Icons.person),
+    },
+    // {
+    //   'key': 'settings',
+    //   'name': 'Settings',
+    //   'widget': Icon(Icons.settings),
+    // },
+  ];
+
   @override
   Widget build(BuildContext context) {
     var curvedNavigationBar = CurvedNavigationBar(
@@ -26,12 +50,9 @@ class _NavbarWidgetState extends State<NavbarWidget> {
           _currentIndex = index;
         });
       },
-      items: [
-        Icon(Icons.home),
-        Icon(Icons.add),
-        Icon(Icons.person),
-        Icon(Icons.settings),
-      ],
+      items: pageProperties.map((page) {
+        return page['widget'] as Widget;
+      }).toList(),
     );
     return Scaffold(
       body: Center(
