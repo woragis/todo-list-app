@@ -66,10 +66,10 @@ class MyApp extends StatelessWidget {
 }
 
 class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
+  const Main({super.key});
 
   @override
-  _MainState createState() => _MainState();
+  createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
@@ -119,12 +119,6 @@ class _MainState extends State<Main> {
             children: [
               Text(
                 pageProperties[_currentIndex]['name'] as String,
-              ),
-              IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/auth/register');
-                },
               ),
             ],
           ),

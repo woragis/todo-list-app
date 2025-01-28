@@ -20,11 +20,11 @@ class _ProfilePageState extends State<ProfilePage> {
           final token = state.token;
           return Column(
             children: [
-              Text("Id: " + user.id),
-              Text("Name: " + user.name),
-              Text("Email: " + user.email),
-              Text("Password: " + user.password),
-              Text("Token: " + token),
+              Text("Id: ${user.id}"),
+              Text("Name: ${user.name}"),
+              Text("Email: ${user.email}"),
+              Text("Password: ${user.password}"),
+              Text("Token: $token"),
             ],
           );
         } else {
