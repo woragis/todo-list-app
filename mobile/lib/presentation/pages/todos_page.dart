@@ -59,9 +59,3 @@ class TodosPage extends StatelessWidget {
     );
   }
 }
-
-    // floatingActionButton:
-    // FloatingActionButton(
-    //   // Open a form to add a new todo
-    //   onPressed: () => Navigator.of(context).pushNamed('/create-todo'),
-    //   child: const Icon(Icons.add),

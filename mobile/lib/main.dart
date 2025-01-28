@@ -12,94 +12,7 @@ import 'package:todo_mobile/domain/repositories/todo_repository.dart';
 import 'package:todo_mobile/domain/repositories/user_repository.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
-import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
-import 'package:todo_mobile/presentation/pages/login_page.dart';
-import 'package:todo_mobile/presentation/pages/profile_page.dart';
-import 'package:todo_mobile/presentation/pages/register_page.dart';
-import 'package:todo_mobile/presentation/pages/todos_page.dart';
-import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
-import 'package:todo_mobile/presentation/widgets/navbar_widget.dart';
-// import 'package:todo_mobile/presentation/pages/todo_list_page.dart';
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-// import 'package:todo_mobile/data/providers/auth_api_provider.dart';
-// import 'package:todo_mobile/data/providers/auth_db_provider.dart';
-// import 'package:todo_mobile/data/repositories/auth_repository.dart';
-// import 'package:todo_mobile/presentation/bloc/auth_bloc.dart';
-// import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
-// import 'package:todo_mobile/data/providers/todo_api_provider.dart';
-// import 'package:todo_mobile/data/providers/todo_db_provider.dart';
-// import 'package:todo_mobile/data/repositories/todo_repository_impl.dart';
-// import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
-// import 'package:todo_mobile/presentation/pages/register_page.dart';
-// import 'package:todo_mobile/presentation/pages/todos_page.dart';
-
-// void main() async {
-//   sqfliteFfiInit();
-//   databaseFactory = databaseFactoryFfi;
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final todoApiProvider = TodoApiProvider(baseUrl: "http://localhost:8080");
-//     final todoDbProvider = TodoDbProvider();
-//     // todoApiProvider.fetchTodos();
-//     final todoRepository = TodoRepository(
-//       apiProvider: todoApiProvider,
-//       dbProvider: todoDbProvider,
-//     );
-
-//     final authApiProvider =
-//         AuthApiProvider(baseUrl: "http://localhost:8080/auth");
-//     final authDbProvider = AuthDbProvider();
-//     final authRepository = AuthRepository(
-//       apiProvider: authApiProvider,
-//       dbProvider: authDbProvider,
-//     );
-
-//     return MultiRepositoryProvider(
-//       providers: [
-//         RepositoryProvider<TodoRepository>(
-//           create: (context) => todoRepository,
-//         ),
-//         RepositoryProvider<AuthRepository>(
-//           create: (context) => authRepository,
-//         ),
-//       ],
-//       child: MultiBlocProvider(
-//         providers: [
-//           BlocProvider<TodoBloc>(
-//             create: (context) => TodoBloc(
-//               repository: RepositoryProvider.of<TodoRepository>(context),
-//             )..add(FetchTodosEvent()), // Trigger fetch on app start
-//           ),
-//           BlocProvider<AuthBloc>(
-//             create: (context) => AuthBloc(
-//               repository: RepositoryProvider.of<AuthRepository>(context),
-//             ),
-//           ),
-//         ],
-//         child: MaterialApp(
-//           debugShowCheckedModeBanner: false,
-//           title: 'Todo App',
-//           theme: ThemeData(primarySwatch: Colors.grey),
-//           home: const TodosPage(),
-//           routes: {
-//             '/create-todo': (context) => const CreateTodoPage(),
-//             '/auth/register': (context) => const RegisterPage(),
-//             // '/auth/login': (context) => const LoginPage(),
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:todo_mobile/presentation/widgets/navigator_widget.dart';
 
 void main() async {
   sqfliteFfiInit();
@@ -143,13 +56,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Todo App',
-        initialRoute: '/',
-        routes: {
-          '/': (context) => TodosPage(),
-          '/auth/login': (context) => LoginPage(),
-          '/auth/register': (context) => RegisterPage(),
-          '/create-todo': (context) => CreateTodoPage(),
-        },
+        home: Main(),
       ),
     );
   }
@@ -167,37 +74,35 @@ class _MainState extends State<Main> {
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
-  final List<String> _routes = [
-    '/',
-    '/create-todo',
-    '/auth/register',
-    '/auth/login',
-    '/profile',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    List<Map<String, Object>> pageProperties = const [
+    Color widgetColor = Colors.white;
+    List<Map<String, Object>> pageProperties = [
       {
         'key': 'home',
         'name': 'Home',
-        'widget': Icon(Icons.home),
+        'widget': Icon(
+          Icons.home,
+          color: widgetColor,
+        ),
       },
       {
         'key': 'create-todo',
         'name': 'Create New Todo',
-        'widget': Icon(Icons.add),
+        'widget': Icon(
+          Icons.add,
+          color: widgetColor,
+        ),
       },
       {
         'key': 'profie',
         'name': 'Profile',
-        'widget': Icon(Icons.person),
+        'text-styles': TextStyle(),
+        'widget': Icon(
+          Icons.person,
+          color: widgetColor,
+        ),
       },
-      // {
-      //   'key': 'settings',
-      //   'name': 'Settings',
-      //   'widget': Icon(Icons.settings),
-      // },
     ];
     return Scaffold(
       appBar: AppBar(
@@ -207,14 +112,10 @@ class _MainState extends State<Main> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Title',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                pageProperties[_currentIndex]['name'] as String,
               ),
               IconButton(
-                icon: Icon(Icons.abc),
-                color: Colors.white,
+                icon: Icon(Icons.person),
                 onPressed: () {
                   Navigator.pushNamed(context, '/auth/register');
                 },
@@ -224,8 +125,8 @@ class _MainState extends State<Main> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.deepPurple,
-        color: Colors.white,
+        backgroundColor: Colors.white,
+        color: Colors.grey,
         animationDuration: Duration(milliseconds: 300),
         onTap: (int index) {
           setState(() {
@@ -236,54 +137,7 @@ class _MainState extends State<Main> {
           return page['widget'] as Widget;
         }).toList(),
       ),
-      // bottomNavigationBar: NavbarWidget(),
-      body: Navigator(
-        key: _navigatorKey,
-        onGenerateRoute: (RouteSettings settings) {
-          Widget page;
-          switch (settings.name) {
-            case '/':
-              page = const TodosPage();
-              break;
-            case 'create-todo':
-              page = const CreateTodoPage();
-              break;
-            case 'auth/register':
-              page = const RegisterPage();
-              break;
-            case 'auth/login':
-              page = const LoginPage();
-              break;
-            case 'profile':
-              page = const ProfilePage();
-              break;
-            default:
-              page = const TodosPage();
-              break;
-          }
-          return MaterialPageRoute(
-            builder: (_) => page,
-            settings: settings,
-          );
-        },
-      ),
+      body: NavigatorWidget(navigatorKey: _navigatorKey),
     );
-  }
-
-  String getAppBarTitle() {
-    switch (_currentIndex) {
-      case 0:
-        return 'Todo List';
-      case 1:
-        return 'Create Todo';
-      case 2:
-        return 'Register';
-      case 3:
-        return 'Login';
-      case 4:
-        return 'Profile';
-      default:
-        return '';
-    }
   }
 }
