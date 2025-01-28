@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/domain/entities/user_entity.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_event.dart';
-import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -49,37 +48,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppBarWidget(
-          title: "Register",
-          icon: Icons.door_back_door,
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: "Name"),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: "Password"),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () => _submitForm(context),
-                child: const Text("Register"))
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          TextField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: "Name"),
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            controller: _emailController,
+            decoration: const InputDecoration(labelText: "Email"),
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            controller: _passwordController,
+            decoration: const InputDecoration(labelText: "Password"),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+              onPressed: () => _submitForm(context),
+              child: const Text("Register"))
+        ],
       ),
     );
   }

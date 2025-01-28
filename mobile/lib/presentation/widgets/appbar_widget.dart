@@ -6,11 +6,11 @@ class AppBarWidget extends StatelessWidget {
   final VoidCallback? onIconPressed;
 
   const AppBarWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     this.onIconPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

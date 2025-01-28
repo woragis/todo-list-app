@@ -41,7 +41,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var curvedNavigationBar = CurvedNavigationBar(
+    return CurvedNavigationBar(
       backgroundColor: Colors.deepPurple,
       color: Colors.white,
       animationDuration: Duration(milliseconds: 300),
@@ -53,13 +53,6 @@ class _NavbarWidgetState extends State<NavbarWidget> {
       items: pageProperties.map((page) {
         return page['widget'] as Widget;
       }).toList(),
-    );
-    return Scaffold(
-      body: Center(
-        child: body[_currentIndex],
-      ),
-      backgroundColor: Colors.deepPurple,
-      bottomNavigationBar: curvedNavigationBar,
     );
   }
 }

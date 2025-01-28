@@ -61,35 +61,25 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Todo',
-            style: TextStyle(
-              color: Colors.white,
-            )),
-        backgroundColor: Colors.grey.shade300,
-      ),
-      backgroundColor: Colors.green.shade300,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () => _submitForm(context),
-              child: const Text('Create Todo'),
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          TextField(
+            controller: _titleController,
+            decoration: const InputDecoration(labelText: 'Title'),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _descriptionController,
+            decoration: const InputDecoration(labelText: 'Description'),
+          ),
+          const SizedBox(height: 32),
+          ElevatedButton(
+            onPressed: () => _submitForm(context),
+            child: const Text('Create Todo'),
+          ),
+        ],
       ),
     );
   }

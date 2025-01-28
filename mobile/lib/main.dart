@@ -13,8 +13,11 @@ import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
 import 'package:todo_mobile/presentation/pages/login_page.dart';
+import 'package:todo_mobile/presentation/pages/profile_page.dart';
 import 'package:todo_mobile/presentation/pages/register_page.dart';
 import 'package:todo_mobile/presentation/pages/todos_page.dart';
+import 'package:todo_mobile/presentation/widgets/appbar_widget.dart';
+import 'package:todo_mobile/presentation/widgets/navbar_widget.dart';
 // import 'package:todo_mobile/presentation/pages/todo_list_page.dart';
 
 // import 'package:flutter/material.dart';
@@ -148,5 +151,84 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class Main extends StatefulWidget {
+  const Main({Key? key}) : super(key: key);
+
+  @override
+  _MainState createState() => _MainState();
+}
+
+class _MainState extends State<Main> {
+  int _currentIndex = 0;
+
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  final List<String> _routes = [
+    '/',
+    '/create-todo',
+    '/auth/register',
+    '/auth/login',
+    '/profile',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBarWidget(
+        title: getAppBarTitle(),
+        icon: Icons.abc,
+      ) as AppBar,
+      bottomNavigationBar: NavbarWidget(),
+      body: Navigator(
+        key: _navigatorKey,
+        onGenerateRoute: (RouteSettings settings) {
+          Widget page;
+          switch (settings.name) {
+            case '/':
+              page = const TodosPage();
+              break;
+            case 'create-todo':
+              page = const CreateTodoPage();
+              break;
+            case 'auth/register':
+              page = const RegisterPage();
+              break;
+            case 'auth/login':
+              page = const LoginPage();
+              break;
+            case 'profile':
+              page = const ProfilePage();
+              break;
+            default:
+              page = const TodosPage();
+              break;
+          }
+          return MaterialPageRoute(
+            builder: (_) => page,
+            settings: settings,
+          );
+        },
+      ),
+    );
+  }
+
+  String getAppBarTitle() {
+    switch (_currentIndex) {
+      case 0:
+        return 'Todo List';
+      case 1:
+        return 'Create Todo';
+      case 2:
+        return 'Register';
+      case 3:
+        return 'Login';
+      case 4:
+        return 'Profile';
+      default:
+        return '';
+    }
   }
 }
