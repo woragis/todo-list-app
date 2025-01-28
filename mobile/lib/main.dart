@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Todo App',
         home: Main(),
       ),
@@ -88,6 +89,7 @@ class _MainState extends State<Main> {
         'widget': Icon(
           Icons.home,
           color: widgetColor,
+          size: 30,
         ),
       },
       {
@@ -97,6 +99,7 @@ class _MainState extends State<Main> {
         'widget': Icon(
           Icons.add,
           color: widgetColor,
+          size: 36,
         ),
       },
       {
@@ -106,12 +109,14 @@ class _MainState extends State<Main> {
         'widget': Icon(
           Icons.person,
           color: widgetColor,
+          size: 30,
         ),
       },
     ];
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueGrey.shade800,
         title: Container(
           padding: EdgeInsets.all(10),
           child: Row(
@@ -119,23 +124,25 @@ class _MainState extends State<Main> {
             children: [
               Text(
                 pageProperties[_currentIndex]['name'] as String,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        color: Colors.blueGrey.shade800,
         backgroundColor: Colors.white,
-        color: Colors.grey,
         animationDuration: Duration(milliseconds: 300),
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        items: pageProperties.map((page) {
-          return page['widget'] as Widget;
-        }).toList(),
+        items: pageProperties.map((page) => page['widget'] as Widget).toList(),
       ),
       body: NavigatorWidget(
           navigatorKey: _navigatorKey,
