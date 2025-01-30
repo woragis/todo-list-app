@@ -16,6 +16,16 @@ class UserEntity {
   });
 }
 
+class UserDataEntity {
+  final UserEntity user;
+  final String token;
+
+  UserDataEntity({
+    required this.user,
+    required this.token,
+  });
+}
+
 class UserRegisterEntity {
   final String name;
   final String email;

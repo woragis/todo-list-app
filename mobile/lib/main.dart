@@ -13,7 +13,10 @@ import 'package:todo_mobile/domain/repositories/user_repository.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/pages/create_todo_page.dart';
+import 'package:todo_mobile/presentation/pages/login_page.dart';
 import 'package:todo_mobile/presentation/pages/profile_page.dart';
+import 'package:todo_mobile/presentation/pages/register_page.dart';
+import 'package:todo_mobile/presentation/pages/settings_page.dart';
 import 'package:todo_mobile/presentation/pages/todos_page.dart';
 import 'package:todo_mobile/presentation/widgets/navigator_widget.dart';
 
@@ -61,6 +64,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Todo App',
         home: Main(),
+        routes: {
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(),
+          '/settings': (context) => const SettingsPage(),
+        },
       ),
     );
   }

@@ -14,23 +14,24 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<UserEntity> login(UserLoginEntity user) async {
+  Future<UserDataEntity> login(UserLoginEntity user) async {
     final model = UserLoginMapper.toModel(user);
     final loggedInUser = await apiProvider.login(model);
-    return UserMapper.toEntity(loggedInUser);
+    print("Login response: $loggedInUser");
+    return UserDataMapper.toEntity(loggedInUser.user, loggedInUser.token);
   }
 
   @override
-  Future<UserEntity> register(UserRegisterEntity user) async {
+  Future<UserDataEntity> register(UserRegisterEntity user) async {
     final model = UserRegisterMapper.toModel(user);
     final registeredUser = await apiProvider.register(model);
-    return UserMapper.toEntity(registeredUser);
+    return UserDataMapper.toEntity(registeredUser.user, registeredUser.token);
   }
 
   @override
-  Future<UserEntity> local() async {
+  Future<UserDataEntity> local() async {
     final model = await dbProvider.local();
-    return UserMapper.toEntity(model);
+    return UserDataMapper.toEntity(model, '');
   }
 
   @override

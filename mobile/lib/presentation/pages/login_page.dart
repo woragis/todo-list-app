@@ -37,30 +37,34 @@ class _LoginPageState extends State<LoginPage> {
     context.read<UserBloc>().add(
           UserLoginEvent(UserLoginEntity(email: email, password: password)),
         );
-
-    // Navigate back after creating the todo
-    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          TextField(
-            controller: _emailController,
-            decoration: const InputDecoration(labelText: "Email"),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(labelText: "Password"),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-              onPressed: () => _submitForm(context), child: const Text("Login"))
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Login"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: "Email"),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: "Password"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () => _submitForm(context),
+                child: const Text("Login"))
+          ],
+        ),
       ),
     );
   }

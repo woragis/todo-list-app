@@ -29,7 +29,24 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         } else {
           return Center(
-            child: Text("Login"),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text("Login"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  child: Text("Register"),
+                ),
+              ],
+            ),
           );
         }
       },

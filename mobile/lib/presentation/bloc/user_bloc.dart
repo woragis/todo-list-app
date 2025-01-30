@@ -16,8 +16,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onLogin(UserLoginEvent event, Emitter<UserState> emit) async {
     try {
       final response = await repository.login(event.user);
-      emit(UserLoadedState(token: 'token', user: response));
+      print("Login bloc event called: $response");
+      emit(UserLoadedState(token: response.token, user: response.user));
     } catch (e) {
+      print("Error on login bloc event called: $e");
       emit(UserErrorState(message: "Error on login: $e"));
     }
   }
@@ -26,7 +28,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       UserRegisterEvent event, Emitter<UserState> emit) async {
     try {
       final response = await repository.register(event.user);
-      emit(UserLoadedState(token: 'token', user: response));
+      emit(UserLoadedState(token: response.token, user: response.user));
     } catch (e) {
       emit(UserErrorState(message: "Error on register: $e"));
     }
@@ -44,7 +46,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onLocal(UserLocalEvent event, Emitter<UserState> emit) async {
     try {
       final localUser = await repository.local();
-      emit(UserLoadedState(token: '', user: localUser));
+      emit(UserLoadedState(token: localUser.token, user: localUser.user));
     } catch (e) {
       emit(UserErrorState(message: "Error retrieving local user: $e"));
     }

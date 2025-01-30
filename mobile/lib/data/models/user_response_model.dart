@@ -1,20 +1,34 @@
 import 'package:todo_mobile/data/models/user_model.dart';
 
-class UserResponseData {
+class UserResponseDataModel {
   final String token;
   final UserModel user;
 
-  UserResponseData({
+  UserResponseDataModel({
     required this.token,
     required this.user,
   });
+
+  factory UserResponseDataModel.fromJson(Map<String, dynamic> json) {
+    return UserResponseDataModel(
+      token: json['token'],
+      user: json['user'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'token': token,
+      'user': user,
+    };
+  }
 }
 
 class UserResponseModel {
   final int status;
   final String message;
   final String? error;
-  final UserResponseData data;
+  final UserResponseDataModel data;
 
   UserResponseModel({
     required this.status,
@@ -28,7 +42,7 @@ class UserResponseModel {
       status: json['status'],
       message: json['message'],
       error: json['error'],
-      data: json['data'],
+      data: UserResponseDataModel.fromJson(json['data']),
     );
   }
 
@@ -37,7 +51,7 @@ class UserResponseModel {
       'status': status,
       'message': message,
       'error': error,
-      'data': data,
+      'data': data.toJson(),
     };
   }
 }

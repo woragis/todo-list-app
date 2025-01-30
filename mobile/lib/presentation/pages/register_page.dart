@@ -48,29 +48,35 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          TextField(
-            controller: _nameController,
-            decoration: const InputDecoration(labelText: "Name"),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _emailController,
-            decoration: const InputDecoration(labelText: "Email"),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(labelText: "Password"),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-              onPressed: () => _submitForm(context),
-              child: const Text("Register"))
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Register"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: "Name"),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: "Email"),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: "Password"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () => _submitForm(context),
+                child: const Text("Register"))
+          ],
+        ),
       ),
     );
   }
