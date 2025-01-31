@@ -16,23 +16,8 @@
       "memory": 128
     },
     {
-      "name": "database",
-      "image": "woragis/todo-database",
-      "hostname": "database",
-      "essential": true,
-      "memory": 128
-    },
-    {
-      "name": "cache",
-      "image": "woragis/todo-cache",
-      "hostname": "cache",
-      "essential": true,
-      "memory": 128
-    },
-    {
       "name": "nginx",
       "image": "woragis/todo-nginx",
-      "hostname": "nginx",
       "essential": true,
       "memory": 128,
       "portMappings": [
