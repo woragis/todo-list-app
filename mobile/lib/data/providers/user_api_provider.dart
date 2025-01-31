@@ -16,10 +16,10 @@ class UserApiProvider {
   Future<UserDataModel> login(UserLoginModel user) async {
     final uri = Uri.parse('$baseUrl/login');
     final response = await http.post(uri, body: json.encode(user.toJson()));
-    print("Response data: $response");
+    log("Response data: $response");
     if (response.statusCode == 200) {
       final data = UserResponseModel.fromJson(json.decode(response.body));
-      print("Response mapped data: $data");
+      log("Response mapped data: $data");
       return UserDataModel(user: data.data.user, token: data.data.token);
     } else {
       throw Exception("Error on login function");

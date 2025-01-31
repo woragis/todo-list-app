@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:todo_mobile/data/mappers/user_mapper.dart';
 import 'package:todo_mobile/data/providers/user_api_provider.dart';
 import 'package:todo_mobile/data/providers/user_db_provider.dart';
@@ -17,7 +19,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<UserDataEntity> login(UserLoginEntity user) async {
     final model = UserLoginMapper.toModel(user);
     final loggedInUser = await apiProvider.login(model);
-    print("Login response: $loggedInUser");
+    log("Login response: $loggedInUser");
     return UserDataMapper.toEntity(loggedInUser.user, loggedInUser.token);
   }
 

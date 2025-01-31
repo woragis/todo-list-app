@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_mobile/domain/repositories/user_repository.dart';
 import 'package:todo_mobile/presentation/bloc/user_state.dart';
@@ -16,10 +18,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onLogin(UserLoginEvent event, Emitter<UserState> emit) async {
     try {
       final response = await repository.login(event.user);
-      print("Login bloc event called: $response");
+      log("Login bloc event called: $response");
       emit(UserLoadedState(token: response.token, user: response.user));
     } catch (e) {
-      print("Error on login bloc event called: $e");
+      log("Error on login bloc event called: $e");
       emit(UserErrorState(message: "Error on login: $e"));
     }
   }
