@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:toastification/toastification.dart';
 import 'package:todo_mobile/domain/entities/todo_entity.dart';
 import 'package:todo_mobile/presentation/bloc/todo_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/todo_event.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_state.dart';
+import 'package:todo_mobile/presentation/widgets/toast_widget.dart';
 
 class CreateTodoPage extends StatefulWidget {
   const CreateTodoPage({super.key});
@@ -30,8 +30,10 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     final description = _descriptionController.text.trim();
 
     if (title.isEmpty || description.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
+      ToastWidget.warn(
+        context,
+        "Error in Form",
+        "Please fill in all the fields",
       );
       return;
     }
@@ -54,16 +56,10 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
       // Navigate back after creating the todo
       Navigator.of(context).pop();
     } else {
-      toastification.show(
-        context: context,
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        title: Text("Can't create todo"),
-        description: Text("You need to be logged in"),
-        alignment: Alignment.bottomRight,
-        autoCloseDuration: const Duration(seconds: 4),
-        borderRadius: BorderRadius.circular(12.0),
-        dragToClose: true,
+      ToastWidget.error(
+        context,
+        "Can't create todo",
+        "You need to be logged in",
       );
     }
   }
