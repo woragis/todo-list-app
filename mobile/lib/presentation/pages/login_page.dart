@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 import 'package:todo_mobile/domain/entities/user_entity.dart';
 import 'package:todo_mobile/presentation/bloc/user_bloc.dart';
 import 'package:todo_mobile/presentation/bloc/user_event.dart';
@@ -27,8 +28,21 @@ class _LoginPageState extends State<LoginPage> {
     final password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Please fill in all fields'),
+      //   ),
+      // );
+      toastification.show(
+        context: context,
+        type: ToastificationType.warning,
+        style: ToastificationStyle.fillColored,
+        title: Text("Error on form"),
+        description: Text("You need to fill all of the fields"),
+        alignment: Alignment.bottomRight,
+        autoCloseDuration: const Duration(seconds: 4),
+        borderRadius: BorderRadius.circular(12.0),
+        dragToClose: true,
       );
       return;
     }
