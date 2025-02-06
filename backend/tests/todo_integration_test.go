@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"bytes"
 	"container/list"
 	"encoding/json"
 	"fmt"
@@ -10,12 +11,13 @@ import (
 	"todo-backend/constants"
 	"todo-backend/models"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
-var realTodoList = list.New()
-var testTodoList = list.New()
 var baseUrl = constants.GetUrl()
+var realTodoList = list.New()
+var tempTodosList = list.New()
 
 func TestGetAllTodos(t *testing.T) {
 	todosUrl := fmt.Sprintf("%s/todos/", baseUrl)
@@ -88,4 +90,133 @@ func TestGetTodoByID(t *testing.T) {
 		assert.Equal(t, todo.Completed, retrievedTodo.Completed, "Completed status do todo deve ser igual")
 		assert.Equal(t, todo.AuthorID, retrievedTodo.AuthorID, "Author IDs do todo devem ser iguais")
 	}
+}
+
+
+
+func TestCreateTodo(t *testing.T) {
+	baseURL := constants.GetUrl()
+
+	// Criando um novo todo fictício
+	newTodo := models.Todo{
+		Title:       "New Test Todo",
+		Description: "This is a test todo",
+		Completed:   false,
+		AuthorID:    uuid.New(),
+	}
+
+	// Convertendo o todo para JSON
+	todoJSON, err := json.Marshal(newTodo)
+	assert.NoError(t, err)
+
+	// Enviando a requisição POST
+	resp, err := http.Post(baseURL, "application/json", bytes.NewBuffer(todoJSON))
+	assert.NoError(t, err)
+	defer resp.Body.Close()
+
+	// Verificando o status da resposta
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
+
+	// Lendo o corpo da resposta
+	body, err := io.ReadAll(resp.Body)
+	assert.NoError(t, err)
+
+	// Desserializando a resposta para `models.Response`
+	var response models.Response
+	err = json.Unmarshal(body, &response)
+	assert.NoError(t, err)
+
+	// Convertendo `response.Data` para `models.Todo`
+	todoBytes, err := json.Marshal(response.Data)
+	assert.NoError(t, err)
+
+	var createdTodo models.Todo
+	err = json.Unmarshal(todoBytes, &createdTodo)
+	assert.NoError(t, err)
+
+	// Adicionando o todo criado à lista global
+	tempTodosList.PushBack(createdTodo)
+	fmt.Println("Created Todo:", createdTodo)
+}
+
+func TestUpdateTodo(t *testing.T) {
+	baseURL := constants.GetUrl()
+
+	// Pegando um todo salvo na lista global
+	front := tempTodosList.Front()
+	if front == nil {
+		t.Skip("Skipping test: No todos available to update")
+	}
+	todo := front.Value.(models.Todo)
+
+	// Modificando os valores do todo
+	updatedTodo := todo
+	updatedTodo.Title = "Updated Title"
+	updatedTodo.Completed = true
+
+	// Convertendo para JSON
+	todoJSON, err := json.Marshal(updatedTodo)
+	assert.NoError(t, err)
+
+	// Criando a requisição PUT
+	req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("%s/%s", baseURL, todo.ID), bytes.NewBuffer(todoJSON))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+
+	// Enviando a requisição
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	assert.NoError(t, err)
+	defer resp.Body.Close()
+
+	// Verificando o status da resposta
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+	// Lendo o corpo da resposta
+	body, err := io.ReadAll(resp.Body)
+	assert.NoError(t, err)
+
+	// Desserializando a resposta para `models.Response`
+	var response models.Response
+	err = json.Unmarshal(body, &response)
+	assert.NoError(t, err)
+
+	// Convertendo `response.Data` para `models.Todo`
+	todoBytes, err := json.Marshal(response.Data)
+	assert.NoError(t, err)
+
+	var updatedResponseTodo models.Todo
+	err = json.Unmarshal(todoBytes, &updatedResponseTodo)
+	assert.NoError(t, err)
+
+	// Verificando se os valores foram atualizados corretamente
+	assert.Equal(t, updatedTodo.Title, updatedResponseTodo.Title)
+	assert.Equal(t, updatedTodo.Completed, updatedResponseTodo.Completed)
+}
+
+func TestDeleteTodo(t *testing.T) {
+	baseURL := constants.GetUrl()
+
+	// Pegando um todo salvo na lista global
+	front := tempTodosList.Front()
+	if front == nil {
+		t.Skip("Skipping test: No todos available to delete")
+	}
+	todo := front.Value.(models.Todo)
+
+	// Criando a requisição DELETE
+	req, err := http.NewRequest(http.MethodDelete, fmt.Sprintf("%s/%s", baseURL, todo.ID), nil)
+	assert.NoError(t, err)
+
+	// Enviando a requisição
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	assert.NoError(t, err)
+	defer resp.Body.Close()
+
+	// Verificando o status da resposta
+	assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+
+	// Removendo o todo da lista global
+	tempTodosList.Remove(front)
 }
