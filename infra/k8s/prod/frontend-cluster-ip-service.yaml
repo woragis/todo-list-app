@@ -1,0 +1,11 @@
+apiVersion: 1
+kind: Service
+metadata:
+  name: frontend-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: frontend
+  ports:
+    - port: 5173
+      targetPort: 5173

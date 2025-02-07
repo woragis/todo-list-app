@@ -1,19 +1,19 @@
-apiVersion: apps/v1
+apiVersion: app/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: todos-frontend-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      todos: frontend
+      component: frontend
   template:
     metadata:
       labels:
-        todos: frontend
+        component: frontend
     spec:
       containers:
-        - name: todos-frontend
+        - name: frontend
           image: woragis/todos-frontend
           ports:
             - containerPort: 5173
