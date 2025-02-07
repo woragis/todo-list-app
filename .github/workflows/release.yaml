@@ -1,0 +1,11 @@
+name: Release Pipeline
+
+on: workflow_dispatch
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start and deploy kubernetes
+        working-directory: ./infra
+        run: echo deploying

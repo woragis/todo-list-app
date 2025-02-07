@@ -1,0 +1,10 @@
+name: CD Pipeline
+
+on: workflow_dispatch
+
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deliver to ifood
+        run: echo delivered
