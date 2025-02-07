@@ -11,13 +11,14 @@ import (
 	"todo-backend/constants"
 	"todo-backend/models"
 
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
 var baseUrl = constants.GetUrl()
 var realTodoList = list.New()
 var tempTodosList = list.New()
+var userID = ""
+
 
 func TestGetAllTodos(t *testing.T) {
 	todosUrl := fmt.Sprintf("%s/todos/", baseUrl)
@@ -102,7 +103,7 @@ func TestCreateTodo(t *testing.T) {
 		Title:       "New Test Todo",
 		Description: "This is a test todo",
 		Completed:   false,
-		AuthorID:    uuid.New(),
+		AuthorID:    userID,
 	}
 
 	// Convertendo o todo para JSON
